@@ -9,7 +9,15 @@ extern "C" int fileno(FILE *stream);
 
 %%
 
+[(]										{return T_LBRACKET;}
+[)]										{return T_RBRACKET;}
+[{]										{return T_CLBRACKET;}
+[}]										{return T_CRBRACKET;}
+[;]										{return T_SEMICOLON;}
+[return]								{return T_RETURN;}
 
+[-]?[0-9]+([.][0-9]*)?					{yylval.number=strtod(yytext, 0); return T_NUMBER;}
+[a-z]+									{yylval.string=new std::string(yytext); return T_IDENTIFIER;}
 
 [ \t\r\n]+		{;}
 
