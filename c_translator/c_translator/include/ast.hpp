@@ -7,7 +7,8 @@
 #include <memory>
 //----------------------------------Declaration-------------------------------------
 class Node;
-
+class Function;
+class Statement;
 //----------------------------------Node----------------------------------------
 
 typedef const Node* NodePtr;
@@ -15,13 +16,12 @@ typedef const Node* NodePtr;
 class Node
 {
 public:
-	virtual Node()
-    virtual ~Node()
+	virtual Node();
+    virtual ~Node();
     {}
 
     //! Tell and expression to print itself to the given stream
     virtual void print(std::ostream &dst) const =0;
-	virtual void construct()
     //! Evaluate the tree using the given mapping of variables to numbers
 };
 // ---------------------------------PROGRAM---------------------------------
@@ -37,7 +37,7 @@ class Function : public Node{
 	Function(std::string *return_t_in, std::string *id_in, Statement* arg_in, Statement* body_in);
 	~Function();
 	
-	print();
+	void print();
 	
 	public:
 	
@@ -47,7 +47,7 @@ Function::Function(std::string *return_t_in, std::string *id_in, Statement* arg_
 
 Function::~Function(){}
 
-Function::print(){
+void Function::print(){
 	std::cout << "def " << *id << "():" << std::endl;
 	body->print();
 }
@@ -64,13 +64,13 @@ class Statement : public Node{
 	Statement(std::string *return_t_in, int val_in);
 	~Statement();
 	
-	print();
+	void print();
 	public:
 }
 
 Statement::Statement(std::string *return_t_in, int val_in):return_t(return_t_in),val(val_in){}
 Statement::~Statement(){}
-Statement::print(){
+void Statement::print(){
 	std::cout << "return " << val << std::endl;
 }
 
