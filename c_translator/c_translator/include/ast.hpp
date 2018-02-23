@@ -1,14 +1,17 @@
 #ifndef ast_hpp
 #define ast_hpp
+#include <string>
+#include <iostream>
+#include <map>
 
+#include <memory>
+//----------------------------------Declaration-------------------------------------
+class Node;
 
-extern const Expression *parseAST();
-
-
-// ---------------------------------NODE---------------------------------
+//----------------------------------Node----------------------------------------
 
 typedef const Node* NodePtr;
-
+//https://stackoverflow.com/questions/750178/is-it-a-good-idea-to-typedef-pointers
 class Node
 {
 public:
@@ -18,35 +21,21 @@ public:
     //! Tell and expression to print itself to the given stream
     virtual void print(std::ostream &dst) const =0;
 
-	/*
     //! Evaluate the tree using the given mapping of variables to numbers
-    virtual double evaluate(
-        const std::map<std::string,double> &bindings
-    ) const
-    { throw std::runtime_error("Not implemented."); }
-	*/
 };
 // ---------------------------------PROGRAM---------------------------------
 
-// ---------------------------------FUNCTION---------------------------------
-class FunctionDec : public Node {
-	private:
-		const std::string *type;
-		const std::string *id;
-		//int parameter;
-		StatementPtr body;
-	public:
-		
-		FunctionDec(const std::string *type, const std::string *id, StatementPtr body);
-		~FunctionDec();
-		
-		void print() const override;
-}
-FunctionDec::FunctionDec(const std::string *type, const std::string *id, StatementPtr body){}
-FunctionDec::~FunctionDec(){}
-// ---------------------------------EXPRESSION---------------------------------
 
-// ---------------------------------STATEMENT---------------------------------
+
+// #include "ast/ast_expression.hpp"
+// #include "ast/ast_primitives.hpp"
+// #include "ast/ast_operators.hpp"
+// #include "ast/ast_functions.hpp"
+
+
+extern const Node *parseAST();
+
+
 
 
 #endif

@@ -1,0 +1,173 @@
+Grammar
+
+    0 $accept: ROOT $end
+
+    1 ROOT: PROGRAM
+
+    2 PROGRAM: FUNCTION
+
+    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
+
+    4 STATEMENT: T_RETURN EXPRESSION T_SEMICOLON
+
+    5 EXPRESSION: T_NUMBER
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+T_LBRACKET (258) 3
+T_RBRACKET (259) 3
+T_CLBRACKET (260) 3
+T_CRBRACKET (261) 3
+T_SEMICOLON (262) 4
+T_NUMBER (263) 5
+T_IDENTIFIER (264) 3
+T_RETURN (265) 4
+T_TYPE (266) 3
+
+
+Nonterminals, with rules where they appear
+
+$accept (12)
+    on left: 0
+ROOT (13)
+    on left: 1, on right: 0
+PROGRAM (14)
+    on left: 2, on right: 1
+FUNCTION (15)
+    on left: 3, on right: 2
+STATEMENT (16)
+    on left: 4, on right: 3
+EXPRESSION (17)
+    on left: 5, on right: 4
+
+
+State 0
+
+    0 $accept: . ROOT $end
+
+    T_TYPE  shift, and go to state 1
+
+    ROOT      go to state 2
+    PROGRAM   go to state 3
+    FUNCTION  go to state 4
+
+
+State 1
+
+    3 FUNCTION: T_TYPE . T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
+
+    T_IDENTIFIER  shift, and go to state 5
+
+
+State 2
+
+    0 $accept: ROOT . $end
+
+    $end  shift, and go to state 6
+
+
+State 3
+
+    1 ROOT: PROGRAM .
+
+    $default  reduce using rule 1 (ROOT)
+
+
+State 4
+
+    2 PROGRAM: FUNCTION .
+
+    $default  reduce using rule 2 (PROGRAM)
+
+
+State 5
+
+    3 FUNCTION: T_TYPE T_IDENTIFIER . T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
+
+    T_LBRACKET  shift, and go to state 7
+
+
+State 6
+
+    0 $accept: ROOT $end .
+
+    $default  accept
+
+
+State 7
+
+    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET . STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
+
+    T_RETURN  shift, and go to state 8
+
+    STATEMENT  go to state 9
+
+
+State 8
+
+    4 STATEMENT: T_RETURN . EXPRESSION T_SEMICOLON
+
+    T_NUMBER  shift, and go to state 10
+
+    EXPRESSION  go to state 11
+
+
+State 9
+
+    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT . T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
+
+    T_RBRACKET  shift, and go to state 12
+
+
+State 10
+
+    5 EXPRESSION: T_NUMBER .
+
+    $default  reduce using rule 5 (EXPRESSION)
+
+
+State 11
+
+    4 STATEMENT: T_RETURN EXPRESSION . T_SEMICOLON
+
+    T_SEMICOLON  shift, and go to state 13
+
+
+State 12
+
+    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET . T_CLBRACKET STATEMENT T_CRBRACKET
+
+    T_CLBRACKET  shift, and go to state 14
+
+
+State 13
+
+    4 STATEMENT: T_RETURN EXPRESSION T_SEMICOLON .
+
+    $default  reduce using rule 4 (STATEMENT)
+
+
+State 14
+
+    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET . STATEMENT T_CRBRACKET
+
+    T_RETURN  shift, and go to state 8
+
+    STATEMENT  go to state 15
+
+
+State 15
+
+    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT . T_CRBRACKET
+
+    T_CRBRACKET  shift, and go to state 16
+
+
+State 16
+
+    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET .
+
+    $default  reduce using rule 3 (FUNCTION)
