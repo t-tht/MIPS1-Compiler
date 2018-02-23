@@ -14,7 +14,8 @@ extern "C" int fileno(FILE *stream);
 [{]										{return T_CLBRACKET;}
 [}]										{return T_CRBRACKET;}
 [;]										{return T_SEMICOLON;}
-[return]								{return T_RETURN;}
+return									{return T_RETURN;}
+int										{return T_TYPE;}
 
 [-]?[0-9]+([.][0-9]*)?					{yylval.number=strtod(yytext, 0); return T_NUMBER;}
 [a-z]+									{yylval.string=new std::string(yytext); return T_IDENTIFIER;}

@@ -1,34 +1,33 @@
 Nonterminals useless in grammar
 
    EXPRESSION
+   PROGRAM
 
 
 Grammar
 
     0 $accept: ROOT $end
 
-    1 ROOT: PROGRAM
+    1 ROOT: FUNCTION
 
-    2 PROGRAM: FUNCTION
+    2 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
 
-    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
-
-    4 STATEMENT: T_RETURN T_NUMBER T_SEMICOLON
+    3 STATEMENT: T_RETURN T_NUMBER T_SEMICOLON
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-T_LBRACKET (258) 3
-T_RBRACKET (259) 3
-T_CLBRACKET (260) 3
-T_CRBRACKET (261) 3
-T_SEMICOLON (262) 4
-T_NUMBER (263) 4
-T_IDENTIFIER (264) 3
-T_RETURN (265) 4
-T_TYPE (266) 3
+T_LBRACKET (258) 2
+T_RBRACKET (259) 2
+T_CLBRACKET (260) 2
+T_CRBRACKET (261) 2
+T_SEMICOLON (262) 3
+T_NUMBER (263) 3
+T_IDENTIFIER (264) 2
+T_RETURN (265) 3
+T_TYPE (266) 2
 
 
 Nonterminals, with rules where they appear
@@ -37,12 +36,10 @@ $accept (12)
     on left: 0
 ROOT (13)
     on left: 1, on right: 0
-PROGRAM (14)
+FUNCTION (14)
     on left: 2, on right: 1
-FUNCTION (15)
+STATEMENT (15)
     on left: 3, on right: 2
-STATEMENT (16)
-    on left: 4, on right: 3
 
 
 State 0
@@ -52,114 +49,97 @@ State 0
     T_TYPE  shift, and go to state 1
 
     ROOT      go to state 2
-    PROGRAM   go to state 3
-    FUNCTION  go to state 4
+    FUNCTION  go to state 3
 
 
 State 1
 
-    3 FUNCTION: T_TYPE . T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
+    2 FUNCTION: T_TYPE . T_IDENTIFIER T_LBRACKET T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
 
-    T_IDENTIFIER  shift, and go to state 5
+    T_IDENTIFIER  shift, and go to state 4
 
 
 State 2
 
     0 $accept: ROOT . $end
 
-    $end  shift, and go to state 6
+    $end  shift, and go to state 5
 
 
 State 3
 
-    1 ROOT: PROGRAM .
+    1 ROOT: FUNCTION .
 
     $default  reduce using rule 1 (ROOT)
 
 
 State 4
 
-    2 PROGRAM: FUNCTION .
+    2 FUNCTION: T_TYPE T_IDENTIFIER . T_LBRACKET T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
 
-    $default  reduce using rule 2 (PROGRAM)
+    T_LBRACKET  shift, and go to state 6
 
 
 State 5
-
-    3 FUNCTION: T_TYPE T_IDENTIFIER . T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
-
-    T_LBRACKET  shift, and go to state 7
-
-
-State 6
 
     0 $accept: ROOT $end .
 
     $default  accept
 
 
+State 6
+
+    2 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET . T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
+
+    T_RBRACKET  shift, and go to state 7
+
+
 State 7
 
-    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET . STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
+    2 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET . T_CLBRACKET STATEMENT T_CRBRACKET
 
-    T_RETURN  shift, and go to state 8
-
-    STATEMENT  go to state 9
+    T_CLBRACKET  shift, and go to state 8
 
 
 State 8
 
-    4 STATEMENT: T_RETURN . T_NUMBER T_SEMICOLON
+    2 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET T_CLBRACKET . STATEMENT T_CRBRACKET
 
-    T_NUMBER  shift, and go to state 10
+    T_RETURN  shift, and go to state 9
+
+    STATEMENT  go to state 10
 
 
 State 9
 
-    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT . T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET
+    3 STATEMENT: T_RETURN . T_NUMBER T_SEMICOLON
 
-    T_RBRACKET  shift, and go to state 11
+    T_NUMBER  shift, and go to state 11
 
 
 State 10
 
-    4 STATEMENT: T_RETURN T_NUMBER . T_SEMICOLON
+    2 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET T_CLBRACKET STATEMENT . T_CRBRACKET
 
-    T_SEMICOLON  shift, and go to state 12
+    T_CRBRACKET  shift, and go to state 12
 
 
 State 11
 
-    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET . T_CLBRACKET STATEMENT T_CRBRACKET
+    3 STATEMENT: T_RETURN T_NUMBER . T_SEMICOLON
 
-    T_CLBRACKET  shift, and go to state 13
+    T_SEMICOLON  shift, and go to state 13
 
 
 State 12
 
-    4 STATEMENT: T_RETURN T_NUMBER T_SEMICOLON .
+    2 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET .
 
-    $default  reduce using rule 4 (STATEMENT)
+    $default  reduce using rule 2 (FUNCTION)
 
 
 State 13
 
-    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET . STATEMENT T_CRBRACKET
+    3 STATEMENT: T_RETURN T_NUMBER T_SEMICOLON .
 
-    T_RETURN  shift, and go to state 8
-
-    STATEMENT  go to state 14
-
-
-State 14
-
-    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT . T_CRBRACKET
-
-    T_CRBRACKET  shift, and go to state 15
-
-
-State 15
-
-    3 FUNCTION: T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET .
-
-    $default  reduce using rule 3 (FUNCTION)
+    $default  reduce using rule 3 (STATEMENT)

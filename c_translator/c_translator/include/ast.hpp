@@ -9,6 +9,7 @@
 class Node;
 class Function;
 class Statement;
+class Number;
 
 
 class Node{
@@ -36,9 +37,9 @@ class Function : public Node{
 class Statement : public Node{
 	protected:
 		std::string *return_t;
-		int val;
+		double val;
 	public:
-		Statement(int val_in);
+		Statement(double val_in);
 		~Statement();
 		void print() const;
 };

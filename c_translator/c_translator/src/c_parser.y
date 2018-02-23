@@ -33,10 +33,11 @@
 
 %%
 
-ROOT : PROGRAM 												{ g_root = $1; }
-PROGRAM: FUNCTION                     { $$ = $1; }
-FUNCTION :	T_TYPE T_IDENTIFIER T_LBRACKET STATEMENT T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET	{$$ = new Function($1,$2,$4,$7);}
+ROOT : FUNCTION 												{ g_root = $1; }
+FUNCTION :	T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET	{$$ = new Function($1,$2,NULL,$6);}
 STATEMENT :	T_RETURN T_NUMBER T_SEMICOLON	{$$ = new Statement($2);}
+
+//ROOT : T_RETURN T_NUMBER {g_root = new Number($2);}
 
 %%
 const Node *g_root; // Definition of variable (to match declaration earlier)
