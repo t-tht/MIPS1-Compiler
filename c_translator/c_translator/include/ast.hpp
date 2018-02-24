@@ -16,7 +16,7 @@ class Node{
 	public:
 		Node();
 		~Node();
-		virtual void print() const =0;
+		virtual void print(std::ostream &dst) const =0;
 
 };
 
@@ -30,7 +30,7 @@ class Function : public Node{
 	public:
 		Function(std::string *return_t_in, std::string *id_in, Statement* arg_in, Statement* body_in);
 		~Function();
-		void print() const override;
+		virtual void print(std::ostream &dst) const override;
 };
 
 
@@ -41,7 +41,7 @@ class Statement : public Node{
 	public:
 		Statement(double val_in);
 		~Statement();
-		void print() const override;
+		virtual void print(std::ostream &dst) const override;
 };
 
 
@@ -51,7 +51,7 @@ class Number : public Node{
 	public:
 		Number(double val_in);
 		~Number();
-		void print() const override;
+		virtual void print(std::ostream &dst) const override;
 };
 
 extern const Node* parseAST();
