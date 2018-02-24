@@ -4,7 +4,7 @@ Node::Node(){}
 
 Node::~Node(){}
 
-void Node::print(std::ostream &dst) const {}
+
 
 Function::Function(std::string *return_t_in, std::string *id_in, Statement* arg_in, Statement* body_in): return_t(return_t_in), id(id_in), arg(arg_in), body(body_in){}
 
@@ -14,7 +14,7 @@ void Function::print() const{
 	std::cout << "def " << *id << "():" << std::endl;
 	body->print();
 }
-		
+
 Statement::Statement(double val_in):val(val_in){}
 
 Statement::~Statement(){}
