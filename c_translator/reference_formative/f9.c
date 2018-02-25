@@ -21,15 +21,27 @@ int main()
 
 Program[
 FunctionDeclaration[
-        CompoundStatement[block[
+        CompoundStatement[[block[
+                        
                           
                     IfStatement[
                           Assertion= [left=Identifier[a]
                                       Operator= "<"
                                       right= Identifier[b]]
                             
-                                ]]
+                                ]
+                                ]
                     ]]
 
 
 ]
+
+FunctionDeclaration: Statements
+        
+
+Block: Declaration
+        Statements
+
+
+
+If_Statement:
