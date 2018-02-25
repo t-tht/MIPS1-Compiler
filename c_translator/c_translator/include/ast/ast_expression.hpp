@@ -1,31 +1,51 @@
-#ifndef ast_expression_hpp
-#define ast_expression_hpp
+#ifndef "AST_EXPRESSION_HPP"
+#define "AST_EXPRESSION_HPP"
 
 #include <string>
 #include <iostream>
-#include <map>
 
-#include <memory>
+//------------------------------------------------------------------------------------
 
 class Expression;
+class BinExpr;
+class ComprExpr;
 
-typedef const Expression *ExpressionPtr;
+//------------------------------------------------------------------------------------
 
-class Expression
-{
-public:
-    virtual ~Expression()
-    {}
-
-    //! Tell and expression to print itself to the given stream
-    virtual void print(std::ostream &dst) const =0;
-
-    //! Evaluate the tree using the given mapping of variables to numbers
-    virtual double evaluate(
-        const std::map<std::string,double> &bindings
-    ) const
-    { throw std::runtime_error("Not implemented."); }
+class Expression : public Node{
+	protected:
+		Expression* left;
+		Expression* right;
+	public:
+		Expr();
+		~Expr();
+		virtual void print(std::ostream &dst) const = 0;
 };
 
+//------------------------------------------------------------------------------------
+
+class BinExpr : public Expression{
+	protected:
+		std::string bin_op;
+	public:
+		BinExpr(Expression* left_in, std::string bin_op_in, Expression* right_in);
+		~BinExpr();
+		std::string getop();
+		void print(std::ostream &dst) const;
+};
+
+
+//------------------------------------------------------------------------------------
+
+class ComprExpr : public Expression{
+	protected:
+		std::string compr_op;
+	public:
+		ComprExpr(Expression* left_in, std::string compr_op_in, Expression* right_in);
+		~ComprExpr();
+		void print(std::ostream &dst) const;
+};
+
+//------------------------------------------------------------------------------------
 
 #endif
