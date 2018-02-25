@@ -4,14 +4,13 @@ Program[
             name=[Identifier[main]]
             returnType[IntType]
             parameters= [NULL]
-            body= CompoundStatment[
-                            block[
+            block= CompoundStatment[
                                 ReturnStatement[ Expr[ AddExpr[ left=Identifier[Number[5]], right= Identfier[Number[6]]]]
                                                          
                                                          
                                                          ]
                                                    
-                                                   ]
+                                    
                 
                 
                 

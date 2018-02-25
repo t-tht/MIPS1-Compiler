@@ -32,14 +32,43 @@
 %start ROOT
 
 %%
+ROOT: Program                                           { g_root = $1; }
 
-ROOT : FUNCTION 												{ g_root = $1; }
-FUNCTION :	T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET	{$$ = new Function($1,$2,NULL,$6);}
-STATEMENT :	T_RETURN T_NUMBER T_SEMICOLON	{$$ = new Statement($2);}
+Program: FunctionDeclaration                            { $$= new Program($1); }
 
-DECLARATION:  VARDEC 
-			| FUNCDEC
+FunctionDeclaration: TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDeclaration($1, $2, NULL, $5); }
 
+Statement: CompoundStatement                        { $$= $1; }
+            |SimpleStatement                                {$$ = $1;}
+
+
+CompoundStatement: Block                            { $$= $1;}
+
+SimpleStatement: ReturnStatement                    {$$ = new ReturnStatement($1);}
+
+
+Block: T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
+| T_CLBRACKET Statement T_CRBRACKET                    { $$= new Block($2);}
+
+
+ReturnStatement: T_RETURN Expr T_SEMICOLON                  { $$= new Expr($1);}
+
+Expr: T_NUMBER                      { $$= new Number($1);}
+
+TYPE: T_INT                         { $$ = new std::string("int"); }
+    |T_VOID                               {  $$= new std::string("void");}
+
+
+Type
+//
+//ROOT : FUNCTION 												{ g_root = $1; }
+//
+//FUNCTION :	T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET T_CLBRACKET STATEMENT T_CRBRACKET	{$$ = new Function($1,$2,NULL,$6);}
+//STATEMENT :	T_RETURN T_NUMBER T_SEMICOLON	{$$ = new Statement($2);}
+//
+//DECLARATION:  VARDEC 
+//			| FUNCDEC
+//
 
 
 %%
