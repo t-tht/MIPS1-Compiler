@@ -1,17 +1,27 @@
 
 
-
-
-ReturnStatement[FunctionDeclaration]
-
-
+ReturnStatement[Number[10];
+                ]
 
 
 
-ReturnStatement: FunctionDeclaration
+ReturnStatement[ReturnFunction[
+                name=[f]
+                parameters=[]
+                ]
+                ]
+                
+                
+  
 
-FunctionDeclaration[ name= [f]
-                        returnStatement]
+
+
+
+
+ReturnStatement: ReturnFunction
+
+
+         
 
 
 

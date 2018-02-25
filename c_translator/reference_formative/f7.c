@@ -6,3 +6,15 @@ int main()
     return x;
 }
 
+Program[
+VariableDeclaration[
+        Type= [IntType]
+        Name= Identifier[ x]
+                    ]
+]
+
+Program[
+
+
+
+]
