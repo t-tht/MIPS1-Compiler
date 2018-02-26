@@ -15,9 +15,9 @@ void Expression::print(std::ostream &dst){
 
 //------------------------------------------------------------------------------------
 
-BinExpr::BinExpr(Expression* left_in, std::string bin_op_in, Expression* right_in) : left(left_in), bin_op(bin_op_in), right(right_in){}
+ArithExpr::ArithExpr(Expression* left_in, std::string bin_op_in, Expression* right_in) : left(left_in), bin_op(bin_op_in), right(right_in){}
 
-BinExpr::~BinExpr(){
+ArithExpr::~ArithExpr(){
 	delete left;
 	delete right;
 }
@@ -26,7 +26,7 @@ std::string getop(){
 	return bin_op;
 }
 
-void BinExpr::print(std::ostream &dst){
+void ArithExpr::print(std::ostream &dst){
 	left->print(dst);
 	dst << getop();
 	right->print(dst);

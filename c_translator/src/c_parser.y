@@ -85,10 +85,26 @@ FUNC_DECL : 		  T_TYPE T_ID T_LBRACKET PARAM T_RBRACKET T_SEMICOLON				{ $$ = }
 PARAM :				  T_TYPE T_ID														{ $$ = }
 					| PARAM T_COMMA T_TYPE T_ID											{ $$ = }
 
+<<<<<<< HEAD
 BLOCK : 			  T_CLBRACKET VAR_DECL T_CRBRACKET									{ $$ = }
 					| T_CLBRACKET STAT T_CRBRACKET										{ $$ = }
 					| T_CLBRACKET BLOCK T_CRBRACKET										{ $$ = }
 
+=======
+BLOCK : 			  T_CLBRACKET MUL_VAR_DECL T_CRBRACKET									{ $$ = }
+					| T_CLBRACKET MUL_STAT T_CRBRACKET										{ $$ = }
+					| T_CLBRACKET MUL_VAR_DECL MUL_STAT T_CRBRACKET							{ $$ = }
+					| T_CLBRACKET MUL_STAT MUL_VAR_DECL T_CRBRACKET
+					| T_CLBRACKET T_CLBRACKET
+					
+MUL_VAR_DECL :		  VAR_DECL
+					| MUL_VAR_DECL VAR_DECL
+
+MUL_STAT :			  MUL_STAT
+					| MUL_STAT STAT
+					
+		
+>>>>>>> 51ae665b7be456da01bb83e26f96d8df5509a65f
 EXPR :		          ARITH_EXPR														{ $$ = $1; }
 					| RELA_EXPR															{ $$ = $1; }
 					| INCDEC_EXPR 														{ $$ = $1; }
