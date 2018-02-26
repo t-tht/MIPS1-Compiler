@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------------
 
 class Expression;
-class BinExpr;
+class ArithExpr;
 class ComprExpr;
 
 //------------------------------------------------------------------------------------
@@ -25,12 +25,12 @@ class Expression : public Node{
 
 //------------------------------------------------------------------------------------
 
-class BinExpr : public Expression{
+class ArithExpr : public Expression{
 	protected:
-		std::string bin_op;
+		std::string arith_op;
 	public:
-		BinExpr(Expression* left_in, std::string bin_op_in, Expression* right_in);
-		~BinExpr();
+		ArithExpr(Expression* left_in, std::string bin_op_in, Expression* right_in);
+		~ArithExpr();
 		std::string getop();
 		void print(std::ostream &dst) const;
 };

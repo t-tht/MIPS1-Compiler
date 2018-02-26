@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 #include "ast_node.hpp"
-#include "ast_compstat.hpp"
 
 //------------------------------------------------------------------------------------
 
@@ -40,7 +39,7 @@ class FuncDecl: public Declaration{
 	protected:
 		std::string *return_t;
 		std::string *id;
-		Statement* arg_in;
+		Node* arg_in;
         Block* bodyl;
 	public:
 		FuncDecl(std::string *return_t_in, std::string *id_in, Statement* arg_in, Statement* body_in);
