@@ -41,7 +41,7 @@ class FuncDecl: public Declaration{
 		std::string *return_t;
 		std::string *id;
 		Statement* arg_in;
-        Block* bodyl;
+        Statement* bodyl;
 	public:
 		FuncDecl(std::string *return_t_in, std::string *id_in, Statement* arg_in, Statement* body_in);
 		~FuncDecl():
