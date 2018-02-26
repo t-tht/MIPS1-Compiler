@@ -21,7 +21,7 @@ Declaration::~Declaration(){}
 
 //------------------------------------------------------------------------------------
 
-VarDecl::VarDecl(std::string* id_in, double val_in) : id(id_in_), val(val_in){}
+VarDecl::VarDecl(std::string* type_in, std::string* id_in, double val_in) : type(type_in), id(id_in_), val(val_in){}
 
 VarDecl::~VarDecl(){}
 
@@ -31,9 +31,12 @@ void VarDecl::print(std::ostream &dst)const{
 
 //------------------------------------------------------------------------------------
 
-FuncDecl::FuncDecl(std::string *return_t_in, std::string *id_in, Statement* arg_in, Statement* body_in): return_t(return_t_in), id(id_in), arg(arg_in), body(body_in){}
+FuncDecl::FuncDecl(std::string* type_in, std::string* id_in, Node* arg_in, Block* body_in): type(type_in), id(id_in), arg(arg_in), body(body_in){}
 
-FuncDecl::~FuncDecl(){}
+FuncDecl::~FuncDecl(){
+	delete arg_in;
+	delete body;
+}
 
 void FuncDecl::print(std::ostream &dst)const{
 	dst << "def " << *id << "():" << std::endl;
@@ -55,7 +58,7 @@ void Expression::print(std::ostream &dst){
 
 //------------------------------------------------------------------------------------
 
-ArithExpr::ArithExpr(Expression* left_in, std::string bin_op_in, Expression* right_in) : left(left_in), bin_op(bin_op_in), right(right_in){}
+ArithExpr::ArithExpr(Expression* left_in, std::string arith_op_in, Expression* right_in) : left(left_in), arith_op(arith_op_in), right(right_in){}
 
 ArithExpr::~ArithExpr(){
 	delete left;
@@ -63,7 +66,7 @@ ArithExpr::~ArithExpr(){
 }
 
 std::string getop(){
-	return bin_op;
+	return arith_op;
 }
 
 void ArithExpr::print(std::ostream &dst){
@@ -81,7 +84,31 @@ ComprExpr::~ComprExpr(){
 	delete right;
 }
 
+std::string ComprExpr::getop(){
+	return compr_op;
+}
+
 void ComprExpr::print(std::ostream &dst){}
+
+//------------------------------------------------------------------------------------
+
+Statement::~Statement(){}
+
+void Statement::print(std::ostream &dst){}
+
+//------------------------------------------------------------------------------------
+
+StatementSeq::StatementSeq(Statement* list_in, Statement* stat_in) : list(list_in), stat(stat_in){}
+
+StatementSeq::~StatementSeq(){
+	delete list;
+	delete stat;
+}
+
+void StatementSeq::print(std::ostream &dst){
+	stat->print(dst);
+	list->print(dst);
+}
 
 //------------------------------------------------------------------------------------
 
@@ -93,7 +120,7 @@ void SimpStat::print()const{}
 
 //------------------------------------------------------------------------------------
 
-ReturnStat::ReturnStat(){}
+ReturnStat::ReturnStat(std::string type_in, Expression* expr_in) : type(type_in), expr(expr_in){}
 ReturnStat::~ReturnStat(){
 	delete expr;
 }
