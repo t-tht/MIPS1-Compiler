@@ -50,7 +50,7 @@ SimpleStatement: ReturnStatement                    {$$ = new ReturnStatement($1
 
 
 Block: T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
-        | T_CLBRACKET Statement_Seq T_CRBRACKET                    { $$= new Block($2);}
+        | T_CLBRACKET Statement T_CRBRACKET                    { $$= new Block($2);}
 
 
 ReturnStatement: T_RETURN Expr T_SEMICOLON                  { $$= new Expression($1);}
