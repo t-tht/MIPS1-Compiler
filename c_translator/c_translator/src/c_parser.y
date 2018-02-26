@@ -24,7 +24,7 @@
 %token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON
 %token T_NUMBER T_IDENTIFIER T_RETURN T_TYPE
 
-%type <node> PROGRAM FuncDec Expression
+%type <node> PROGRAM FuncDec Expression Bin_Expr
 %type <statement> STATEMENT
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE
@@ -54,6 +54,9 @@ Block: T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
 ReturnStatement: T_RETURN Expr T_SEMICOLON                  { $$= new Expression($1);}
 
 Expr: T_NUMBER                      { $$= new Number($1);}
+| Bin_Expr                      {$$= $1;}
+
+Bin_Expr: T_NUMBER T_ADD T_NUMBER   {$$ = new BinExpr($1,$2,$3);}
 
 TYPE: T_INT                         { $$ = new std::string("int"); }
     |T_VOID                               {  $$= new std::string("void");}

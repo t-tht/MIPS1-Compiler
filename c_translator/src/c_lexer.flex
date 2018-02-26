@@ -14,6 +14,9 @@ extern "C" int fileno(FILE *stream);
 [{]										{return T_CLBRACKET;}
 [}]										{return T_CRBRACKET;}
 [;]										{return T_SEMICOLON;}
+
+[+]                                     {return T_ADD;}
+
 return									{return T_RETURN;}
 int										{return T_TYPE;}
 
