@@ -1,8 +1,5 @@
 #include "ast.hpp"
 
-#include <iostream>
-#include <string>
-
 //------------------------------------------------------------------------------------
 
 Node::Node(){}
@@ -165,11 +162,13 @@ void AssertStat::print(std::ostream &dst)const{}
 
 //------------------------------------------------------------------------------------
 
-CompStat::CompStat(){}
+ComprStat::ComprStat(){}
 
-CompStat::~CompStat(){}
+ComprStat::~ComprStat(){}
 
-void CompStat::print(std::ostream &dst)const{}
+void ComprStat::print(std::ostream &dst)const{
+	dst << "--not implemented--" << std::endl;
+}
 
 //------------------------------------------------------------------------------------
 

@@ -1,9 +1,6 @@
 #ifndef node_hpp
 #define node_hpp
 
-#include <iostream>
-#include <string>
-
 class Node;
 
 class Block;
@@ -37,7 +34,7 @@ class Node{
 
 //------------------------------------------------------------------------------------
 
-class Block : public Node{
+class Block{
 	protected:
 		CompStat* compstat;
 		SimpStat* simpstat;
@@ -62,8 +59,8 @@ class Declaration : public Node{
 
 class VarDecl : public Declaration{
 	protected:
-		std::string *type;
-		std::string *id;
+		std::string* type;
+		std::string* id;
 		double val;
 	public:
 		VarDecl(std::string* type_in, std::string* id_in, double val_in);
@@ -75,12 +72,12 @@ class VarDecl : public Declaration{
 
 class FuncDecl: public Declaration{
 	protected:
-		std::string *type;
-		std::string *id;
+		std::string* type;
+		std::string* id;
 		Node* arg_in;		//needs fixing later, but atm assume no arg
         Block* body;
 	public:
-		FuncDecl(std::string *type_in, std::string *id_in, Node* arg_in, Block* body_in);
+		FuncDecl(std::string* type_in, std::string *id_in, Node* arg_in, Block* body_in);
 		~FuncDecl():
 		void print(std::ostream &dst) const override;
 };
@@ -102,9 +99,9 @@ class Expression : public Node{
 
 class ArithExpr : public Expression{
 	protected:
-		std::string *arith_op;
+		std::string* arith_op;
 	public:
-		ArithExpr(Expression* left_in, std::string *bin_op_in, Expression* right_in);
+		ArithExpr(Expression* left_in, std::string* bin_op_in, Expression* right_in);
 		~ArithExpr();
 		std::string getop();
 		void print(std::ostream &dst) const;
@@ -178,7 +175,7 @@ class ReturnStat : public SimpStat{
 
 class AssignStat : public SimpStat{
 	protected:
-		std::string *id;
+		std::string* id;
 		Expression* expr;
 	public:
 		AssignStat(std::string id_in, Expression* expr_in);
@@ -189,16 +186,6 @@ class AssignStat : public SimpStat{
 //------------------------------------------------------------------------------------
 
 class AssertStat : public SimpStat{};
-
-//------------------------------------------------------------------------------------
-
-class CompStat : public Statement{
-	protected:
-	public:
-		CompStat();
-		virtual ~CompStat();
-		void print(std::ostream &dst) const = 0;
-};
 
 //------------------------------------------------------------------------------------
 
