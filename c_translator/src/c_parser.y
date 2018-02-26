@@ -34,9 +34,9 @@
 
 %%
 
-ROOT: PROGRAM                                           { g_root = $1; }
+ROOT: Program                                           { g_root = $1; }
 
-PROGRAM: FunctionDeclaration                            { $$= new Program($1); }
+PROGRAM: FunctionDeclaration                                        { $$= $1; }
 
 FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDeclaration($1, $2, NULL, $5); }
 
@@ -50,7 +50,7 @@ SimpleStatement: ReturnStatement                    {$$ = new ReturnStatement($1
 
 
 Block: T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
-| T_CLBRACKET Statement T_CRBRACKET                    { $$= new Block($2);}
+        | T_CLBRACKET Statement_Seq T_CRBRACKET                    { $$= new Block($2);}
 
 
 ReturnStatement: T_RETURN Expr T_SEMICOLON                  { $$= new Expression($1);}
@@ -58,7 +58,8 @@ ReturnStatement: T_RETURN Expr T_SEMICOLON                  { $$= new Expression
 Expr: T_NUMBER                      { $$= new Number($1);}
 | Bin_Expr                      {$$= $1;}
 
-Bin_Expr: T_NUMBER T_ADD T_NUMBER   {$$ = new BinExpr($1,$2,$3);}
+Bin_Expr: T_NUMBER                  {$$ = new BinExpr
+        |T_NUMBER T_ADD T_NUMBER   {$$ = new BinExpr($1,$2,$3);}
 
 
 TYPE: T_INT                         { $$ = new std::string("int"); }
@@ -68,7 +69,7 @@ TYPE: T_INT                         { $$ = new std::string("int"); }
 	
 ROOT : PROGRAM																			{ g_root = $1; }
 
-PROGRAM : FUNC_DECL																		{ $$ = }
+PROGRAM : DECL                                                                            { $$ = $1 }
 	
 DECL : 	 		      FUNC_DECL															{ $$ = $1; }
 					| VAR_DECL															{ $$ = $1; }
@@ -84,6 +85,12 @@ FUNC_DECL : 		  T_TYPE T_ID T_LBRACKET PARAM T_RBRACKET T_SEMICOLON				{ $$ = }
 PARAM :				  T_TYPE T_ID														{ $$ = }
 					| PARAM T_COMMA T_TYPE T_ID											{ $$ = }
 
+<<<<<<< HEAD
+BLOCK : 			  T_CLBRACKET VAR_DECL T_CRBRACKET									{ $$ = }
+					| T_CLBRACKET STAT T_CRBRACKET										{ $$ = }
+					| T_CLBRACKET BLOCK T_CRBRACKET										{ $$ = }
+
+=======
 BLOCK : 			  T_CLBRACKET MUL_VAR_DECL T_CRBRACKET									{ $$ = }
 					| T_CLBRACKET MUL_STAT T_CRBRACKET										{ $$ = }
 					| T_CLBRACKET MUL_VAR_DECL MUL_STAT T_CRBRACKET							{ $$ = }
@@ -97,6 +104,7 @@ MUL_STAT :			  MUL_STAT
 					| MUL_STAT STAT
 					
 		
+>>>>>>> 51ae665b7be456da01bb83e26f96d8df5509a65f
 EXPR :		          ARITH_EXPR														{ $$ = $1; }
 					| RELA_EXPR															{ $$ = $1; }
 					| INCDEC_EXPR 														{ $$ = $1; }

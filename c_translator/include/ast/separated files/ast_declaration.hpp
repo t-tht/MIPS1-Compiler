@@ -39,8 +39,13 @@ class FuncDecl: public Declaration{
 	protected:
 		std::string *return_t;
 		std::string *id;
+<<<<<<< HEAD:c_translator/include/ast/ast_declaration.hpp
+		Statement* arg_in;
+        Statement* bodyl;
+=======
 		Node* arg_in;
         Block* bodyl;
+>>>>>>> 51ae665b7be456da01bb83e26f96d8df5509a65f:c_translator/include/ast/separated files/ast_declaration.hpp
 	public:
 		FuncDecl(std::string *return_t_in, std::string *id_in, Statement* arg_in, Statement* body_in);
 		~FuncDecl():
