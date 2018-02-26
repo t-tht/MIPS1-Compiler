@@ -12,6 +12,10 @@ void Node::print(std::ostream &dst){}
 
 Block::Block();
 Block::~Block();
+Block::Block(SimpStat* simpstat_in)
+: simpstat(simpstat_in), compstat(NULL)
+{}
+
 
 //------------------------------------------------------------------------------------
 

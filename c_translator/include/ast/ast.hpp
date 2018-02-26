@@ -40,8 +40,9 @@ class Block{
 		SimpStat* simpstat;
 	public:
 		Block();
+        Block(SimpStat* simpstat_in);
 		~Block();
-		void print(std::ostream &dst) const;
+		void print(std::ostream &dst) const override;
 };
 
 //------------------------------------------------------------------------------------
