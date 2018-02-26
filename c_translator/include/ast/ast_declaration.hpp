@@ -1,8 +1,10 @@
-#ifndef AST_DECLARATION_HPP
-#define AST_DECLARATION_HPP
+#ifndef ast_declaration_hpp
+#define ast_declaration_hpp
 
 #include <string>
 #include <iostream>
+#include "ast_node.hpp"
+
 
 //------------------------------------------------------------------------------------
 
@@ -12,7 +14,7 @@ class FuncDecl;
 
 //------------------------------------------------------------------------------------
 
-class Declaration : public node{
+class Declaration : public Node{
 	protected:
 	public:
 		Declaration();

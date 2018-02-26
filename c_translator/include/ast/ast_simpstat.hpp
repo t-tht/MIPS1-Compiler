@@ -1,8 +1,10 @@
- #ifndef "AST_SIMPSTAT_HPP"
-#define "AST_SIMPSTAT_HPP"
+#ifndef ast_simpstat_hpp
+#define ast_simpstat_hpp
 
 #include <string>
 #include <iostream>
+#include "ast_node.hpp"
+
 
 //------------------------------------------------------------------------------------
 

@@ -1,8 +1,9 @@
-#ifndef "AST_EXPRESSION_HPP"
-#define "AST_EXPRESSION_HPP"
+#ifndef ast_expression_hpp
+#define ast_expression_hpp
 
 #include <string>
 #include <iostream>
+#include "ast_node.hpp"
 
 //------------------------------------------------------------------------------------
 

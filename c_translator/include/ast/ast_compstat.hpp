@@ -1,8 +1,10 @@
-#ifndef "COMPSTAT_HPP"
-#define "COMPSTAT_HPP"
+#ifndef ast_compstat_hpp
+#define ast_compstat_hpp
 
 #include <string>
 #include <iostream>
+#include "ast_node.hpp"
+
 
 //------------------------------------------------------------------------------------
 
@@ -46,7 +48,7 @@ class ForStat : public CompStat{
 	public:
 		ForStat();
 		~ForStat();
-		void print(std::ostream &dst) const override
+    void print(std::ostream &dst) const override;
 };
 
 //------------------------------------------------------------------------------------
@@ -56,7 +58,7 @@ class WhileStat : public CompStat{
 	public:
 		WhileStat();
 		~WhileStat();
-		void print(std::ostream &dst) const override
+    void print(std::ostream &dst) const override;
 };
 
 //------------------------------------------------------------------------------------

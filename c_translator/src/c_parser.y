@@ -23,21 +23,22 @@
 
 %token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON
 %token T_NUMBER T_IDENTIFIER T_RETURN T_TYPE
+%token T_INT T_VOID T_ADD
 
-%type <node> PROGRAM FUNCTION EXPRESSION 
-%type <statement> STATEMENT
+%type <node> PROGRAM Expr Block FunctionDeclaration Bin_Expr TYPE
+%type <statement> Statement CompoundStatement SimpleStatement ReturnStatement
 %type <number> T_NUMBER
-%type <string> T_IDENTIFIER T_RETURN T_TYPE
+%type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
 
 %start ROOT
 
 %%
-/*
-ROOT: Program                                           { g_root = $1; }
+
+ROOT: PROGRAM                                           { g_root = $1; }
 
 PROGRAM: FunctionDeclaration                            { $$= new Program($1); }
 
-FunctionDeclaration: TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDeclaration($1, $2, NULL, $5); }
+FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDeclaration($1, $2, NULL, $5); }
 
 Statement: CompoundStatement                        { $$= $1; }
             |SimpleStatement                                {$$ = $1;}
@@ -52,13 +53,18 @@ Block: T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
 | T_CLBRACKET Statement T_CRBRACKET                    { $$= new Block($2);}
 
 
-ReturnStatement: T_RETURN Expr T_SEMICOLON                  { $$= new Expr($1);}
+ReturnStatement: T_RETURN Expr T_SEMICOLON                  { $$= new Expression($1);}
 
 Expr: T_NUMBER                      { $$= new Number($1);}
+| Bin_Expr                      {$$= $1;}
+
+Bin_Expr: T_NUMBER T_ADD T_NUMBER   {$$ = new BinExpr($1,$2,$3);}
+
 
 TYPE: T_INT                         { $$ = new std::string("int"); }
     |T_VOID                               {  $$= new std::string("void");}
-*/
+
+/*
 	
 ROOT : PROGRAM																			{ g_root = $1; }
 
