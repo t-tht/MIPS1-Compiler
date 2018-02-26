@@ -7,8 +7,8 @@
 //------------------------------------------------------------------------------------
 
 class Declaration;
-class VarDec;
-class FuncDec;
+class VarDecl;
+class FuncDecl;
 
 //------------------------------------------------------------------------------------
 
@@ -22,27 +22,27 @@ class Declaration : public node{
 
 //------------------------------------------------------------------------------------
 
-class VarDec : public Declaration{
+class VarDecl : public Declaration{
 	protected:
 		std::string* id;
 		double val;
 	public:
-		VarDec(std::string* id_in, double val_in);
-		~VarDec();
+		VarDecl(std::string* id_in, double val_in);
+		~VarDecl();
 		void print(std::ostream &dst) const override;
 };
 
 //------------------------------------------------------------------------------------
 
-class FuncDec: public Declaration{
+class FuncDecl: public Declaration{
 	protected:
 		std::string *return_t;
 		std::string *id;
 		Statement* arg_in;
 		Statement* bodyl
 	public:
-		FuncDec(std::string *return_t_in, std::string *id_in, Statement* arg_in, Statement* body_in);
-		~FuncDec():
+		FuncDecl(std::string *return_t_in, std::string *id_in, Statement* arg_in, Statement* body_in);
+		~FuncDecl():
 		void print(std::ostream &dst) const override;
 };
 
