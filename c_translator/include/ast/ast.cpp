@@ -96,6 +96,16 @@ void ComprExpr::print(std::ostream &dst){}
 
 //------------------------------------------------------------------------------------
 
+NumExpr::NumExpr(double val_in) : val(val_in) {}
+
+NumExpr::~NumExpr(){}
+
+void NumExpr::print(std::ostream &dst){
+	dst << val;
+}
+
+//------------------------------------------------------------------------------------
+
 Statement::~Statement(){}
 
 void Statement::print(std::ostream &dst){}
@@ -124,7 +134,7 @@ void SimpStat::print()const{}
 
 //------------------------------------------------------------------------------------
 
-ReturnStat::ReturnStat(std::string type_in, Expression* expr_in) : type(type_in), expr(expr_in){}
+ReturnStat::ReturnStat(Expression* expr_in) : expr(expr_in){}
 ReturnStat::~ReturnStat(){
 	delete expr;
 }
@@ -152,11 +162,11 @@ void AssertStat::print(std::ostream &dst)const{}
 
 //------------------------------------------------------------------------------------
 
-CompStat::CompStat(){}
+ComprStat::ComprStat(){}
 
-CompStat::~CompStat(){}
+ComprStat::~ComprStat(){}
 
-void CompStat::print(std::ostream &dst)const{
+void ComprStat::print(std::ostream &dst)const{
 	dst << "--not implemented--" << std::endl;
 }
 

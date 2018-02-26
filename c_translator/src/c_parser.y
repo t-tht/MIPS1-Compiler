@@ -38,7 +38,7 @@ ROOT: Program                                           { g_root = $1; }
 
 PROGRAM: FunctionDeclaration                                        { $$= $1; }
 
-FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDeclaration($1, $2, NULL, $5); }
+FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDecl($1, $2, NULL, $5); }
 
 Statement: CompoundStatement                        { $$= $1; }
             |SimpleStatement                                {$$ = $1;}
@@ -53,7 +53,7 @@ Block: T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
         | T_CLBRACKET Statement T_CRBRACKET                    { $$= new Block($2);}
 
 
-ReturnStatement: T_RETURN Expr T_SEMICOLON                  { $$= new Expression($1);}
+ReturnStatement: T_RETURN Expr T_SEMICOLON                  { $$= new ReturnStat($1,$2); }
 
 Expr: T_NUMBER                      { $$= new Number($1);}
 | Bin_Expr                      {$$= $1;}

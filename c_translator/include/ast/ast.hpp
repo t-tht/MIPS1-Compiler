@@ -118,6 +118,16 @@ class ComprExpr : public Expression{
 		std::string getop();
 		void print(std::ostream &dst) const;
 };
+//------------------------------------------------------------------------------------
+
+class NumExpr : public Expression{
+	protected:
+		double val;
+	public:
+		NumExpr();
+		~NumExpr();
+		void print(std::ostream &dst) const;
+};
 
 //------------------------------------------------------------------------------------
 
@@ -154,10 +164,9 @@ class SimpStat : public Node{
 
 class ReturnStat : public SimpStat{
 	protected:
-		std::string* type;
 		Expression* expr;
 	public:
-		ReturnStat(std::string type_in, Expression* expr_in);
+		ReturnStat(Expression* expr_in);
 		~ReturnStat();
 		void print(std::ostream &dst) const override;
 };
