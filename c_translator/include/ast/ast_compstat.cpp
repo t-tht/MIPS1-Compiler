@@ -35,3 +35,10 @@ WhileStat::~WhileStat(){}
 void WhileStat::print(std::ostream &dst)const{}
 
 //------------------------------------------------------------------------------------
+
+Block::Block(){}
+Block::~Block(){}
+
+void Block::print(std::ostream &dst)const{
+    
+}
