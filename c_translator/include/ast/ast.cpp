@@ -39,7 +39,7 @@ void VarDecl::print(std::ostream &dst)const{
 //------------------------------------------------------------------------------------
 
 FuncDecl::FuncDecl(std::string* type_in, std::string* id_in, Node* arg_in, Block* body_in): type(type_in), id(id_in), arg(arg_in), body(body_in){}
-
+//type for arg_in is NULL so we put NODE
 FuncDecl::~FuncDecl(){
 	delete arg_in;
 	delete body;
