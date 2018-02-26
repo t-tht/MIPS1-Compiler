@@ -10,7 +10,7 @@ class CompStat;
 class IfElStat;
 class ForStat;
 class WhileStat;
-
+class Block;
 //------------------------------------------------------------------------------------
 
 class CompStat : public Node{
@@ -20,7 +20,15 @@ class CompStat : public Node{
 		~CompStat();
 		virtual void print(std::ostream &dst) const = 0;
 };
+//------------------------------------------------------------------------------------
 
+class Block : public CompStat{
+protected:
+public:
+    Block();
+    ~Block();
+    void print(std::ostream &dst) const override;
+};
 //------------------------------------------------------------------------------------
 
 class IfElStat : public CompStat{
