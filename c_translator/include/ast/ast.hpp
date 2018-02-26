@@ -1,8 +1,12 @@
-#ifndef node_hpp
-#define node_hpp
+#ifndef ast_hpp
+#define ast_hpp
 
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <map>
+#include <vector>
+#include <stdlib.h>
 
 class Node;
 
@@ -45,7 +49,7 @@ class Block : public Node{
 		Block();
         Block(SimpStat* simpstat_in);
 		~Block();
-		void print(std::ostream &dst) const override;
+		virtual void print(std::ostream &dst) const override;
 };
 
 //------------------------------------------------------------------------------------

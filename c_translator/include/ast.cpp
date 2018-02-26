@@ -1,4 +1,6 @@
 #include "ast.hpp"
+#include <string>
+#include <iostream>
 
 //------------------------------------------------------------------------------------
 
@@ -6,7 +8,7 @@ Node::Node(){}
 
 Node::~Node(){}
 
-void Node::print(std::ostream &dst){}
+void Node::print(std::ostream &dst) const{}
 
 //------------------------------------------------------------------------------------
 
@@ -35,7 +37,7 @@ void VarDecl::print(std::ostream &dst)const{
 
 //------------------------------------------------------------------------------------
 
-FuncDecl::FuncDecl(std::string* type_in, std::string* id_in, Node* arg_in, Block* body_in): type(type_in), id(id_in), arg(arg_in), body(body_in){}
+FuncDecl::FuncDecl(std::string type_in, std::string id_in, Node* arg_in, Block* body_in): type(type_in), id(id_in), arg(arg_in), body(body_in){}
 
 FuncDecl::~FuncDecl(){
 	delete arg_in;
@@ -162,11 +164,11 @@ void AssertStat::print(std::ostream &dst)const{}
 
 //------------------------------------------------------------------------------------
 
-ComprStat::ComprStat(){}
+CompStat::CompStat(){}
 
-ComprStat::~ComprStat(){}
+CompStat::~CompStat(){}
 
-void ComprStat::print(std::ostream &dst)const{
+void CompStat::print(std::ostream &dst)const{
 	dst << "--not implemented--" << std::endl;
 }
 
@@ -200,5 +202,5 @@ Block::Block(){}
 Block::~Block(){}
 
 void Block::print(std::ostream &dst)const{
-    
+
 }

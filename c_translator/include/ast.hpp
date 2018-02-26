@@ -1,5 +1,7 @@
-#ifndef node_hpp
-#define node_hpp
+#ifndef ast_hpp
+#define ast_hpp
+#include <string>
+#include <iostream>
 
 class Node;
 
@@ -24,8 +26,9 @@ class ReturnStat;
 class AssignStat;
 class AssertStat;
 
+extern const Node *parseAST();
+
 class Node{
-	protected:
 	public:
 		Node();
 		~Node();
@@ -34,15 +37,15 @@ class Node{
 
 //------------------------------------------------------------------------------------
 
-class Block{
+class Block: public Node{
 	protected:
 		CompStat* compstat;
 		SimpStat* simpstat;
 	public:
 		Block();
-        Block(SimpStat* simpstat_in);
+    Block(SimpStat* simpstat_in);
 		~Block();
-		void print(std::ostream &dst) const override;
+		virtual void print(std::ostream &dst) const;
 };
 
 //------------------------------------------------------------------------------------
@@ -65,21 +68,21 @@ class VarDecl : public Declaration{
 	public:
 		VarDecl(std::string* type_in, std::string* id_in, double val_in);
 		~VarDecl();
-		void print(std::ostream &dst) const override;
+		virtual void print(std::ostream &dst) const;
 };
 
 //------------------------------------------------------------------------------------
 
 class FuncDecl: public Declaration{
 	protected:
-		std::string* type;
-		std::string* id;
-		Node* arg_in;		//needs fixing later, but atm assume no arg
-        Block* body;
+		std::string type;
+		std::string id;
+		Node* arg;		//needs fixing later, but atm assume no arg
+    Block* body;
 	public:
-		FuncDecl(std::string* type_in, std::string *id_in, Node* arg_in, Block* body_in);
-		~FuncDecl():
-		void print(std::ostream &dst) const override;
+		FuncDecl(std::string type_in, std::string id_in, Node* arg_in, Block* body_in);
+		~FuncDecl();
+		virtual void print(std::ostream &dst) const;
 };
 
 //------------------------------------------------------------------------------------
@@ -90,8 +93,8 @@ class Expression : public Node{
 		Expression* left;
 		Expression* right;
 	public:
-		Expr();
-		~Expr();
+		Expression();
+		~Expression();
 		virtual void print(std::ostream &dst) const = 0;
 };
 
@@ -186,7 +189,17 @@ class AssignStat : public SimpStat{
 //------------------------------------------------------------------------------------
 
 class AssertStat : public SimpStat{};
+//------------------------------------------------------------------------------------
 
+
+
+class CompStat : public Node{
+	protected:
+	public:
+		CompStat();
+		~CompStat();
+		virtual void print(std::ostream &dst) = 0;
+};
 //------------------------------------------------------------------------------------
 
 class IfElStat : public CompStat{
