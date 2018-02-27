@@ -28,10 +28,11 @@ class AssertStat;
 
 extern const Node *parseAST();
 
+typedef const Node *NodePtr;
+
 class Node{
 	public:
-		Node();
-		~Node();
+    ~Node(){}
 		virtual void print(std::ostream &dst) const =0;
 };
 
@@ -43,102 +44,134 @@ class Block: public Node{
 		SimpStat* simpstat;
 	public:
 		Block();
-    Block(SimpStat* simpstat_in);
+        Block(SimpStat* simpstat_in): simpstat(simpstat_in), compstat(NULL)
+        {}
 		~Block();
 		virtual void print(std::ostream &dst) const;
 };
 
 //------------------------------------------------------------------------------------
+//
+//class Declaration : public Node{
+//	protected:
+//	public:
+//    Declaration(){}
+//    ~Declaration(){}
+//		virtual void print(std::ostream &dst) const = 0;
+//};
 
-class Declaration : public Node{
-	protected:
-	public:
-		Declaration();
-		~Declaration();
-		virtual void print(std::ostream &dst) const = 0;
-};
-
+//Declaration main purpose is to be a base class for VarDecl and FuncDecl but it's a bit redundant
 //------------------------------------------------------------------------------------
 
-class VarDecl : public Declaration{
+class VarDecl : public Node{
 	protected:
 		std::string* type;
 		std::string* id;
 		double val;
 	public:
-		VarDecl(std::string* type_in, std::string* id_in, double val_in);
-		~VarDecl();
-		virtual void print(std::ostream &dst) const;
+		VarDecl(std::string* type_in, std::string* id_in, double val_in) : type(type_in), id(id_in), val(val_in){}
+		~VarDecl(){}
+    virtual void print(std::ostream &dst) const {
+        dst << *id << " = " << val << ";" << std::endl;
+    }
 };
 
 //------------------------------------------------------------------------------------
 
-class FuncDecl: public Declaration{
+class FuncDecl: public Node{
 	protected:
 		std::string type;
 		std::string id;
-		Node* arg;		//needs fixing later, but atm assume no arg
-    Block* body;
+		NodePtr arg;		//needs fixing later, but atm assume no arg
+        NodePtr body;
 	public:
-		FuncDecl(std::string type_in, std::string id_in, Node* arg_in, Block* body_in);
-		~FuncDecl();
-		virtual void print(std::ostream &dst) const;
+		FuncDecl(std::string type_in, std::string id_in, NodePtr arg_in, NodePtr body_in): type(type_in), id(id_in), arg(arg_in), body(body_in){}
+    ~FuncDecl(){
+        delete arg;
+        delete body;
+    }
+    virtual void print(std::ostream &dst) const{
+        dst << "def " << id << "():" << std::endl;
+        body->print(dst);
+    }
 };
 
 //------------------------------------------------------------------------------------
 
 
-class Expression : public Node{
-	protected:
-		Expression* left;
-		Expression* right;
-	public:
-		Expression();
-		~Expression();
-		virtual void print(std::ostream &dst) const = 0;
-};
+//class Expression : public Node{
+//	public:
+//    ~Expression(){
+//    }
+//    virtual void print(std::ostream &dst) const{
+//        dst << "--not implemented--" << std::endl;
+//    }
+//
+//};
 
 //------------------------------------------------------------------------------------
 
-class ArithExpr : public Expression{
+class ArithExpr : public Node{
 	protected:
+    NodePtr left;
+    NodePtr right;
 		std::string* arith_op;
 	public:
-		ArithExpr(Expression* left_in, std::string* bin_op_in, Expression* right_in);
-		~ArithExpr();
-		std::string getop();
-		void print(std::ostream &dst) const;
+		ArithExpr(NodePtr left_in, std::string* arith_op_in, NodePtr right_in) : left(left_in), arith_op(arith_op_in), right(right_in){}
+    ~ArithExpr(){
+        delete left;
+        delete right;
+    }
+//    std::string getop(){
+//        return arith_op;
+//    }
+    virtual void print(std::ostream &dst) const override{
+//        left->print(dst);
+//        dst << getop();
+//        right->print(dst);
+    }
 };
 
 //------------------------------------------------------------------------------------
 
-class ComprExpr : public Expression{
+class ComprExpr : public Node{
 	protected:
+    NodePtr left;
+    NodePtr right;
 		std::string compr_op;
 	public:
-		ComprExpr(Expression* left_in, std::string compr_op_in, Expression* right_in);
-		~ComprExpr();
-		std::string getop();
-		void print(std::ostream &dst) const;
+		ComprExpr(NodePtr left_in, std::string compr_op_in, NodePtr right_in): left(left_in), compr_op(compr_op_in), right(right_in){}
+    ~ComprExpr(){
+        delete left;
+        delete right;
+    }
+    std::string getop(){
+        return compr_op;
+    }
+    virtual void print(std::ostream &dst) const{}
+    
 };
 //------------------------------------------------------------------------------------
 
-class NumExpr : public Expression{
+class NumExpr : public Node{
 	protected:
 		double val;
 	public:
-		NumExpr();
-		~NumExpr();
-		void print(std::ostream &dst) const;
+		NumExpr(double val_in) : val(val_in) {}
+    ~NumExpr(){}
+    void print(std::ostream &dst) const{
+        dst << val;
+    }
 };
 
+//------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------
 
 class Statement : public Node{
 	protected:
 	public:
-		virtual ~Statement();
-		virtual void print(std::ostream &dst) const = 0;
+    virtual ~Statement(){}
+    virtual void print(std::ostream &dst) const = 0;
 };
 
 //------------------------------------------------------------------------------------
@@ -148,86 +181,110 @@ class StatementSeq : public Statement{
 		Statement* list;
 		Statement* stat;
 	public:
-		StatementSeq(Statement* list_in, Statement* stat_in);
-		virtual ~StatementSeq();
-		virtual void print(std::ostream &dst) const = 0;
+    StatementSeq(Statement* list_in, Statement* stat_in) : list(list_in), stat(stat_in){}
+    virtual ~StatementSeq(){
+        delete list;
+        delete stat;
+    }
+
+    virtual void print(std::ostream &dst) const{
+        stat->print(dst);
+        list->print(dst);
+    }
 };
 
+//------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------
 
 class SimpStat : public Node{
 	protected:
 	public:
-		SimpStat();
-		~SimpStat();
-		virtual void print(std::ostream &dst) = 0;
+    SimpStat(){}
+    ~SimpStat(){}
+    virtual void print(std::ostream &dst) const{}
 };
 
 //------------------------------------------------------------------------------------
 
-class ReturnStat : public SimpStat{
+class ReturnStat : public Node{
 	protected:
-		Expression* expr;
+		ArithExpr* expr;
 	public:
-		ReturnStat(Expression* expr_in);
-		~ReturnStat();
-		void print(std::ostream &dst) const override;
+		ReturnStat(ArithExpr* expr_in): expr(expr_in){}
+    ~ReturnStat(){
+        delete expr;
+    }
+    virtual void print(std::ostream &dst) const override{
+        dst << "return ";
+        expr->print(dst);
+    }
+
 };
 
 //------------------------------------------------------------------------------------
 
-class AssignStat : public SimpStat{
+class AssignStat : public Node{
 	protected:
-		std::string* id;
-		Expression* expr;
+		std::string id;
+		ArithExpr* expr;
 	public:
-		AssignStat(std::string id_in, Expression* expr_in);
+    AssignStat(std::string id_in, ArithExpr* expr_in): id(id_in), expr(expr_in){}
 		~AssignStat();
-		void print(std::ostream &dst) const override;
+    void print(std::ostream &dst) const override{
+        dst << id << " = ";
+        expr->print(dst);
+    }
 };
-
+//A= a+5
 //------------------------------------------------------------------------------------
 
-class AssertStat : public SimpStat{};
+//class AssertStat : public SimpStat{
+//
+//
+//
+//
+//Need to do assert statement
 //------------------------------------------------------------------------------------
 
-
-
+//------------------------------------------------------------------------------------
+//
 class CompStat : public Node{
 	protected:
 	public:
 		CompStat();
 		~CompStat();
-		virtual void print(std::ostream &dst) = 0;
+    virtual void print(std::ostream &dst) const override{
+        dst << "--not implemented--" << std::endl;
+    }
 };
 //------------------------------------------------------------------------------------
 
-class IfElStat : public CompStat{
+class IfElStat : public Node{
 	protected:
 	public:
-		IfElStat();
-		~IfElStat();
-		void print(std::ostream &dst) const override;
+    IfElStat(){}
+    ~IfElStat(){}
+    virtual void print(std::ostream &dst) const override{}
 };
 
 //------------------------------------------------------------------------------------
 
-class ForStat : public CompStat{
+class ForStat : public Node{
 	protected:
 	public:
-		ForStat();
-		~ForStat();
-    void print(std::ostream &dst) const override;
+    ForStat(){}
+    ~ForStat(){}
+    virtual void print(std::ostream &dst) const override{}
 };
 
 //------------------------------------------------------------------------------------
 
-class WhileStat : public CompStat{
+class WhileStat : public Node{
 	protected:
 	public:
 		WhileStat();
 		~WhileStat();
-    void print(std::ostream &dst) const override;
+    virtual void print(std::ostream &dst) const override;
 };
 
 //------------------------------------------------------------------------------------

@@ -84,11 +84,10 @@ union YYSTYPE
 #line 17 "src/c_parser.y" /* yacc.c:1909  */
 
   const Node *node;
-  Statement* statement;
   double number;
   std::string *string;
 
-#line 92 "src/c_parser.tab.hpp" /* yacc.c:1909  */
+#line 91 "src/c_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

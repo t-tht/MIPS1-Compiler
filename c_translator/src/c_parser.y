@@ -16,7 +16,6 @@
 // AST node.
 %union{
   const Node *node;
-  Statement* statement;
   double number;
   std::string *string;
 }
@@ -25,8 +24,7 @@
 %token T_NUMBER T_IDENTIFIER T_RETURN T_TYPE
 %token T_INT T_VOID T_ADD
 
-%type <node> Program Expr Block FunctionDeclaration Bin_Expr TYPE
-%type <statement> Statement CompoundStatement SimpleStatement ReturnStatement
+%type <node> Program Expr FunctionDeclaration Bin_Expr TYPE Statement CompoundStatement SimpleStatement ReturnStatement Block
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
 
@@ -46,19 +44,19 @@ Statement: CompoundStatement                        { $$= $1; }
 
 CompoundStatement: Block                            { $$= $1;}
 
-SimpleStatement: ReturnStatement                    {$$ = new ReturnStatement($1);}
+SimpleStatement: ReturnStatement                    {$$ = $1;}
 
 
 Block: T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
-        | T_CLBRACKET Statement T_CRBRACKET                    { $$= new Block($2);}
+        | T_CLBRACKET Statement T_CRBRACKET                    { $$= $2;}
 
 
 ReturnStatement: T_RETURN Expr T_SEMICOLON                  { $$= new ReturnStat($1,$2); }
 
 Expr: Bin_Expr                      {$$= $1;}
 
-Bin_Expr: T_NUMBER                  {$$ = new BinExpr($1); }
-        |T_NUMBER T_ADD T_NUMBER   {$$ = new BinExpr($1,$2,$3);}
+Bin_Expr: T_NUMBER                  {$$ = new NumExpr($1); }
+        |T_NUMBER T_ADD T_NUMBER   {$$ = new ArithExpr($1,$2,$3);}
 
 
 TYPE: T_INT                         { $$ = new std::string("int"); }
