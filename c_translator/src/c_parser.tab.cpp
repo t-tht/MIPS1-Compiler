@@ -1229,37 +1229,37 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 36 "src/c_parser.y" /* yacc.c:1646  */
+#line 36 "src/c_parser.y" /* yacc.c:1661  */
     { g_root = (yyvsp[0].node); }
-#line 1235 "src/c_parser.tab.cpp" /* yacc.c:1646  */
+#line 1235 "src/c_parser.tab.cpp" /* yacc.c:1661  */
     break;
 
   case 3:
-#line 38 "src/c_parser.y" /* yacc.c:1646  */
+#line 38 "src/c_parser.y" /* yacc.c:1661  */
     { (yyval.node)= (yyvsp[0].node); }
-#line 1241 "src/c_parser.tab.cpp" /* yacc.c:1646  */
+#line 1241 "src/c_parser.tab.cpp" /* yacc.c:1661  */
     break;
 
   case 4:
-#line 40 "src/c_parser.y" /* yacc.c:1646  */
+#line 40 "src/c_parser.y" /* yacc.c:1661  */
     { (yyval.node)= new FuncDecl((yyvsp[-4].string), (yyvsp[-3].string), NULL, (yyvsp[0].node)); }
-#line 1247 "src/c_parser.tab.cpp" /* yacc.c:1646  */
+#line 1247 "src/c_parser.tab.cpp" /* yacc.c:1661  */
     break;
 
   case 5:
-#line 51 "src/c_parser.y" /* yacc.c:1646  */
+#line 51 "src/c_parser.y" /* yacc.c:1661  */
     { (yyval.node)= (yyvsp[-1].node);}
-#line 1253 "src/c_parser.tab.cpp" /* yacc.c:1646  */
+#line 1253 "src/c_parser.tab.cpp" /* yacc.c:1661  */
     break;
 
   case 6:
-#line 56 "src/c_parser.y" /* yacc.c:1646  */
+#line 56 "src/c_parser.y" /* yacc.c:1661  */
     { (yyval.node)= new ReturnStat((yyvsp[-1].number)); }
-#line 1259 "src/c_parser.tab.cpp" /* yacc.c:1646  */
+#line 1259 "src/c_parser.tab.cpp" /* yacc.c:1661  */
     break;
 
 
-#line 1263 "src/c_parser.tab.cpp" /* yacc.c:1646  */
+#line 1263 "src/c_parser.tab.cpp" /* yacc.c:1661  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
