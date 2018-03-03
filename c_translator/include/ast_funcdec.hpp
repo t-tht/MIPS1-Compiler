@@ -10,7 +10,7 @@ class FuncDecl: public Node{
 		NodePtr arg;		//needs fixing later, but atm assume no arg
         NodePtr block;
 	public:
-		FuncDecl(std::string _type, std::string _id, NodePtr _arg, NodePtr _block): type(_type), id(_id), arg(_arg), body(_body){}
+		FuncDecl(std::string* _type, std::string* _id, NodePtr _arg, NodePtr _block): type(_type), id(_id), arg(_arg), body(_body){}
 		~FuncDecl(){
 			delete arg;
 			delete block;

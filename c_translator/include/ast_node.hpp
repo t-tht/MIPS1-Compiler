@@ -10,7 +10,7 @@ typedef const Node *NodePtr;
 
 class Node{
 	public:
-    ~Node(){}
+		virtual ~Node(){};
 		virtual void translate(std::ostream &dst) const =0;
 		virtual void print(std::ostream &dst) const =0;
 };
