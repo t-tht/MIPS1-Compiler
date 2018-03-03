@@ -36,8 +36,9 @@
 ROOT: Program                                           { g_root = $1; }
 
 Program: FunctionDeclaration                                        { $$= $1; }
-
+        
 FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDecl($1, $2, NULL, $5); }
+
 
 //Statement: CompoundStatement                        { $$= $1; }
 //            |SimpleStatement                                {$$ = $1;}
