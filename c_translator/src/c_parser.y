@@ -25,7 +25,7 @@
 %token T_INT T_VOID T_ADD
 
 //%type <node> Program Expr FunctionDeclaration Bin_Expr TYPE Statement CompoundStatement SimpleStatement ReturnStatement Block
-%type <node> Program ReturnStatement FunctionDeclaration ARGS Block
+%type <node> Program ReturnStatement FunctionDeclaration Block
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
 
@@ -37,7 +37,7 @@ ROOT: Program                                           { g_root = $1; }
 
 Program: FunctionDeclaration                                        { $$= $1; }
 
-FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET ARGS T_RBRACKET Block { $$= new FuncDec($1, $2, NULL, $5); }
+FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDecl($1, $2, NULL, $5); }
 
 //Statement: CompoundStatement                        { $$= $1; }
 //            |SimpleStatement                                {$$ = $1;}

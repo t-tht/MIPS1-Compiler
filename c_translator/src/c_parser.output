@@ -1,18 +1,8 @@
-Nonterminals useless in grammar
-
-   TYPE
-
-
 Terminals unused in grammar
 
    T_INT
    T_VOID
-
-
-Rules useless in grammar
-
-   14 TYPE: T_INT
-   15     | T_VOID
+   T_ADD
 
 
 Grammar
@@ -25,22 +15,9 @@ Grammar
 
     3 FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block
 
-    4 Statement: CompoundStatement
-    5          | SimpleStatement
+    4 Block: T_CLBRACKET ReturnStatement T_CRBRACKET
 
-    6 CompoundStatement: Block
-
-    7 SimpleStatement: ReturnStatement
-
-    8 Block: T_CLBRACKET T_CRBRACKET
-    9      | T_CLBRACKET Statement T_CRBRACKET
-
-   10 ReturnStatement: T_RETURN Expr T_SEMICOLON
-
-   11 Expr: Bin_Expr
-
-   12 Bin_Expr: T_NUMBER
-   13         | T_NUMBER T_ADD T_NUMBER
+    5 ReturnStatement: T_RETURN T_NUMBER T_SEMICOLON
 
 
 Terminals, with rules where they appear
@@ -49,16 +26,16 @@ $end (0) 0
 error (256)
 T_LBRACKET (258) 3
 T_RBRACKET (259) 3
-T_CLBRACKET (260) 8 9
-T_CRBRACKET (261) 8 9
-T_SEMICOLON (262) 10
-T_NUMBER (263) 12 13
+T_CLBRACKET (260) 4
+T_CRBRACKET (261) 4
+T_SEMICOLON (262) 5
+T_NUMBER (263) 5
 T_IDENTIFIER (264) 3
-T_RETURN (265) 10
+T_RETURN (265) 5
 T_TYPE (266) 3
 T_INT (267)
 T_VOID (268)
-T_ADD (269) 13
+T_ADD (269)
 
 
 Nonterminals, with rules where they appear
@@ -71,20 +48,10 @@ Program (17)
     on left: 2, on right: 1
 FunctionDeclaration (18)
     on left: 3, on right: 2
-Statement (19)
-    on left: 4 5, on right: 9
-CompoundStatement (20)
-    on left: 6, on right: 4
-SimpleStatement (21)
-    on left: 7, on right: 5
-Block (22)
-    on left: 8 9, on right: 3 6
-ReturnStatement (23)
-    on left: 10, on right: 7
-Expr (24)
-    on left: 11, on right: 10
-Bin_Expr (25)
-    on left: 12 13, on right: 11
+Block (19)
+    on left: 4, on right: 3
+ReturnStatement (20)
+    on left: 5, on right: 4
 
 
 State 0
@@ -158,18 +125,11 @@ State 8
 
 State 9
 
-    8 Block: T_CLBRACKET . T_CRBRACKET
-    9      | T_CLBRACKET . Statement T_CRBRACKET
+    4 Block: T_CLBRACKET . ReturnStatement T_CRBRACKET
 
-    T_CLBRACKET  shift, and go to state 9
-    T_CRBRACKET  shift, and go to state 11
-    T_RETURN     shift, and go to state 12
+    T_RETURN  shift, and go to state 11
 
-    Statement          go to state 13
-    CompoundStatement  go to state 14
-    SimpleStatement    go to state 15
-    Block              go to state 16
-    ReturnStatement    go to state 17
+    ReturnStatement  go to state 12
 
 
 State 10
@@ -181,103 +141,34 @@ State 10
 
 State 11
 
-    8 Block: T_CLBRACKET T_CRBRACKET .
+    5 ReturnStatement: T_RETURN . T_NUMBER T_SEMICOLON
 
-    $default  reduce using rule 8 (Block)
+    T_NUMBER  shift, and go to state 13
 
 
 State 12
 
-   10 ReturnStatement: T_RETURN . Expr T_SEMICOLON
+    4 Block: T_CLBRACKET ReturnStatement . T_CRBRACKET
 
-    T_NUMBER  shift, and go to state 18
-
-    Expr      go to state 19
-    Bin_Expr  go to state 20
+    T_CRBRACKET  shift, and go to state 14
 
 
 State 13
 
-    9 Block: T_CLBRACKET Statement . T_CRBRACKET
+    5 ReturnStatement: T_RETURN T_NUMBER . T_SEMICOLON
 
-    T_CRBRACKET  shift, and go to state 21
+    T_SEMICOLON  shift, and go to state 15
 
 
 State 14
 
-    4 Statement: CompoundStatement .
+    4 Block: T_CLBRACKET ReturnStatement T_CRBRACKET .
 
-    $default  reduce using rule 4 (Statement)
+    $default  reduce using rule 4 (Block)
 
 
 State 15
 
-    5 Statement: SimpleStatement .
+    5 ReturnStatement: T_RETURN T_NUMBER T_SEMICOLON .
 
-    $default  reduce using rule 5 (Statement)
-
-
-State 16
-
-    6 CompoundStatement: Block .
-
-    $default  reduce using rule 6 (CompoundStatement)
-
-
-State 17
-
-    7 SimpleStatement: ReturnStatement .
-
-    $default  reduce using rule 7 (SimpleStatement)
-
-
-State 18
-
-   12 Bin_Expr: T_NUMBER .
-   13         | T_NUMBER . T_ADD T_NUMBER
-
-    T_ADD  shift, and go to state 22
-
-    $default  reduce using rule 12 (Bin_Expr)
-
-
-State 19
-
-   10 ReturnStatement: T_RETURN Expr . T_SEMICOLON
-
-    T_SEMICOLON  shift, and go to state 23
-
-
-State 20
-
-   11 Expr: Bin_Expr .
-
-    $default  reduce using rule 11 (Expr)
-
-
-State 21
-
-    9 Block: T_CLBRACKET Statement T_CRBRACKET .
-
-    $default  reduce using rule 9 (Block)
-
-
-State 22
-
-   13 Bin_Expr: T_NUMBER T_ADD . T_NUMBER
-
-    T_NUMBER  shift, and go to state 24
-
-
-State 23
-
-   10 ReturnStatement: T_RETURN Expr T_SEMICOLON .
-
-    $default  reduce using rule 10 (ReturnStatement)
-
-
-State 24
-
-   13 Bin_Expr: T_NUMBER T_ADD T_NUMBER .
-
-    $default  reduce using rule 13 (Bin_Expr)
+    $default  reduce using rule 5 (ReturnStatement)
