@@ -3,20 +3,21 @@
 
 #include<string>
 #include<iostream>
+#include<ast.hpp>
 
 class ReturnStat;
 
 class ReturnStat : public Node{
 	protected:
-		int* num;
+		double num;
 	public:
-		ReturnStat(int* _num) : num(_num){};
+		ReturnStat(double _num) : num(_num){};
 		~ReturnStat(){};
-		virtual void translate(std::ostream &dst)const override{
-			dst << "return " << *num << std::endl;
+		void translate(std::ostream &dst)const{
+			dst << "return " << num << std::endl;
 		};
-		virtual void print(std::ostream &dst)const override{
-			dst << "return " << *num << std::endl;
+		void print(std::ostream &dst)const{
+			dst << "return " << num << std::endl;
 		};
 };
 

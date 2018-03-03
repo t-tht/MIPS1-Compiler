@@ -53,7 +53,7 @@ Block: T_CLBRACKET ReturnStatement T_CRBRACKET                    { $$= $2;}
 
 
 
-ReturnStatement: T_RETURN T_NUMBER T_SEMICOLON                  { $$= new ReturnStat($1,$2); }
+ReturnStatement: T_RETURN T_NUMBER T_SEMICOLON                  { $$= new ReturnStat($2); }
 
 //Expr: Bin_Expr                      {$$= $1;}
 
