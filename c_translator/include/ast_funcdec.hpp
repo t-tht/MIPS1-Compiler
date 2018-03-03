@@ -25,7 +25,7 @@ class FuncDecl: public Node{
 			block->translate(dst);
 		}
 		void print(std::ostream &dst) const {
-			dst << "print not implemented yet" <<std::endl;
+			dst << "print not implemented yet funcdecl" <<std::endl;
 			arg->print(dst);
 			block->print(dst);
 		}
