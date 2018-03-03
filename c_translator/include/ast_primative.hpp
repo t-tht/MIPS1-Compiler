@@ -25,7 +25,7 @@ class Variable : public Node{
 	private:
 		std::string* id;
 	public:
-		Variable(double _id) : id(_id){};
+		Variable(string* _id) : id(_id){};
 		~Variable(){};
 		virtual void translate(std::ostream &dst)const override{
 			dst << *id;

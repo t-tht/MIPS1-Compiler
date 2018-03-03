@@ -11,9 +11,6 @@ class BinExpr : public Node{
 	public:
 		BinExpr(NodePtr _left, NodePtr _right, std::string* _op) : left(_left), right(_right), op(_op){};
 		~BinExpr(){};
-		std::string* getop const(){
-			return op;
-		}
 		virtual void translate(std::ostream &dst)const override{
 			left->translate(dst);
 			dst << *op;
