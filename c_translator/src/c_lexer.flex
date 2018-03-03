@@ -15,7 +15,10 @@ extern "C" int fileno(FILE *stream);
 [}]										{return T_CRBRACKET;}
 [;]										{return T_SEMICOLON;}
 
-[+]                                     {return T_ADD;}
+[*]                                     { return T_TIMES; }
+[+]                                     { return T_PLUS; }
+[-]                                     { return T_MINUS; }
+[/]                                     { return T_DIVIDE; }
 
 return									{return T_RETURN;}
 int										{return T_TYPE;}

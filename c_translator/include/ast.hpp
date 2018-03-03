@@ -4,6 +4,9 @@
 #include "ast_node.hpp"
 #include "ast_funcdec.hpp"
 #include "ast_returnstat.hpp"
+#include "ast_primative.hpp"
+#include "ast_binexpr.hpp"
+
 
 
 extern const Node *parseAST();

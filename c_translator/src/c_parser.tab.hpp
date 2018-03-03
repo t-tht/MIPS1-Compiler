@@ -61,18 +61,22 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    T_LBRACKET = 258,
-    T_RBRACKET = 259,
-    T_CLBRACKET = 260,
-    T_CRBRACKET = 261,
-    T_SEMICOLON = 262,
-    T_NUMBER = 263,
-    T_IDENTIFIER = 264,
-    T_RETURN = 265,
-    T_TYPE = 266,
-    T_INT = 267,
-    T_VOID = 268,
-    T_ADD = 269
+    T_TIMES = 258,
+    T_DIVIDE = 259,
+    T_PLUS = 260,
+    T_MINUS = 261,
+    T_LBRACKET = 262,
+    T_RBRACKET = 263,
+    T_CLBRACKET = 264,
+    T_CRBRACKET = 265,
+    T_SEMICOLON = 266,
+    T_NUMBER = 267,
+    T_IDENTIFIER = 268,
+    T_RETURN = 269,
+    T_TYPE = 270,
+    T_INT = 271,
+    T_VOID = 272,
+    T_ADD = 273
   };
 #endif
 
@@ -87,7 +91,7 @@ union YYSTYPE
   double number;
   std::string *string;
 
-#line 91 "src/c_parser.tab.hpp" /* yacc.c:1909  */
+#line 95 "src/c_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
