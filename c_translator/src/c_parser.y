@@ -65,7 +65,7 @@ Term : Factor                     { $$ = $1; }
 
 
 Factor: T_NUMBER           { $$ = new Number( $1 ); }
-
+        |T_IDENTIFIER        { $$ = new Variable( $1 ); }
 //Expr: Bin_Expr                      {$$= $1;}
 
 //Bin_Expr: T_NUMBER                  {$$ = new NumExpr($1); }
