@@ -25,7 +25,7 @@
 %token T_INT T_VOID T_ADD
 
 //%type <node> Program Expr FunctionDeclaration Bin_Expr TYPE Statement CompoundStatement SimpleStatement ReturnStatement Block
-%type <node> Program ReturnStatement FunctionDeclaration Block
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
 
@@ -53,7 +53,18 @@ Block: T_CLBRACKET ReturnStatement T_CRBRACKET                    { $$= $2;}
 
 
 
-ReturnStatement: T_RETURN T_NUMBER T_SEMICOLON                  { $$= new ReturnStat($2); }
+ReturnStatement: T_RETURN Expression T_SEMICOLON                  { $$= new ReturnStat($2); }
+
+Expression : Term                      { $$ = $1; }
+            | Expression T_PLUS Term         { $$ = new BinExpr ($1, $2, $3); }
+            | Expression T_MINUS Term        {$$ = new BinExpr ($1,$2, $3);}
+
+Term : Factor                     { $$ = $1; }
+        | Term T_TIMES Factor        { $$ = new BinExpr($1,$2, $3); }
+        | Term T_DIVIDE Factor       { $$ = new BinExpr($1,$2,$3); }
+
+
+Factor: T_NUMBER           { $$ = new Number( $1 ); }
 
 //Expr: Bin_Expr                      {$$= $1;}
 
