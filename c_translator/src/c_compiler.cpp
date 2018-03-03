@@ -5,7 +5,7 @@ int main()
 {
     const Node *ast=parseAST();
 
-    ast->translate(std::cout);
+    ast->print(std::cout);
     std::cout<<std::endl;
 
     return 0;

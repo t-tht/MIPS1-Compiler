@@ -20,17 +20,13 @@ class FuncDecl: public Node{
 			delete block;
 		}
 		void translate(std::ostream &dst) const{
-			dst << "def " << *id << "():" << std::endl;
-			if(arg != NULL){
-				arg ->translate(dst);
-			}
+			dst << "def " << id << "():" << std::endl;
+			arg->translate(dst);
 			block->translate(dst);
 		}
 		void print(std::ostream &dst) const {
 			dst << "print not implemented yet" <<std::endl;
-			if(arg != NULL){
-				arg ->print(dst);
-			}
+			arg->print(dst);
 			block->print(dst);
 		}
 };
