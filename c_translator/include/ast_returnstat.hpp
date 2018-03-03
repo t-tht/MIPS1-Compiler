@@ -9,15 +9,17 @@ class ReturnStat;
 
 class ReturnStat : public Node{
 	protected:
-		double num;
+		NodePtr Expr;
 	public:
-		ReturnStat(double _num) : num(_num){};
+		ReturnStat(NodePtr _Expr) : Expr(_Expr){};
 		~ReturnStat(){};
 		void translate(std::ostream &dst)const{
-			dst << "return " << num << std::endl;
+            dst << "return ";
+            Expr->translate(dst);
 		};
 		void print(std::ostream &dst)const{
-			dst << "return " << num << std::endl;
+            dst << "return ";
+            Expr->print(dst);
 		};
 };
 
