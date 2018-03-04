@@ -24,10 +24,7 @@
 %token T_NUMBER T_IDENTIFIER T_RETURN T_TYPE
 %token T_INT T_VOID T_ADD
 
-//%type <node> Program Expr FunctionDeclaration Bin_Expr TYPE Statement CompoundStatement SimpleStatement ReturnStatement Block
-
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur VariableDeclaration
-
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur ParamVar VariableDeclaration
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
 
@@ -41,8 +38,8 @@ Program: VariableDeclaration                                    { $$ = new Progr
         |FunctionDeclaration                                     { $$= new Program($1, NULL); }
         | Program FunctionDeclaration							{ $$= new Program($1, $2);}
         
-FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDecl($1, $2, NULL, $5); }
-					| T_TYPE T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET Block { $$= new FuncDecl($1, $2, $4, $6); }
+FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDec($1, $2, NULL, $5); }
+					| T_TYPE T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block { $$= new FuncDec($1, $2, $4, $6); }
 
 VariableDeclaration: T_TYPE T_IDENTIFIER T_SEMICOLON            {$$= new VarDec($1, $2, NULL);}
              | T_TYPE T_IDENTIFIER T_EQUALS Expression T_SEMICOLON   {$$ = new VarDec($1, $2, $4);}
@@ -75,14 +72,15 @@ Term : Factor                     { $$ = $1; }
 Factor: T_NUMBER           { $$ = new Number( $1 ); }
         |T_IDENTIFIER        { $$ = new Variable($1); }
         | T_IDENTIFIER T_LBRACKET T_RBRACKET {  $$ = new FuncCallExpr($1, NULL);}
-		| T_IDENTIFIER T_LBRACKET ParamRec T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
+		| T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
 		
 ParamRecur : Param					{ $$ = new Param($1, NULL); }
-		| ParamRecur T_COMMA Param			{ $$ = new Param($1, $3); }
+		//| ParamRecur T_COMMA Param			{ $$ = new Param($1, $3); }
 		
-Param :   T_NUMBER				{ $$ = new Number($1); }
-			| T_IDENTIFIER				{ $$ = new Variable($1);}
-			| T_TYPE T_IDENTIFIER	{ $$ = new ParamVar($1, $2);}
+Param :   //T_NUMBER				{ $$ = new Number($1); }
+		//	| T_IDENTIFIER				{ $$ = new Variable($1);}
+		T_TYPE T_IDENTIFIER { $$ = new ParamVar($1, $2);}
+			
 			
 
 
