@@ -3,18 +3,22 @@
 
 class ParamDec;
 
-class ParamDec : public Program{
+class ParamDec : public Node{
 	protected:
 		NodePtr left;
-		double num;
+		NodePtr right;
 	public:
-		ParamDec(const NodePtr left, double _num) : left(_left) num(_num){};
+		ParamDec(const NodePtr _left, NodePtr _right) : left(_left), right(_right){};
 		~ParamDec(){};
 		void translate(std::ostream &dst)const override{
-			if(left != NULL){
-				left->print(dst);
+			if(left != NULL && right != NULL){
+				left->translate(dst);
+				dst << ",";
+				right->translate(dst);
+			}else if(left != NULL && right == NULL){
+				left->translate(dst);
 			}
-			dst << ", " << num
+			
 		};
 		void print(std::ostream &dst)const override{};
 };

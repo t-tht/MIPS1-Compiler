@@ -17,10 +17,12 @@ class FuncCallExpr: public Node{
 			delete param;
 		}
 		void translate(std::ostream &dst) const{
-			dst << *id << "()" << std::endl;
+			dst << *id << "(";
 			if(param != NULL){
-				param ->translate(dst);
-			}
+				param->translate(dst);
+			}		
+			dst << ")";
+
 		}
 		void print(std::ostream &dst) const {
 			dst << "print not implemented yet" <<std::endl;

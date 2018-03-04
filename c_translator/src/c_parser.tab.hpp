@@ -70,13 +70,14 @@ extern int yydebug;
     T_CLBRACKET = 264,
     T_CRBRACKET = 265,
     T_SEMICOLON = 266,
-    T_NUMBER = 267,
-    T_IDENTIFIER = 268,
-    T_RETURN = 269,
-    T_TYPE = 270,
-    T_INT = 271,
-    T_VOID = 272,
-    T_ADD = 273
+    T_COMMA = 267,
+    T_NUMBER = 268,
+    T_IDENTIFIER = 269,
+    T_RETURN = 270,
+    T_TYPE = 271,
+    T_INT = 272,
+    T_VOID = 273,
+    T_ADD = 274
   };
 #endif
 
@@ -91,7 +92,7 @@ union YYSTYPE
   double number;
   std::string *string;
 
-#line 95 "src/c_parser.tab.hpp" /* yacc.c:1909  */
+#line 96 "src/c_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

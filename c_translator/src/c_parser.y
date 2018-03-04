@@ -20,12 +20,12 @@
   std::string *string;
 }
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS
-%token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON
+%token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA
 %token T_NUMBER T_IDENTIFIER T_RETURN T_TYPE
 %token T_INT T_VOID T_ADD
 
 //%type <node> Program Expr FunctionDeclaration Bin_Expr TYPE Statement CompoundStatement SimpleStatement ReturnStatement Block
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamDec
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
 
@@ -69,6 +69,12 @@ Term : Factor                     { $$ = $1; }
 Factor: T_NUMBER           { $$ = new Number( $1 ); }
         |T_IDENTIFIER        { $$ = new Variable( $1 ); }
         | T_IDENTIFIER T_LBRACKET T_RBRACKET {  $$ = new FuncCallExpr($1, NULL);}
+		| T_IDENTIFIER T_LBRACKET Param T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
+		
+Param : ParamDec					{ $$ = new ParamDec($1, NULL); }
+		| Param T_COMMA ParamDec			{ $$ = new ParamDec($1, $3); }
+		
+ParamDec :   T_NUMBER				{ $$ = new Number($1); }
 
 //Expr: Bin_Expr                      {$$= $1;}
 

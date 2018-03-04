@@ -8,6 +8,7 @@
 #include "ast_binexpr.hpp"
 #include "ast_program.hpp"
 #include "ast_funccallexpr.hpp"
+#include "ast_param_dec.hpp"
 
 extern const Node *parseAST();
 

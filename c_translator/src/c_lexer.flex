@@ -14,6 +14,7 @@ extern "C" int fileno(FILE *stream);
 [{]										{return T_CLBRACKET;}
 [}]										{return T_CRBRACKET;}
 [;]										{return T_SEMICOLON;}
+[,]										{return T_COMMA;}
 
 [*]                                     { return T_TIMES; }
 [+]                                     { return T_PLUS; }
