@@ -13,7 +13,8 @@ class Program : public Node{
 		void translate(std::ostream &dst) const override{
 			if(left != NULL){
 				left->translate(dst);
-			}else if(right != NULL){
+			}
+			if(right != NULL){
 				right->translate(dst);
 			}
 		};
