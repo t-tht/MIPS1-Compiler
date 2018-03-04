@@ -32,14 +32,14 @@
 
 %%
 
-ROOT: VariableDeclaration                                          { g_root = $1; }
+ROOT: Program                                          { g_root = $1; }
 
 Program: FunctionDeclaration                                     { $$= new Program($1, NULL); }
         | Program FunctionDeclaration							{ $$= new Program($1, $2);}
         |VariableDeclaration                                    { $$ = new Program($1, NULL);}
 
-FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDecl($1, $2, NULL, $5); }
-					| T_TYPE T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET Block { $$= new FuncDecl($1, $2, $4, $6); }
+FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDec($1, $2, NULL, $5); }
+					| T_TYPE T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET Block { $$= new FuncDec($1, $2, $4, $6); }
 
 
 VariableDeclaration: T_TYPE T_IDENTIFIER T_SEMICOLON            {$$= new VarDec($1, $2, NULL);}
