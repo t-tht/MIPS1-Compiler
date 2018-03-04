@@ -7,6 +7,8 @@ class Param : public Node{
 	protected:
 		NodePtr left;
 		NodePtr right;
+		const NodePtr left;
+		const NodePtr right;
 	public:
 		Param(const NodePtr _left, NodePtr _right) : left(_left), right(_right){};
 		~Param(){

@@ -28,6 +28,7 @@
 
 %type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur VariableDeclaration
 
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur ParamVar VariableDeclaration
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
 
@@ -78,11 +79,7 @@ Factor: T_NUMBER           { $$ = new Number( $1 ); }
 		| T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
 		
 ParamRecur : Param					{ $$ = new Param($1, NULL); }
-		| ParamRecur T_COMMA Param			{ $$ = new Param($1, $3); }
 		
-Param :   T_NUMBER				{ $$ = new Number($1); }
-			| T_IDENTIFIER				{ $$ = new Variable($1);}
-			| T_TYPE T_IDENTIFIER	{ $$ = new ParamVar($1, $2);}
 			
 
 
