@@ -8,20 +8,19 @@
 class VarDec;
 
 class VarDec: public Node{
-	private:
+	protected:
 		std::string* type;
 		std::string* id;
         NodePtr Expr;
 	public:
 		VarDec(std::string* _type, std::string* _id, NodePtr _Expr): type(_type), id(_id), Expr(_Expr){}
-		~VarDec(){
-            delete Expr;
+        ~VarDec(){
 		}
 		void translate(std::ostream &dst) const{
-            dst << *type << " "<< *id << std::endl;
-//			if(Expr != NULL){
-//				Expr ->translate(dst);
-//			}
+            dst << *type << " "<< *id;
+			if(Expr != NULL){
+				Expr ->translate(dst);
+			}
             
 		}
 		void print(std::ostream &dst) const {
