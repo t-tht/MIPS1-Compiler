@@ -28,6 +28,7 @@ Grammar
    11     | Term T_DIVIDE Factor
 
    12 Factor: T_NUMBER
+   13       | T_IDENTIFIER
 
 
 Terminals, with rules where they appear
@@ -44,7 +45,7 @@ T_CLBRACKET (264) 4
 T_CRBRACKET (265) 4
 T_SEMICOLON (266) 5
 T_NUMBER (267) 12
-T_IDENTIFIER (268) 3
+T_IDENTIFIER (268) 3 13
 T_RETURN (269) 5
 T_TYPE (270) 3
 T_INT (271)
@@ -71,7 +72,7 @@ Expression (25)
 Term (26)
     on left: 9 10 11, on right: 6 7 8 10 11
 Factor (27)
-    on left: 12, on right: 9 10 11
+    on left: 12 13, on right: 9 10 11
 
 
 State 0
@@ -163,18 +164,19 @@ State 11
 
     5 ReturnStatement: T_RETURN . Expression T_SEMICOLON
 
-    T_NUMBER  shift, and go to state 13
+    T_NUMBER      shift, and go to state 13
+    T_IDENTIFIER  shift, and go to state 14
 
-    Expression  go to state 14
-    Term        go to state 15
-    Factor      go to state 16
+    Expression  go to state 15
+    Term        go to state 16
+    Factor      go to state 17
 
 
 State 12
 
     4 Block: T_CLBRACKET ReturnStatement . T_CRBRACKET
 
-    T_CRBRACKET  shift, and go to state 17
+    T_CRBRACKET  shift, and go to state 18
 
 
 State 13
@@ -186,118 +188,129 @@ State 13
 
 State 14
 
+   13 Factor: T_IDENTIFIER .
+
+    $default  reduce using rule 13 (Factor)
+
+
+State 15
+
     5 ReturnStatement: T_RETURN Expression . T_SEMICOLON
     7 Expression: Expression . T_PLUS Term
     8           | Expression . T_MINUS Term
 
-    T_PLUS       shift, and go to state 18
-    T_MINUS      shift, and go to state 19
-    T_SEMICOLON  shift, and go to state 20
+    T_PLUS       shift, and go to state 19
+    T_MINUS      shift, and go to state 20
+    T_SEMICOLON  shift, and go to state 21
 
 
-State 15
+State 16
 
     6 Expression: Term .
    10 Term: Term . T_TIMES Factor
    11     | Term . T_DIVIDE Factor
 
-    T_TIMES   shift, and go to state 21
-    T_DIVIDE  shift, and go to state 22
+    T_TIMES   shift, and go to state 22
+    T_DIVIDE  shift, and go to state 23
 
     $default  reduce using rule 6 (Expression)
 
 
-State 16
+State 17
 
     9 Term: Factor .
 
     $default  reduce using rule 9 (Term)
 
 
-State 17
+State 18
 
     4 Block: T_CLBRACKET ReturnStatement T_CRBRACKET .
 
     $default  reduce using rule 4 (Block)
 
 
-State 18
+State 19
 
     7 Expression: Expression T_PLUS . Term
 
-    T_NUMBER  shift, and go to state 13
-
-    Term    go to state 23
-    Factor  go to state 16
-
-
-State 19
-
-    8 Expression: Expression T_MINUS . Term
-
-    T_NUMBER  shift, and go to state 13
+    T_NUMBER      shift, and go to state 13
+    T_IDENTIFIER  shift, and go to state 14
 
     Term    go to state 24
-    Factor  go to state 16
+    Factor  go to state 17
 
 
 State 20
+
+    8 Expression: Expression T_MINUS . Term
+
+    T_NUMBER      shift, and go to state 13
+    T_IDENTIFIER  shift, and go to state 14
+
+    Term    go to state 25
+    Factor  go to state 17
+
+
+State 21
 
     5 ReturnStatement: T_RETURN Expression T_SEMICOLON .
 
     $default  reduce using rule 5 (ReturnStatement)
 
 
-State 21
+State 22
 
    10 Term: Term T_TIMES . Factor
 
-    T_NUMBER  shift, and go to state 13
-
-    Factor  go to state 25
-
-
-State 22
-
-   11 Term: Term T_DIVIDE . Factor
-
-    T_NUMBER  shift, and go to state 13
+    T_NUMBER      shift, and go to state 13
+    T_IDENTIFIER  shift, and go to state 14
 
     Factor  go to state 26
 
 
 State 23
 
+   11 Term: Term T_DIVIDE . Factor
+
+    T_NUMBER      shift, and go to state 13
+    T_IDENTIFIER  shift, and go to state 14
+
+    Factor  go to state 27
+
+
+State 24
+
     7 Expression: Expression T_PLUS Term .
    10 Term: Term . T_TIMES Factor
    11     | Term . T_DIVIDE Factor
 
-    T_TIMES   shift, and go to state 21
-    T_DIVIDE  shift, and go to state 22
+    T_TIMES   shift, and go to state 22
+    T_DIVIDE  shift, and go to state 23
 
     $default  reduce using rule 7 (Expression)
 
 
-State 24
+State 25
 
     8 Expression: Expression T_MINUS Term .
    10 Term: Term . T_TIMES Factor
    11     | Term . T_DIVIDE Factor
 
-    T_TIMES   shift, and go to state 21
-    T_DIVIDE  shift, and go to state 22
+    T_TIMES   shift, and go to state 22
+    T_DIVIDE  shift, and go to state 23
 
     $default  reduce using rule 8 (Expression)
 
 
-State 25
+State 26
 
    10 Term: Term T_TIMES Factor .
 
     $default  reduce using rule 10 (Term)
 
 
-State 26
+State 27
 
    11 Term: Term T_DIVIDE Factor .
 

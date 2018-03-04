@@ -23,15 +23,15 @@ class Number : public Node{
 
 class Variable : public Node{
 	private:
-		std::string id;
+		std::string* id;
 	public:
-    Variable(std::string _id) : id(_id){};
+    Variable(std::string* _id) : id(_id){};
 		~Variable(){};
 		virtual void translate(std::ostream &dst)const override{
-			dst << id;
+			dst << *id;
 		};
 		virtual void print(std::ostream &dst)const override{
-			dst << id;
+			dst << *id;
 		};
 };
 
