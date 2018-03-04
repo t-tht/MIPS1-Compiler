@@ -20,14 +20,14 @@
   std::string *string;
 }
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS
-%token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA
 %token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS
 %token T_NUMBER T_IDENTIFIER T_RETURN T_TYPE
 %token T_INT T_VOID T_ADD
 
 //%type <node> Program Expr FunctionDeclaration Bin_Expr TYPE Statement CompoundStatement SimpleStatement ReturnStatement Block
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor ParamRecur Param
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamDec VariableDeclaration
+
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur VariableDeclaration
+
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
 
@@ -37,8 +37,6 @@
 
 ROOT: Program                                           { g_root = $1; }
 
-Program: FunctionDeclaration                                        { $$= new Program($1, NULL); }
-			| Program FunctionDeclaration							{ $$= new Program($1, $2);}
 Program: VariableDeclaration                                    { $$ = new Program($1, NULL);}
         |FunctionDeclaration                                     { $$= new Program($1, NULL); }
         | Program FunctionDeclaration							{ $$= new Program($1, $2);}
