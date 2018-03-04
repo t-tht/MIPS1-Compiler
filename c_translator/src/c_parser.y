@@ -24,7 +24,7 @@
 %token T_NUMBER T_IDENTIFIER T_RETURN T_TYPE
 %token T_INT T_VOID T_ADD
 
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur ParamVar VariableDeclaration
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur VariableDeclaration
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
 
