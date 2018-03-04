@@ -10,6 +10,8 @@
 #include "ast_funccallexpr.hpp"
 #include "ast_param.hpp"
 #include "ast_param_var.hpp"
+#include "ast_param_dec.hpp"
+#include "ast_vardec.hpp"
 
 extern const Node *parseAST();
 
