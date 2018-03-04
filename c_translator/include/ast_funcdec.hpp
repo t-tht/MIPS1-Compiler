@@ -1,14 +1,12 @@
-#ifndef ast_funcdecl_hpp
-#define ast_funcdecl_hpp
 #ifndef ast_funcdec_hpp
 #define ast_funcdec_hpp
 
 #include<string>
 #include<iostream>
+#include"ast_param_var.hpp"
 
-class FuncDecl;
 
-class FuncDecl: public Node{
+
 class FuncDec;
 
 class FuncDec: public Node{
@@ -18,8 +16,6 @@ class FuncDec: public Node{
 		NodePtr param;
         NodePtr block;
 	public:
-		FuncDecl(std::string* _type, std::string* _id, NodePtr _param, NodePtr _block): type(_type), id(_id), param(_param), block(_block){}
-		~FuncDecl(){
 		FuncDec(std::string* _type, std::string* _id, NodePtr _param, NodePtr _block): type(_type), id(_id), param(_param), block(_block){}
 		~FuncDec(){
 			delete param;

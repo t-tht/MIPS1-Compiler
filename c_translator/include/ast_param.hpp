@@ -5,8 +5,6 @@ class Param;
 
 class Param : public Node{
 	protected:
-		NodePtr left;
-		NodePtr right;
 		const NodePtr left;
 		const NodePtr right;
 	public:
