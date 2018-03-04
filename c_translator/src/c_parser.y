@@ -26,7 +26,7 @@
 
 %type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur VariableDeclaration
 %type <number> T_NUMBER
-%type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
+%type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD Type
 
 %start ROOT
 
@@ -38,12 +38,12 @@ Program: FunctionDeclaration                                     { $$= new Progr
         | Program FunctionDeclaration							{ $$= new Program($1, $2);}
         |VariableDeclaration                                    { $$ = new Program($1, NULL);}
 
-FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDec($1, $2, NULL, $5); }
-					| T_TYPE T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET Block { $$= new FuncDec($1, $2, $4, $6); }
+FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDec($1, $2, NULL, $5); }
+					| Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block { $$= new FuncDec($1, $2, $4, $6); }
 
 
-VariableDeclaration: T_TYPE T_IDENTIFIER T_SEMICOLON            {$$= new VarDec($1, $2, NULL);}
-             | T_TYPE T_IDENTIFIER T_EQUALS Expression T_SEMICOLON   {$$ = new VarDec($1, $2, $4);}
+VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON            {$$= new VarDec($1, $2, NULL);}
+             | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON   {$$ = new VarDec($1, $2, $4);}
 
 //Statement: CompoundStatement                        { $$= $1; }
 //            |SimpleStatement                                {$$ = $1;}
@@ -73,16 +73,15 @@ Term : Factor                     { $$ = $1; }
 Factor: T_NUMBER           { $$ = new Number( $1 ); }
         |T_IDENTIFIER        { $$ = new Variable($1); }
         | T_IDENTIFIER T_LBRACKET T_RBRACKET {  $$ = new FuncCallExpr($1, NULL);}
-		| T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
+		| T_IDENTIFIER T_LBRACKET Param T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
 		
-ParamRecur : Param					{ $$ = new Param($1, NULL); }
-		| ParamRecur T_COMMA Param			{ $$ = new Param($1, $3); }
-		
-Param :     T_NUMBER				{ $$ = new Number($1); }
-			| T_IDENTIFIER				{ $$ = new Variable($1);}
-		|T_TYPE T_IDENTIFIER { $$ = new ParamVar($1, $2);}
+//ParamRecur : Param					{ $$ = new Param($1, NULL); }
+//		| Param		{ $$ = new Param($1, $3); }
+
+Param : Type T_IDENTIFIER             { $$ = new Param($1, $2, NULL);}
+        |Type T_IDENTIFIER T_COMMA Param { $$ = new Param($1, $2, $4);}
 			
-			
+Type: T_TYPE                         { $$ = new std::string("int");}
 
 
 

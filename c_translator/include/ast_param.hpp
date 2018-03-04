@@ -5,18 +5,16 @@ class Param;
 
 class Param : public Node{
 	protected:
-		const NodePtr left;
-		const NodePtr right;
+		std::string* type;
+    std::string* ident;
+		NodePtr right;
 	public:
-		Param(const NodePtr _left, NodePtr _right) : left(_left), right(_right){};
+    Param(std::string* _type, std::string* _ident, NodePtr _right ) : type(_type), ident(_ident), right(_right){};
 		~Param(){
-			delete left;
 			delete right;
 		};
 		void translate(std::ostream &dst)const override{
-			if(left != NULL){
-				left->translate(dst);
-			}
+            dst<< *type << " " << *ident;
 			if(right != NULL){
 				dst << ",";
 				right->translate(dst);
