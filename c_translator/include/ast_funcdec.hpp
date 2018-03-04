@@ -11,25 +11,26 @@ class FuncDecl: public Node{
 	protected:
 		std::string* type;
 		std::string* id;
-		NodePtr arg;		//needs fixing later, but atm assume no arg
+		NodePtr param;
         NodePtr block;
 	public:
-		FuncDecl(std::string* _type, std::string* _id, NodePtr _arg, NodePtr _block): type(_type), id(_id), arg(_arg), block(_block){}
+		FuncDecl(std::string* _type, std::string* _id, NodePtr _param, NodePtr _block): type(_type), id(_id), param(_param), block(_block){}
 		~FuncDecl(){
-			delete arg;
+			delete param;
 			delete block;
 		}
 		void translate(std::ostream &dst) const{
-			dst << "def " << *id << "():" << std::endl;
-			if(arg != NULL){
-				arg ->translate(dst);
+			dst << "def " << *id << "(";
+			if(param != NULL){
+				param->translate(dst);
 			}
+			dst << "):" << std::endl;
 			block->translate(dst);
 		}
 		void print(std::ostream &dst) const {
 			dst << "print not implemented yet" <<std::endl;
-			if(arg != NULL){
-				arg ->print(dst);
+			if(param != NULL){
+				param->print(dst);
 			}
 			block->print(dst);
 		}

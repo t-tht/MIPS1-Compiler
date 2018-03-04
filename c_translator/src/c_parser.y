@@ -25,7 +25,7 @@
 %token T_INT T_VOID T_ADD
 
 //%type <node> Program Expr FunctionDeclaration Bin_Expr TYPE Statement CompoundStatement SimpleStatement ReturnStatement Block
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamDec
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor ParamRecur Param
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD
 
@@ -39,6 +39,7 @@ Program: FunctionDeclaration                                        { $$= new Pr
 			| Program FunctionDeclaration							{ $$= new Program($1, $2);}
         
 FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDecl($1, $2, NULL, $5); }
+					| T_TYPE T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET Block { $$= new FuncDecl($1, $2, $4, $6); }
 
 
 //Statement: CompoundStatement                        { $$= $1; }
@@ -67,14 +68,18 @@ Term : Factor                     { $$ = $1; }
 
 
 Factor: T_NUMBER           { $$ = new Number( $1 ); }
-        |T_IDENTIFIER        { $$ = new Variable( $1 ); }
+        |T_IDENTIFIER        { $$ = new Variable($1); }
         | T_IDENTIFIER T_LBRACKET T_RBRACKET {  $$ = new FuncCallExpr($1, NULL);}
-		| T_IDENTIFIER T_LBRACKET Param T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
+		| T_IDENTIFIER T_LBRACKET ParamRec T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
 		
-Param : ParamDec					{ $$ = new ParamDec($1, NULL); }
-		| Param T_COMMA ParamDec			{ $$ = new ParamDec($1, $3); }
+ParamRecur : Param					{ $$ = new Param($1, NULL); }
+		| ParamRecur T_COMMA Param			{ $$ = new Param($1, $3); }
 		
-ParamDec :   T_NUMBER				{ $$ = new Number($1); }
+Param :   T_NUMBER				{ $$ = new Number($1); }
+			| T_IDENTIFIER				{ $$ = new Variable($1);}
+			| T_TYPE T_IDENTIFIER	{ $$ = new ParamVar($1, $2);}
+			
+
 
 //Expr: Bin_Expr                      {$$= $1;}
 

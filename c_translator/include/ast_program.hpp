@@ -9,7 +9,10 @@ class Program : public Node{
 		NodePtr right;
 	public:
 		Program(const NodePtr _left, const NodePtr _right) : left(_left), right(_right){};
-		~Program(){};
+		~Program(){
+			delete left;
+			delete right;
+		};
 		void translate(std::ostream &dst) const override{
 			if(left != NULL){
 				left->translate(dst);

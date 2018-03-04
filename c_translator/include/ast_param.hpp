@@ -9,14 +9,17 @@ class Param : public Node{
 		NodePtr right;
 	public:
 		Param(const NodePtr _left, NodePtr _right) : left(_left), right(_right){};
-		~Param(){};
+		~Param(){
+			delete left;
+			delete right;
+		};
 		void translate(std::ostream &dst)const override{
-			if(left != NULL && right != NULL){
+			if(left != NULL){
 				left->translate(dst);
+			}
+			if(right != NULL){
 				dst << ",";
 				right->translate(dst);
-			}else if(left != NULL && right == NULL){
-				left->translate(dst);
 			}
 			
 		};
