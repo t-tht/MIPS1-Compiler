@@ -35,7 +35,8 @@
 
 ROOT: Program                                           { g_root = $1; }
 
-Program: FunctionDeclaration                                        { $$= $1; }
+Program: FunctionDeclaration                                        { $$= new Program($1, NULL); }
+			| Program FunctionDeclaration							{ $$= new Program($1, $2);}
         
 FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDecl($1, $2, NULL, $5); }
 
