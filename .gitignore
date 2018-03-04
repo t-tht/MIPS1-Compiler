@@ -7,3 +7,4 @@
 .vagrant/machines/default/virtualbox/private_key
 .vagrant/machines/default/virtualbox/vagrant_cwd
 .vagrant/machines/default/virtualbox/synced_folders
+ubuntu-xenial-16.04-cloudimg-console.log
