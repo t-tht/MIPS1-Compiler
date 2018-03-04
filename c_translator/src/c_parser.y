@@ -35,12 +35,12 @@
 
 %%
 
-ROOT: Program                                           { g_root = $1; }
+ROOT: VariableDeclaration                                          { g_root = $1; }
 
-Program: VariableDeclaration                                    { $$ = new Program($1, NULL);}
-        |FunctionDeclaration                                     { $$= new Program($1, NULL); }
+Program: FunctionDeclaration                                     { $$= new Program($1, NULL); }
         | Program FunctionDeclaration							{ $$= new Program($1, $2);}
-        
+        |VariableDeclaration                                    { $$ = new Program($1, NULL);}
+
 FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDecl($1, $2, NULL, $5); }
 					| T_TYPE T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET Block { $$= new FuncDecl($1, $2, $4, $6); }
 
@@ -75,7 +75,7 @@ Term : Factor                     { $$ = $1; }
 Factor: T_NUMBER           { $$ = new Number( $1 ); }
         |T_IDENTIFIER        { $$ = new Variable($1); }
         | T_IDENTIFIER T_LBRACKET T_RBRACKET {  $$ = new FuncCallExpr($1, NULL);}
-		| T_IDENTIFIER T_LBRACKET ParamRec T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
+		| T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
 		
 ParamRecur : Param					{ $$ = new Param($1, NULL); }
 		| ParamRecur T_COMMA Param			{ $$ = new Param($1, $3); }

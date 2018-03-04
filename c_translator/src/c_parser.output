@@ -1,0 +1,396 @@
+Nonterminals useless in grammar
+
+   Program
+   FunctionDeclaration
+   Block
+   ReturnStatement
+
+
+Terminals unused in grammar
+
+   T_CLBRACKET
+   T_CRBRACKET
+   T_RETURN
+   T_INT
+   T_VOID
+   T_ADD
+
+
+Rules useless in grammar
+
+   19 Program: FunctionDeclaration
+   20        | Program FunctionDeclaration
+   21        | VariableDeclaration
+
+   22 FunctionDeclaration: T_TYPE T_IDENTIFIER T_LBRACKET T_RBRACKET Block
+   23                    | T_TYPE T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET Block
+
+   24 Block: T_CLBRACKET ReturnStatement T_CRBRACKET
+
+   25 ReturnStatement: T_RETURN Expression T_SEMICOLON
+
+
+Grammar
+
+    0 $accept: ROOT $end
+
+    1 ROOT: VariableDeclaration
+
+    2 VariableDeclaration: T_TYPE T_IDENTIFIER T_SEMICOLON
+    3                    | T_TYPE T_IDENTIFIER T_EQUALS Expression T_SEMICOLON
+
+    4 Expression: Term
+    5           | Expression T_PLUS Term
+    6           | Expression T_MINUS Term
+
+    7 Term: Factor
+    8     | Term T_TIMES Factor
+    9     | Term T_DIVIDE Factor
+
+   10 Factor: T_NUMBER
+   11       | T_IDENTIFIER
+   12       | T_IDENTIFIER T_LBRACKET T_RBRACKET
+   13       | T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET
+
+   14 ParamRecur: Param
+   15           | ParamRecur T_COMMA Param
+
+   16 Param: T_NUMBER
+   17      | T_IDENTIFIER
+   18      | T_TYPE T_IDENTIFIER
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+T_TIMES (258) 8
+T_DIVIDE (259) 9
+T_PLUS (260) 5
+T_MINUS (261) 6
+T_LBRACKET (262) 12 13
+T_RBRACKET (263) 12 13
+T_CLBRACKET (264)
+T_CRBRACKET (265)
+T_SEMICOLON (266) 2 3
+T_COMMA (267) 15
+T_EQUALS (268) 3
+T_NUMBER (269) 10 16
+T_IDENTIFIER (270) 2 3 11 12 13 17 18
+T_RETURN (271)
+T_TYPE (272) 2 3 18
+T_INT (273)
+T_VOID (274)
+T_ADD (275)
+
+
+Nonterminals, with rules where they appear
+
+$accept (21)
+    on left: 0
+ROOT (22)
+    on left: 1, on right: 0
+VariableDeclaration (23)
+    on left: 2 3, on right: 1
+Expression (24)
+    on left: 4 5 6, on right: 3 5 6
+Term (25)
+    on left: 7 8 9, on right: 4 5 6 8 9
+Factor (26)
+    on left: 10 11 12 13, on right: 7 8 9
+ParamRecur (27)
+    on left: 14 15, on right: 13 15
+Param (28)
+    on left: 16 17 18, on right: 14 15
+
+
+State 0
+
+    0 $accept: . ROOT $end
+
+    T_TYPE  shift, and go to state 1
+
+    ROOT                 go to state 2
+    VariableDeclaration  go to state 3
+
+
+State 1
+
+    2 VariableDeclaration: T_TYPE . T_IDENTIFIER T_SEMICOLON
+    3                    | T_TYPE . T_IDENTIFIER T_EQUALS Expression T_SEMICOLON
+
+    T_IDENTIFIER  shift, and go to state 4
+
+
+State 2
+
+    0 $accept: ROOT . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    1 ROOT: VariableDeclaration .
+
+    $default  reduce using rule 1 (ROOT)
+
+
+State 4
+
+    2 VariableDeclaration: T_TYPE T_IDENTIFIER . T_SEMICOLON
+    3                    | T_TYPE T_IDENTIFIER . T_EQUALS Expression T_SEMICOLON
+
+    T_SEMICOLON  shift, and go to state 6
+    T_EQUALS     shift, and go to state 7
+
+
+State 5
+
+    0 $accept: ROOT $end .
+
+    $default  accept
+
+
+State 6
+
+    2 VariableDeclaration: T_TYPE T_IDENTIFIER T_SEMICOLON .
+
+    $default  reduce using rule 2 (VariableDeclaration)
+
+
+State 7
+
+    3 VariableDeclaration: T_TYPE T_IDENTIFIER T_EQUALS . Expression T_SEMICOLON
+
+    T_NUMBER      shift, and go to state 8
+    T_IDENTIFIER  shift, and go to state 9
+
+    Expression  go to state 10
+    Term        go to state 11
+    Factor      go to state 12
+
+
+State 8
+
+   10 Factor: T_NUMBER .
+
+    $default  reduce using rule 10 (Factor)
+
+
+State 9
+
+   11 Factor: T_IDENTIFIER .
+   12       | T_IDENTIFIER . T_LBRACKET T_RBRACKET
+   13       | T_IDENTIFIER . T_LBRACKET ParamRecur T_RBRACKET
+
+    T_LBRACKET  shift, and go to state 13
+
+    $default  reduce using rule 11 (Factor)
+
+
+State 10
+
+    3 VariableDeclaration: T_TYPE T_IDENTIFIER T_EQUALS Expression . T_SEMICOLON
+    5 Expression: Expression . T_PLUS Term
+    6           | Expression . T_MINUS Term
+
+    T_PLUS       shift, and go to state 14
+    T_MINUS      shift, and go to state 15
+    T_SEMICOLON  shift, and go to state 16
+
+
+State 11
+
+    4 Expression: Term .
+    8 Term: Term . T_TIMES Factor
+    9     | Term . T_DIVIDE Factor
+
+    T_TIMES   shift, and go to state 17
+    T_DIVIDE  shift, and go to state 18
+
+    $default  reduce using rule 4 (Expression)
+
+
+State 12
+
+    7 Term: Factor .
+
+    $default  reduce using rule 7 (Term)
+
+
+State 13
+
+   12 Factor: T_IDENTIFIER T_LBRACKET . T_RBRACKET
+   13       | T_IDENTIFIER T_LBRACKET . ParamRecur T_RBRACKET
+
+    T_RBRACKET    shift, and go to state 19
+    T_NUMBER      shift, and go to state 20
+    T_IDENTIFIER  shift, and go to state 21
+    T_TYPE        shift, and go to state 22
+
+    ParamRecur  go to state 23
+    Param       go to state 24
+
+
+State 14
+
+    5 Expression: Expression T_PLUS . Term
+
+    T_NUMBER      shift, and go to state 8
+    T_IDENTIFIER  shift, and go to state 9
+
+    Term    go to state 25
+    Factor  go to state 12
+
+
+State 15
+
+    6 Expression: Expression T_MINUS . Term
+
+    T_NUMBER      shift, and go to state 8
+    T_IDENTIFIER  shift, and go to state 9
+
+    Term    go to state 26
+    Factor  go to state 12
+
+
+State 16
+
+    3 VariableDeclaration: T_TYPE T_IDENTIFIER T_EQUALS Expression T_SEMICOLON .
+
+    $default  reduce using rule 3 (VariableDeclaration)
+
+
+State 17
+
+    8 Term: Term T_TIMES . Factor
+
+    T_NUMBER      shift, and go to state 8
+    T_IDENTIFIER  shift, and go to state 9
+
+    Factor  go to state 27
+
+
+State 18
+
+    9 Term: Term T_DIVIDE . Factor
+
+    T_NUMBER      shift, and go to state 8
+    T_IDENTIFIER  shift, and go to state 9
+
+    Factor  go to state 28
+
+
+State 19
+
+   12 Factor: T_IDENTIFIER T_LBRACKET T_RBRACKET .
+
+    $default  reduce using rule 12 (Factor)
+
+
+State 20
+
+   16 Param: T_NUMBER .
+
+    $default  reduce using rule 16 (Param)
+
+
+State 21
+
+   17 Param: T_IDENTIFIER .
+
+    $default  reduce using rule 17 (Param)
+
+
+State 22
+
+   18 Param: T_TYPE . T_IDENTIFIER
+
+    T_IDENTIFIER  shift, and go to state 29
+
+
+State 23
+
+   13 Factor: T_IDENTIFIER T_LBRACKET ParamRecur . T_RBRACKET
+   15 ParamRecur: ParamRecur . T_COMMA Param
+
+    T_RBRACKET  shift, and go to state 30
+    T_COMMA     shift, and go to state 31
+
+
+State 24
+
+   14 ParamRecur: Param .
+
+    $default  reduce using rule 14 (ParamRecur)
+
+
+State 25
+
+    5 Expression: Expression T_PLUS Term .
+    8 Term: Term . T_TIMES Factor
+    9     | Term . T_DIVIDE Factor
+
+    T_TIMES   shift, and go to state 17
+    T_DIVIDE  shift, and go to state 18
+
+    $default  reduce using rule 5 (Expression)
+
+
+State 26
+
+    6 Expression: Expression T_MINUS Term .
+    8 Term: Term . T_TIMES Factor
+    9     | Term . T_DIVIDE Factor
+
+    T_TIMES   shift, and go to state 17
+    T_DIVIDE  shift, and go to state 18
+
+    $default  reduce using rule 6 (Expression)
+
+
+State 27
+
+    8 Term: Term T_TIMES Factor .
+
+    $default  reduce using rule 8 (Term)
+
+
+State 28
+
+    9 Term: Term T_DIVIDE Factor .
+
+    $default  reduce using rule 9 (Term)
+
+
+State 29
+
+   18 Param: T_TYPE T_IDENTIFIER .
+
+    $default  reduce using rule 18 (Param)
+
+
+State 30
+
+   13 Factor: T_IDENTIFIER T_LBRACKET ParamRecur T_RBRACKET .
+
+    $default  reduce using rule 13 (Factor)
+
+
+State 31
+
+   15 ParamRecur: ParamRecur T_COMMA . Param
+
+    T_NUMBER      shift, and go to state 20
+    T_IDENTIFIER  shift, and go to state 21
+    T_TYPE        shift, and go to state 22
+
+    Param  go to state 32
+
+
+State 32
+
+   15 ParamRecur: ParamRecur T_COMMA Param .
+
+    $default  reduce using rule 15 (ParamRecur)
