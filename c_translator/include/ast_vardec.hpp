@@ -19,6 +19,7 @@ class VarDec: public Node{
 		void translate(std::ostream &dst) const{
             dst << *type << " "<< *id;
 			if(Expr != NULL){
+				dst << " = ";
 				Expr ->translate(dst);
 			}
             
@@ -29,7 +30,7 @@ class VarDec: public Node{
             if(Expr != NULL){
                 Expr ->print(dst);
             }
-		}
+		} 
 };
 
 #endif

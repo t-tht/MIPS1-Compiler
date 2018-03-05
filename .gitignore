@@ -9,3 +9,11 @@
 .vagrant/machines/default/virtualbox/synced_folders
 ubuntu-xenial-16.04-cloudimg-console.log
 *.log
+c_translator/bin/c_compiler
+c_translator/src/c_lexer.yy.cpp
+c_translator/src/c_lexer.yy.o
+c_translator/src/c_parser.output
+c_translator/src/c_parser.tab.cpp
+c_translator/src/c_parser.tab.hpp
+c_translator/src/c_parser.tab.o
+ubuntu-xenial-16.04-cloudimg-console.log
