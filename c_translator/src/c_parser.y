@@ -57,8 +57,8 @@ VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON            {$$= new VarDec($1
 Block: T_CLBRACKET BlockList T_CRBRACKET                    { $$= $2;}
 //T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
 
-BlockList:  Statements                              {$$=$1;}
-            |BlockList Statements                  { $$ = $2;}
+BlockList:  Statements                              {$$=  new Block($1, NULL);}
+            |BlockList Statements                  { $$ = new Block($1, $2);}
 Statements: ReturnStatement                     {$$= $1;}
             |AssignStatement                       {$$=$1;}
 
@@ -69,7 +69,7 @@ AssignStatement: Type T_IDENTIFIER T_SEMICOLON            {$$= new AssignmentSta
 //TODO: ADD more to blocklist and make it recursive
 //TODO: Define a class for variable z=7; possibly using variable declaration
 //TODO: Define if statement class- including comparison expression
-//TODO: Define a scope class
+//TODO: Define a block class
 
 ReturnStatement: T_RETURN Expression T_SEMICOLON                  { $$= new ReturnStat($2); }
 
