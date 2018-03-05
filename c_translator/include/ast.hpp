@@ -12,7 +12,7 @@
 #include "ast_param_var.hpp"
 #include "ast_vardec.hpp"
 #include "ast_block.hpp"
-
+#include "ast_assignment.hpp"
 
 
 extern const Node *parseAST();

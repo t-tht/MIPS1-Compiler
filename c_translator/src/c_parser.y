@@ -20,7 +20,7 @@
   std::string *string;
 }
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS
-%token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS
+%token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS T_LESSTHANEQ T_MORETHANEQ T_CONDEQ T_NOTEQ T_LOGAND T_LOGOR
 %token T_NUMBER T_IDENTIFIER T_RETURN T_INT
 %token T_ADD T_VOID
 
@@ -61,11 +61,22 @@ BlockList:  Statements                              {$$=  new Block($1, NULL);}
             |BlockList Statements                  { $$ = new Block($1, $2);}
 Statements: ReturnStatement                     {$$= $1;}
             |AssignStatement                       {$$=$1;}
+            |IfStatement                                    {$$= $1;}
 
-AssignStatement: Type T_IDENTIFIER T_SEMICOLON            {$$= new AssignmentStatement($1, $2, NULL);}
-                    | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON   {$$ = new AssignmentStatement($1, $2, $4);}
-                    | T_IDENTIFIER T_EQUALS Expression T_SEMICOLON  {$$ = new AssignmentStatement(NULL, $1, $3);}
+AssignStatement: Type T_IDENTIFIER T_SEMICOLON            {$$= new AssignmentStatement( $1,$2, NULL);}
+                | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON   {$$ = new AssignmentStatement($1, $2, $4);}
+                | T_IDENTIFIER T_EQUALS Expression T_SEMICOLON  {$$ = new AssignmentStatement(NULL, $1, $3);}
 
+IfStatement: T_IF T_LBRACKET Comp_Expr T_RBRACKET Block { $$= new IfStatement($3, $5);}
+
+Compr_Expr: Expr Comp_Op Expr                           { $$= new CompExpr($1, $2, $3);}
+
+Comp_Op: T_LESSTHANEQ                        { $$ = new std::string("<=");}
+    |T_MORETHANEQ                        { $$ = new std::string("=>");}
+    |T_CONDEQ                        { $$ = new std::string("==");}
+    |T_NOTEQ                        { $$ = new std::string("!=");}
+    |T_LOGAND                        { $$ = new std::string("&&");}
+    |T_LOGOR                        { $$ = new std::string("||");}
 //TODO: ADD more to blocklist and make it recursive
 //TODO: Define a class for variable z=7; possibly using variable declaration
 //TODO: Define if statement class- including comparison expression

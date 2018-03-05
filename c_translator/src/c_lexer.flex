@@ -22,9 +22,20 @@ extern "C" int fileno(FILE *stream);
 [/]                                     { return T_DIVIDE; }
 [=]                                     { return T_EQUALS; }
 
+\<\=                                     { return T_LESSTHANEQ}
+\=\>                                     { return T_MORETHANEQ}
+\=\=                                     { return T_CONDEQ}
+\!\=                                     { return T_NOTEQ}
+
+\&\&                                    {return T_LOGAND}
+\|\|                                    {return T_LOGOR}
+
+
+
 return									{return T_RETURN;}
 int										{return T_INT;}
 void									{return T_VOID;}
+if                                      {return T_IF;}
 
 [-]?[0-9]+([.][0-9]*)?					{yylval.number=strtod(yytext, 0); return T_NUMBER;}
 [a-z]+									{yylval.string=new std::string(yytext); return T_IDENTIFIER;}
