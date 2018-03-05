@@ -13,6 +13,8 @@
 #include "ast_vardec.hpp"
 #include "ast_block.hpp"
 #include "ast_assignment.hpp"
+#include "ast_compexpr.hpp"
+#include "ast_ifstatement.hpp"
 
 
 extern const Node *parseAST();

@@ -20,13 +20,13 @@
   std::string *string;
 }
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS
-%token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS T_LESSTHANEQ T_MORETHANEQ T_CONDEQ T_NOTEQ T_LOGAND T_LOGOR
+%token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS T_LESSTHANEQ T_MORETHANEQ T_CONDEQ T_NOTEQ T_LOGAND T_LOGOR T_IF
 %token T_NUMBER T_IDENTIFIER T_RETURN T_INT
 %token T_ADD T_VOID
 
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements Comp_Expr IfStatement
 %type <number> T_NUMBER
-%type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
+%type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID Comp_Op
 
 %start ROOT
 
@@ -69,7 +69,7 @@ AssignStatement: Type T_IDENTIFIER T_SEMICOLON            {$$= new AssignmentSta
 
 IfStatement: T_IF T_LBRACKET Comp_Expr T_RBRACKET Block { $$= new IfStatement($3, $5);}
 
-Compr_Expr: Expr Comp_Op Expr                           { $$= new CompExpr($1, $2, $3);}
+Comp_Expr: Expression Comp_Op Expression                        { $$= new CompExpr($1, $2, $3);}
 
 Comp_Op: T_LESSTHANEQ                        { $$ = new std::string("<=");}
     |T_MORETHANEQ                        { $$ = new std::string("=>");}

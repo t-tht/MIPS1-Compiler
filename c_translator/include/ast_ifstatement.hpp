@@ -14,7 +14,7 @@ class IfStatement : public Node{
 			delete body;
 		};
 		void translate(std::ostream &dst)const override{
-			dst << "if("
+			dst << "if(";
 			if(cond != NULL){
 				cond->translate(dst);
 			}

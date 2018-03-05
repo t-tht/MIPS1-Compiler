@@ -22,13 +22,13 @@ extern "C" int fileno(FILE *stream);
 [/]                                     { return T_DIVIDE; }
 [=]                                     { return T_EQUALS; }
 
-\<\=                                     { return T_LESSTHANEQ}
-\=\>                                     { return T_MORETHANEQ}
-\=\=                                     { return T_CONDEQ}
-\!\=                                     { return T_NOTEQ}
+\<\=                                     { return T_LESSTHANEQ;}
+\=\>                                     { return T_MORETHANEQ;}
+\=\=                                     { return T_CONDEQ;}
+\!\=                                     { return T_NOTEQ;}
 
-\&\&                                    {return T_LOGAND}
-\|\|                                    {return T_LOGOR}
+\&\&                                    {return T_LOGAND;}
+\|\|                                    {return T_LOGOR;}
 
 
 
