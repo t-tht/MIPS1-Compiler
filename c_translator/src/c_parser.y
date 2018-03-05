@@ -21,12 +21,12 @@
 }
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS
 %token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS
-%token T_NUMBER T_IDENTIFIER T_RETURN T_TYPE
-%token T_INT T_VOID T_ADD
+%token T_NUMBER T_IDENTIFIER T_RETURN T_INT
+%token T_ADD T_VOID
 
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur VariableDeclaration BlockList
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList
 %type <number> T_NUMBER
-%type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD Type
+%type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
 
 %start ROOT
 
@@ -54,11 +54,14 @@ VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON            {$$= new VarDec($1
 //SimpleStatement: ReturnStatement                    {$$ = $1;}
 
 
-Block: T_CLBRACKET BlockList T_CRBRACKET                    { $$= new Block($2);}
+Block: T_CLBRACKET BlockList T_CRBRACKET                    { $$= $2;}
 //T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
 
-BlockList: ReturnStatement                   { $$ = $2;}
-
+BlockList: ReturnStatement                   { $$ = $1;}
+//TODO: ADD more to blocklist and make it recursive
+//TODO: Define a class for variable z=7; possibly using variable declaration
+//TODO: Define if statement class- including comparison expression
+//TODO: Define a scope class
 
 ReturnStatement: T_RETURN Expression T_SEMICOLON                  { $$= new ReturnStat($2); }
 
@@ -75,15 +78,13 @@ Factor: T_NUMBER           { $$ = new Number( $1 ); }
         |T_IDENTIFIER        { $$ = new Variable($1); }
         | T_IDENTIFIER T_LBRACKET T_RBRACKET {  $$ = new FuncCallExpr($1, NULL);}
 		| T_IDENTIFIER T_LBRACKET Param T_RBRACKET {  $$ = new FuncCallExpr($1, $3);}
-		
-//ParamRecur : Param					{ $$ = new Param($1, NULL); }
-//		| Param		{ $$ = new Param($1, $3); }
+
 
 Param : Type T_IDENTIFIER             { $$ = new Param($1, $2, NULL);}
         |Type T_IDENTIFIER T_COMMA Param { $$ = new Param($1, $2, $4);}
 			
-Type: T_TYPE                         { $$ = new std::string("int");}
-
+Type: T_INT                         { $$ = new std::string("int");}
+    | T_VOID                         { $$ = new std::string("void");}
 
 
 %%
