@@ -11,6 +11,9 @@
 #include "ast_param.hpp"
 #include "ast_param_var.hpp"
 #include "ast_vardec.hpp"
+#include "ast_block.hpp"
+
+
 
 extern const Node *parseAST();
 

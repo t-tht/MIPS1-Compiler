@@ -24,7 +24,7 @@
 %token T_NUMBER T_IDENTIFIER T_RETURN T_INT
 %token T_ADD T_VOID
 
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
 
