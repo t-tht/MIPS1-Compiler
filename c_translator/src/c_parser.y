@@ -24,7 +24,7 @@
 %token T_NUMBER T_IDENTIFIER T_RETURN T_INT
 %token T_ADD T_VOID
 
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
 
@@ -57,7 +57,15 @@ VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON            {$$= new VarDec($1
 Block: T_CLBRACKET BlockList T_CRBRACKET                    { $$= $2;}
 //T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
 
-BlockList: ReturnStatement                   { $$ = $1;}
+BlockList:  Statements                              {$$=$1;}
+            |BlockList Statements                  { $$ = $2;}
+Statements: ReturnStatement                     {$$= $1;}
+            |AssignStatement                       {$$=$1;}
+
+AssignStatement: Type T_IDENTIFIER T_SEMICOLON            {$$= new AssignmentStatement($1, $2, NULL);}
+                    | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON   {$$ = new AssignmentStatement($1, $2, $4);}
+                    | T_IDENTIFIER T_EQUALS Expression T_SEMICOLON  {$$ = new AssignmentStatement(NULL, $1, $3);}
+
 //TODO: ADD more to blocklist and make it recursive
 //TODO: Define a class for variable z=7; possibly using variable declaration
 //TODO: Define if statement class- including comparison expression
