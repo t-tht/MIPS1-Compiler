@@ -24,7 +24,7 @@
 %token T_NUMBER T_IDENTIFIER T_RETURN T_TYPE
 %token T_INT T_VOID T_ADD
 
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur VariableDeclaration
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param ParamRecur VariableDeclaration BlockList
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_TYPE T_ADD Type
 
@@ -54,9 +54,10 @@ VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON            {$$= new VarDec($1
 //SimpleStatement: ReturnStatement                    {$$ = $1;}
 
 
-Block: T_CLBRACKET ReturnStatement T_CRBRACKET                    { $$= $2;}
+Block: T_CLBRACKET BlockList T_CRBRACKET                    { $$= new Block($2);}
 //T_CLBRACKET T_CRBRACKET                      { $$= new Block(NULL);}
 
+BlockList: ReturnStatement                   { $$ = $2;}
 
 
 ReturnStatement: T_RETURN Expression T_SEMICOLON                  { $$= new ReturnStat($2); }
