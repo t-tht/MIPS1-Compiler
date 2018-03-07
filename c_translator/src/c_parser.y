@@ -34,16 +34,17 @@
 
 ROOT: Program                                          { g_root = $1; }
 
-Program: FunctionDeclaration                                     { $$= new Program($1, NULL); }
-        | Program FunctionDeclaration							{ $$= new Program($1, $2);}
-        |VariableDeclaration                                    { $$ = new Program($1, NULL);}
+Program:  FunctionDeclaration                                     	{ $$= new Program($1, NULL); }
+        | Program FunctionDeclaration								{ $$= new Program($1, $2); }
+        | VariableDeclaration                                    	{ $$ = new Program($1, NULL); }
+		| Program VariableDeclaration								{ $$ = new Program($1, $2); }			
 
-FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET T_RBRACKET Block { $$= new FuncDec($1, $2, NULL, $5); }
-					| Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block { $$= new FuncDec($1, $2, $4, $6); }
+FunctionDeclaration:  Type T_IDENTIFIER T_LBRACKET T_RBRACKET Block 		{ $$= new FuncDec($1, $2, NULL, $5); }
+					| Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block 	{ $$= new FuncDec($1, $2, $4, $6); }
 
 
-VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON            {$$= new VarDec($1, $2, NULL);}
-             | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON   {$$ = new VarDec($1, $2, $4);}
+VariableDeclaration:  Type T_IDENTIFIER T_SEMICOLON            					{ $$= new VarDec($1, $2, NULL); }
+					| Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON   		{ $$ = new VarDec($1, $2, $4); }
 
 //Statement: CompoundStatement                        { $$= $1; }
 //            |SimpleStatement                                {$$ = $1;}
@@ -84,13 +85,13 @@ Comp_Op: T_LESSTHANEQ                        { $$ = new std::string("<=");}
 
 ReturnStatement: T_RETURN Expression T_SEMICOLON                  { $$= new ReturnStat($2); }
 
-Expression : Term                      { $$ = $1; }
-            | Expression T_PLUS Term         { $$ = new BinExpr ($1, new std::string("+"), $3); }
-            | Expression T_MINUS Term        {$$ = new BinExpr ($1,new std::string("-"), $3);}
+Expression :  Term                      	{ $$ = $1; }
+            | Expression T_PLUS Term        { $$ = new BinExpr ($1, new std::string("+"), $3); }
+            | Expression T_MINUS Term       { $$ = new BinExpr ($1,new std::string("-"), $3);}
 
-Term : Factor                     { $$ = $1; }
-        | Term T_TIMES Factor        { $$ = new BinExpr($1,new std::string("*"), $3); }
-        | Term T_DIVIDE Factor       { $$ = new BinExpr($1,new std::string("/"),$3); }
+Term :	  Factor                     { $$ = $1; }
+		| Term T_TIMES Factor        { $$ = new BinExpr($1,new std::string("*"), $3); }
+		| Term T_DIVIDE Factor       { $$ = new BinExpr($1,new std::string("/"),$3); }
 
 
 Factor: T_NUMBER           { $$ = new Number( $1 ); }

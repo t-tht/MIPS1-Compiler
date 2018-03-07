@@ -21,7 +21,7 @@ class FuncDec: public Node{
 			delete param;
 			delete block;
 		}
-		void translate(std::ostream &dst) const{
+		void translate(std::ostream &dst) const override{
 			dst << "def " << *id << "(";
 			if(param != NULL){
 				param->translate(dst);
@@ -29,7 +29,7 @@ class FuncDec: public Node{
 			dst << "):" << std::endl;
 			block->translate(dst);
 		}
-		void print(std::ostream &dst) const {
+		void print(std::ostream &dst) const override{
 			dst << "print not implemented yet" <<std::endl;
 			if(param != NULL){
 				param->print(dst);
