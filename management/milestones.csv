@@ -1,5 +1,6 @@
 MilestoneID,             Dependencies, EstimatedEffort, Lead,  Completed, Description
 DefineInitialMilestones,             ,1,    ?,           , Come up with initial milestones for getting started
-C to python simple,,12,tht216,,Compiler simple C examples into Python code
-C to python advanced,,16,kr1116,,Include more tokens from C to Python code
-C to python simple,,6,th216,,"We have found the ast structure, implementation fo the AST.hpp"
+C to python simple,,12,tht216,24,Compiler simple C examples into Python code
+C to python simple retry,,6,th216,19,"We have found the ast structure, implementation fo the AST.hpp"
+C to Python Advanced,,12,kr1116,,Finish implementing the C program and include the if statements with indentations
+Codegen Phase 1,,,,,Produce simple MIPS code from simple C program
