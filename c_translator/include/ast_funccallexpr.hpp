@@ -16,7 +16,7 @@ class FuncCallExpr: public Node{
 		~FuncCallExpr(){
 			delete param;
 		}
-		void translate(std::ostream &dst) const{
+		void translate(std::ostream &dst) const override{
 			dst << *id << "(";
 			if(param != NULL){
 				param->translate(dst);
@@ -24,7 +24,7 @@ class FuncCallExpr: public Node{
 			dst << ")";
 
 		}
-		void print(std::ostream &dst) const {
+		void print(std::ostream &dst) const override{
 			dst << "print not implemented yet" <<std::endl;
 			if(param != NULL){
 				param ->print(dst);
