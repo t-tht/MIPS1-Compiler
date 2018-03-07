@@ -2,15 +2,21 @@
 #define context_hpp
 
 #include <string>
+#include <sstream>
 
-struct Context{
-		int indentlvl = 0;
-}
+class Context;
 
-void insertindent(const Context ilvl, std::ostream &dst)const{
-	for(int i = 0; i < ilvl; i++){
-		dst << "/t";
-	}
-}
+class Context{
+private:
+	int indentlevel = 0;
+public:
+	std::string indent()const{
+		std::sstream ss;
+		for(int i = 0; i < indentlevel; i++){
+			ss << "\t";
+		}
+		return ss.str();
+	};
+};
 
 #define
