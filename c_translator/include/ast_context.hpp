@@ -1,6 +1,9 @@
 #ifndef ast_context_hpp
 #define ast_context_hpp
 
+#include <vector>
+#include <iostream>
+#include <unordered_map>
 #include <string>
 #include <sstream>
 
