@@ -12,90 +12,128 @@ Grammar
     2 Program: FunctionDeclaration
     3        | Program FunctionDeclaration
     4        | VariableDeclaration
+    5        | Program VariableDeclaration
 
-    5 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET T_RBRACKET Block
-    6                    | Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block
+    6 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET T_RBRACKET Block
+    7                    | Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block
 
-    7 VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON
-    8                    | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON
+    8 VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON
+    9                    | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON
 
-    9 Block: T_CLBRACKET BlockList T_CRBRACKET
+   10 Block: T_CLBRACKET BlockList T_CRBRACKET
 
-   10 BlockList: ReturnStatement
+   11 BlockList: Statements
+   12          | BlockList Statements
 
-   11 ReturnStatement: T_RETURN Expression T_SEMICOLON
+   13 Statements: ReturnStatement
+   14           | AssignStatement
+   15           | IfStatement
 
-   12 Expression: Term
-   13           | Expression T_PLUS Term
-   14           | Expression T_MINUS Term
+   16 AssignStatement: Type T_IDENTIFIER T_SEMICOLON
+   17                | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON
+   18                | T_IDENTIFIER T_EQUALS Expression T_SEMICOLON
 
-   15 Term: Factor
-   16     | Term T_TIMES Factor
-   17     | Term T_DIVIDE Factor
+   19 IfStatement: T_IF T_LBRACKET Comp_Expr T_RBRACKET Block
 
-   18 Factor: T_NUMBER
-   19       | T_IDENTIFIER
-   20       | T_IDENTIFIER T_LBRACKET T_RBRACKET
-   21       | T_IDENTIFIER T_LBRACKET Param T_RBRACKET
+   20 Comp_Expr: Expression Comp_Op Expression
 
-   22 Param: Type T_IDENTIFIER
-   23      | Type T_IDENTIFIER T_COMMA Param
+   21 Comp_Op: T_LESSTHANEQ
+   22        | T_MORETHANEQ
+   23        | T_CONDEQ
+   24        | T_NOTEQ
+   25        | T_LOGAND
+   26        | T_LOGOR
 
-   24 Type: T_INT
-   25     | T_VOID
+   27 ReturnStatement: T_RETURN Expression T_SEMICOLON
+
+   28 Expression: Term
+   29           | Expression T_PLUS Term
+   30           | Expression T_MINUS Term
+
+   31 Term: Factor
+   32     | Term T_TIMES Factor
+   33     | Term T_DIVIDE Factor
+
+   34 Factor: T_NUMBER
+   35       | T_IDENTIFIER
+   36       | T_IDENTIFIER T_LBRACKET T_RBRACKET
+   37       | T_IDENTIFIER T_LBRACKET Param T_RBRACKET
+
+   38 Param: Type T_IDENTIFIER
+   39      | Type T_IDENTIFIER T_COMMA Param
+
+   40 Type: T_INT
+   41     | T_VOID
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-T_TIMES (258) 16
-T_DIVIDE (259) 17
-T_PLUS (260) 13
-T_MINUS (261) 14
-T_LBRACKET (262) 5 6 20 21
-T_RBRACKET (263) 5 6 20 21
-T_CLBRACKET (264) 9
-T_CRBRACKET (265) 9
-T_SEMICOLON (266) 7 8 11
-T_COMMA (267) 23
-T_EQUALS (268) 8
-T_NUMBER (269) 18
-T_IDENTIFIER (270) 5 6 7 8 19 20 21 22 23
-T_RETURN (271) 11
-T_INT (272) 24
-T_ADD (273)
-T_VOID (274) 25
+T_TIMES (258) 32
+T_DIVIDE (259) 33
+T_PLUS (260) 29
+T_MINUS (261) 30
+T_LBRACKET (262) 6 7 19 36 37
+T_RBRACKET (263) 6 7 19 36 37
+T_CLBRACKET (264) 10
+T_CRBRACKET (265) 10
+T_SEMICOLON (266) 8 9 16 17 18 27
+T_COMMA (267) 39
+T_EQUALS (268) 9 17 18
+T_LESSTHANEQ (269) 21
+T_MORETHANEQ (270) 22
+T_CONDEQ (271) 23
+T_NOTEQ (272) 24
+T_LOGAND (273) 25
+T_LOGOR (274) 26
+T_IF (275) 19
+T_NUMBER (276) 34
+T_IDENTIFIER (277) 6 7 8 9 16 17 18 35 36 37 38 39
+T_RETURN (278) 27
+T_INT (279) 40
+T_ADD (280)
+T_VOID (281) 41
 
 
 Nonterminals, with rules where they appear
 
-$accept (20)
+$accept (27)
     on left: 0
-ROOT (21)
+ROOT (28)
     on left: 1, on right: 0
-Program (22)
-    on left: 2 3 4, on right: 1 3
-FunctionDeclaration (23)
-    on left: 5 6, on right: 2 3
-VariableDeclaration (24)
-    on left: 7 8, on right: 4
-Block (25)
-    on left: 9, on right: 5 6
-BlockList (26)
-    on left: 10, on right: 9
-ReturnStatement (27)
-    on left: 11, on right: 10
-Expression (28)
-    on left: 12 13 14, on right: 8 11 13 14
-Term (29)
-    on left: 15 16 17, on right: 12 13 14 16 17
-Factor (30)
-    on left: 18 19 20 21, on right: 15 16 17
-Param (31)
-    on left: 22 23, on right: 6 21 23
-Type (32)
-    on left: 24 25, on right: 5 6 7 8 22 23
+Program (29)
+    on left: 2 3 4 5, on right: 1 3 5
+FunctionDeclaration (30)
+    on left: 6 7, on right: 2 3
+VariableDeclaration (31)
+    on left: 8 9, on right: 4 5
+Block (32)
+    on left: 10, on right: 6 7 19
+BlockList (33)
+    on left: 11 12, on right: 10 12
+Statements (34)
+    on left: 13 14 15, on right: 11 12
+AssignStatement (35)
+    on left: 16 17 18, on right: 14
+IfStatement (36)
+    on left: 19, on right: 15
+Comp_Expr (37)
+    on left: 20, on right: 19
+Comp_Op (38)
+    on left: 21 22 23 24 25 26, on right: 20
+ReturnStatement (39)
+    on left: 27, on right: 13
+Expression (40)
+    on left: 28 29 30, on right: 9 17 18 20 27 29 30
+Term (41)
+    on left: 31 32 33, on right: 28 29 30 32 33
+Factor (42)
+    on left: 34 35 36 37, on right: 31 32 33
+Param (43)
+    on left: 38 39, on right: 7 37 39
+Type (44)
+    on left: 40 41, on right: 6 7 8 9 16 17 38 39
 
 
 State 0
@@ -114,16 +152,16 @@ State 0
 
 State 1
 
-   24 Type: T_INT .
+   40 Type: T_INT .
 
-    $default  reduce using rule 24 (Type)
+    $default  reduce using rule 40 (Type)
 
 
 State 2
 
-   25 Type: T_VOID .
+   41 Type: T_VOID .
 
-    $default  reduce using rule 25 (Type)
+    $default  reduce using rule 41 (Type)
 
 
 State 3
@@ -137,6 +175,7 @@ State 4
 
     1 ROOT: Program .
     3 Program: Program . FunctionDeclaration
+    5        | Program . VariableDeclaration
 
     T_INT   shift, and go to state 1
     T_VOID  shift, and go to state 2
@@ -144,7 +183,8 @@ State 4
     $default  reduce using rule 1 (ROOT)
 
     FunctionDeclaration  go to state 9
-    Type                 go to state 10
+    VariableDeclaration  go to state 10
+    Type                 go to state 7
 
 
 State 5
@@ -163,10 +203,10 @@ State 6
 
 State 7
 
-    5 FunctionDeclaration: Type . T_IDENTIFIER T_LBRACKET T_RBRACKET Block
-    6                    | Type . T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block
-    7 VariableDeclaration: Type . T_IDENTIFIER T_SEMICOLON
-    8                    | Type . T_IDENTIFIER T_EQUALS Expression T_SEMICOLON
+    6 FunctionDeclaration: Type . T_IDENTIFIER T_LBRACKET T_RBRACKET Block
+    7                    | Type . T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block
+    8 VariableDeclaration: Type . T_IDENTIFIER T_SEMICOLON
+    9                    | Type . T_IDENTIFIER T_EQUALS Expression T_SEMICOLON
 
     T_IDENTIFIER  shift, and go to state 11
 
@@ -187,364 +227,621 @@ State 9
 
 State 10
 
-    5 FunctionDeclaration: Type . T_IDENTIFIER T_LBRACKET T_RBRACKET Block
-    6                    | Type . T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block
+    5 Program: Program VariableDeclaration .
 
-    T_IDENTIFIER  shift, and go to state 12
+    $default  reduce using rule 5 (Program)
 
 
 State 11
 
-    5 FunctionDeclaration: Type T_IDENTIFIER . T_LBRACKET T_RBRACKET Block
-    6                    | Type T_IDENTIFIER . T_LBRACKET Param T_RBRACKET Block
-    7 VariableDeclaration: Type T_IDENTIFIER . T_SEMICOLON
-    8                    | Type T_IDENTIFIER . T_EQUALS Expression T_SEMICOLON
+    6 FunctionDeclaration: Type T_IDENTIFIER . T_LBRACKET T_RBRACKET Block
+    7                    | Type T_IDENTIFIER . T_LBRACKET Param T_RBRACKET Block
+    8 VariableDeclaration: Type T_IDENTIFIER . T_SEMICOLON
+    9                    | Type T_IDENTIFIER . T_EQUALS Expression T_SEMICOLON
 
-    T_LBRACKET   shift, and go to state 13
-    T_SEMICOLON  shift, and go to state 14
-    T_EQUALS     shift, and go to state 15
+    T_LBRACKET   shift, and go to state 12
+    T_SEMICOLON  shift, and go to state 13
+    T_EQUALS     shift, and go to state 14
 
 
 State 12
 
-    5 FunctionDeclaration: Type T_IDENTIFIER . T_LBRACKET T_RBRACKET Block
-    6                    | Type T_IDENTIFIER . T_LBRACKET Param T_RBRACKET Block
+    6 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET . T_RBRACKET Block
+    7                    | Type T_IDENTIFIER T_LBRACKET . Param T_RBRACKET Block
 
-    T_LBRACKET  shift, and go to state 13
+    T_RBRACKET  shift, and go to state 15
+    T_INT       shift, and go to state 1
+    T_VOID      shift, and go to state 2
+
+    Param  go to state 16
+    Type   go to state 17
 
 
 State 13
 
-    5 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET . T_RBRACKET Block
-    6                    | Type T_IDENTIFIER T_LBRACKET . Param T_RBRACKET Block
-
-    T_RBRACKET  shift, and go to state 16
-    T_INT       shift, and go to state 1
-    T_VOID      shift, and go to state 2
-
-    Param  go to state 17
-    Type   go to state 18
-
-
-State 14
-
-    7 VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON .
-
-    $default  reduce using rule 7 (VariableDeclaration)
-
-
-State 15
-
-    8 VariableDeclaration: Type T_IDENTIFIER T_EQUALS . Expression T_SEMICOLON
-
-    T_NUMBER      shift, and go to state 19
-    T_IDENTIFIER  shift, and go to state 20
-
-    Expression  go to state 21
-    Term        go to state 22
-    Factor      go to state 23
-
-
-State 16
-
-    5 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET T_RBRACKET . Block
-
-    T_CLBRACKET  shift, and go to state 24
-
-    Block  go to state 25
-
-
-State 17
-
-    6 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET Param . T_RBRACKET Block
-
-    T_RBRACKET  shift, and go to state 26
-
-
-State 18
-
-   22 Param: Type . T_IDENTIFIER
-   23      | Type . T_IDENTIFIER T_COMMA Param
-
-    T_IDENTIFIER  shift, and go to state 27
-
-
-State 19
-
-   18 Factor: T_NUMBER .
-
-    $default  reduce using rule 18 (Factor)
-
-
-State 20
-
-   19 Factor: T_IDENTIFIER .
-   20       | T_IDENTIFIER . T_LBRACKET T_RBRACKET
-   21       | T_IDENTIFIER . T_LBRACKET Param T_RBRACKET
-
-    T_LBRACKET  shift, and go to state 28
-
-    $default  reduce using rule 19 (Factor)
-
-
-State 21
-
-    8 VariableDeclaration: Type T_IDENTIFIER T_EQUALS Expression . T_SEMICOLON
-   13 Expression: Expression . T_PLUS Term
-   14           | Expression . T_MINUS Term
-
-    T_PLUS       shift, and go to state 29
-    T_MINUS      shift, and go to state 30
-    T_SEMICOLON  shift, and go to state 31
-
-
-State 22
-
-   12 Expression: Term .
-   16 Term: Term . T_TIMES Factor
-   17     | Term . T_DIVIDE Factor
-
-    T_TIMES   shift, and go to state 32
-    T_DIVIDE  shift, and go to state 33
-
-    $default  reduce using rule 12 (Expression)
-
-
-State 23
-
-   15 Term: Factor .
-
-    $default  reduce using rule 15 (Term)
-
-
-State 24
-
-    9 Block: T_CLBRACKET . BlockList T_CRBRACKET
-
-    T_RETURN  shift, and go to state 34
-
-    BlockList        go to state 35
-    ReturnStatement  go to state 36
-
-
-State 25
-
-    5 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET T_RBRACKET Block .
-
-    $default  reduce using rule 5 (FunctionDeclaration)
-
-
-State 26
-
-    6 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET . Block
-
-    T_CLBRACKET  shift, and go to state 24
-
-    Block  go to state 37
-
-
-State 27
-
-   22 Param: Type T_IDENTIFIER .
-   23      | Type T_IDENTIFIER . T_COMMA Param
-
-    T_COMMA  shift, and go to state 38
-
-    $default  reduce using rule 22 (Param)
-
-
-State 28
-
-   20 Factor: T_IDENTIFIER T_LBRACKET . T_RBRACKET
-   21       | T_IDENTIFIER T_LBRACKET . Param T_RBRACKET
-
-    T_RBRACKET  shift, and go to state 39
-    T_INT       shift, and go to state 1
-    T_VOID      shift, and go to state 2
-
-    Param  go to state 40
-    Type   go to state 18
-
-
-State 29
-
-   13 Expression: Expression T_PLUS . Term
-
-    T_NUMBER      shift, and go to state 19
-    T_IDENTIFIER  shift, and go to state 20
-
-    Term    go to state 41
-    Factor  go to state 23
-
-
-State 30
-
-   14 Expression: Expression T_MINUS . Term
-
-    T_NUMBER      shift, and go to state 19
-    T_IDENTIFIER  shift, and go to state 20
-
-    Term    go to state 42
-    Factor  go to state 23
-
-
-State 31
-
-    8 VariableDeclaration: Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON .
+    8 VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON .
 
     $default  reduce using rule 8 (VariableDeclaration)
 
 
-State 32
+State 14
 
-   16 Term: Term T_TIMES . Factor
+    9 VariableDeclaration: Type T_IDENTIFIER T_EQUALS . Expression T_SEMICOLON
 
-    T_NUMBER      shift, and go to state 19
-    T_IDENTIFIER  shift, and go to state 20
+    T_NUMBER      shift, and go to state 18
+    T_IDENTIFIER  shift, and go to state 19
 
-    Factor  go to state 43
-
-
-State 33
-
-   17 Term: Term T_DIVIDE . Factor
-
-    T_NUMBER      shift, and go to state 19
-    T_IDENTIFIER  shift, and go to state 20
-
-    Factor  go to state 44
+    Expression  go to state 20
+    Term        go to state 21
+    Factor      go to state 22
 
 
-State 34
+State 15
 
-   11 ReturnStatement: T_RETURN . Expression T_SEMICOLON
+    6 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET T_RBRACKET . Block
 
-    T_NUMBER      shift, and go to state 19
-    T_IDENTIFIER  shift, and go to state 20
+    T_CLBRACKET  shift, and go to state 23
 
-    Expression  go to state 45
-    Term        go to state 22
-    Factor      go to state 23
+    Block  go to state 24
 
 
-State 35
+State 16
 
-    9 Block: T_CLBRACKET BlockList . T_CRBRACKET
+    7 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET Param . T_RBRACKET Block
 
-    T_CRBRACKET  shift, and go to state 46
-
-
-State 36
-
-   10 BlockList: ReturnStatement .
-
-    $default  reduce using rule 10 (BlockList)
+    T_RBRACKET  shift, and go to state 25
 
 
-State 37
+State 17
 
-    6 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block .
+   38 Param: Type . T_IDENTIFIER
+   39      | Type . T_IDENTIFIER T_COMMA Param
+
+    T_IDENTIFIER  shift, and go to state 26
+
+
+State 18
+
+   34 Factor: T_NUMBER .
+
+    $default  reduce using rule 34 (Factor)
+
+
+State 19
+
+   35 Factor: T_IDENTIFIER .
+   36       | T_IDENTIFIER . T_LBRACKET T_RBRACKET
+   37       | T_IDENTIFIER . T_LBRACKET Param T_RBRACKET
+
+    T_LBRACKET  shift, and go to state 27
+
+    $default  reduce using rule 35 (Factor)
+
+
+State 20
+
+    9 VariableDeclaration: Type T_IDENTIFIER T_EQUALS Expression . T_SEMICOLON
+   29 Expression: Expression . T_PLUS Term
+   30           | Expression . T_MINUS Term
+
+    T_PLUS       shift, and go to state 28
+    T_MINUS      shift, and go to state 29
+    T_SEMICOLON  shift, and go to state 30
+
+
+State 21
+
+   28 Expression: Term .
+   32 Term: Term . T_TIMES Factor
+   33     | Term . T_DIVIDE Factor
+
+    T_TIMES   shift, and go to state 31
+    T_DIVIDE  shift, and go to state 32
+
+    $default  reduce using rule 28 (Expression)
+
+
+State 22
+
+   31 Term: Factor .
+
+    $default  reduce using rule 31 (Term)
+
+
+State 23
+
+   10 Block: T_CLBRACKET . BlockList T_CRBRACKET
+
+    T_IF          shift, and go to state 33
+    T_IDENTIFIER  shift, and go to state 34
+    T_RETURN      shift, and go to state 35
+    T_INT         shift, and go to state 1
+    T_VOID        shift, and go to state 2
+
+    BlockList        go to state 36
+    Statements       go to state 37
+    AssignStatement  go to state 38
+    IfStatement      go to state 39
+    ReturnStatement  go to state 40
+    Type             go to state 41
+
+
+State 24
+
+    6 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET T_RBRACKET Block .
 
     $default  reduce using rule 6 (FunctionDeclaration)
 
 
+State 25
+
+    7 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET . Block
+
+    T_CLBRACKET  shift, and go to state 23
+
+    Block  go to state 42
+
+
+State 26
+
+   38 Param: Type T_IDENTIFIER .
+   39      | Type T_IDENTIFIER . T_COMMA Param
+
+    T_COMMA  shift, and go to state 43
+
+    $default  reduce using rule 38 (Param)
+
+
+State 27
+
+   36 Factor: T_IDENTIFIER T_LBRACKET . T_RBRACKET
+   37       | T_IDENTIFIER T_LBRACKET . Param T_RBRACKET
+
+    T_RBRACKET  shift, and go to state 44
+    T_INT       shift, and go to state 1
+    T_VOID      shift, and go to state 2
+
+    Param  go to state 45
+    Type   go to state 17
+
+
+State 28
+
+   29 Expression: Expression T_PLUS . Term
+
+    T_NUMBER      shift, and go to state 18
+    T_IDENTIFIER  shift, and go to state 19
+
+    Term    go to state 46
+    Factor  go to state 22
+
+
+State 29
+
+   30 Expression: Expression T_MINUS . Term
+
+    T_NUMBER      shift, and go to state 18
+    T_IDENTIFIER  shift, and go to state 19
+
+    Term    go to state 47
+    Factor  go to state 22
+
+
+State 30
+
+    9 VariableDeclaration: Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON .
+
+    $default  reduce using rule 9 (VariableDeclaration)
+
+
+State 31
+
+   32 Term: Term T_TIMES . Factor
+
+    T_NUMBER      shift, and go to state 18
+    T_IDENTIFIER  shift, and go to state 19
+
+    Factor  go to state 48
+
+
+State 32
+
+   33 Term: Term T_DIVIDE . Factor
+
+    T_NUMBER      shift, and go to state 18
+    T_IDENTIFIER  shift, and go to state 19
+
+    Factor  go to state 49
+
+
+State 33
+
+   19 IfStatement: T_IF . T_LBRACKET Comp_Expr T_RBRACKET Block
+
+    T_LBRACKET  shift, and go to state 50
+
+
+State 34
+
+   18 AssignStatement: T_IDENTIFIER . T_EQUALS Expression T_SEMICOLON
+
+    T_EQUALS  shift, and go to state 51
+
+
+State 35
+
+   27 ReturnStatement: T_RETURN . Expression T_SEMICOLON
+
+    T_NUMBER      shift, and go to state 18
+    T_IDENTIFIER  shift, and go to state 19
+
+    Expression  go to state 52
+    Term        go to state 21
+    Factor      go to state 22
+
+
+State 36
+
+   10 Block: T_CLBRACKET BlockList . T_CRBRACKET
+   12 BlockList: BlockList . Statements
+
+    T_CRBRACKET   shift, and go to state 53
+    T_IF          shift, and go to state 33
+    T_IDENTIFIER  shift, and go to state 34
+    T_RETURN      shift, and go to state 35
+    T_INT         shift, and go to state 1
+    T_VOID        shift, and go to state 2
+
+    Statements       go to state 54
+    AssignStatement  go to state 38
+    IfStatement      go to state 39
+    ReturnStatement  go to state 40
+    Type             go to state 41
+
+
+State 37
+
+   11 BlockList: Statements .
+
+    $default  reduce using rule 11 (BlockList)
+
+
 State 38
 
-   23 Param: Type T_IDENTIFIER T_COMMA . Param
+   14 Statements: AssignStatement .
 
-    T_INT   shift, and go to state 1
-    T_VOID  shift, and go to state 2
-
-    Param  go to state 47
-    Type   go to state 18
+    $default  reduce using rule 14 (Statements)
 
 
 State 39
 
-   20 Factor: T_IDENTIFIER T_LBRACKET T_RBRACKET .
+   15 Statements: IfStatement .
 
-    $default  reduce using rule 20 (Factor)
+    $default  reduce using rule 15 (Statements)
 
 
 State 40
 
-   21 Factor: T_IDENTIFIER T_LBRACKET Param . T_RBRACKET
+   13 Statements: ReturnStatement .
 
-    T_RBRACKET  shift, and go to state 48
+    $default  reduce using rule 13 (Statements)
 
 
 State 41
 
-   13 Expression: Expression T_PLUS Term .
-   16 Term: Term . T_TIMES Factor
-   17     | Term . T_DIVIDE Factor
+   16 AssignStatement: Type . T_IDENTIFIER T_SEMICOLON
+   17                | Type . T_IDENTIFIER T_EQUALS Expression T_SEMICOLON
 
-    T_TIMES   shift, and go to state 32
-    T_DIVIDE  shift, and go to state 33
-
-    $default  reduce using rule 13 (Expression)
+    T_IDENTIFIER  shift, and go to state 55
 
 
 State 42
 
-   14 Expression: Expression T_MINUS Term .
-   16 Term: Term . T_TIMES Factor
-   17     | Term . T_DIVIDE Factor
+    7 FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block .
 
-    T_TIMES   shift, and go to state 32
-    T_DIVIDE  shift, and go to state 33
-
-    $default  reduce using rule 14 (Expression)
+    $default  reduce using rule 7 (FunctionDeclaration)
 
 
 State 43
 
-   16 Term: Term T_TIMES Factor .
+   39 Param: Type T_IDENTIFIER T_COMMA . Param
 
-    $default  reduce using rule 16 (Term)
+    T_INT   shift, and go to state 1
+    T_VOID  shift, and go to state 2
+
+    Param  go to state 56
+    Type   go to state 17
 
 
 State 44
 
-   17 Term: Term T_DIVIDE Factor .
+   36 Factor: T_IDENTIFIER T_LBRACKET T_RBRACKET .
 
-    $default  reduce using rule 17 (Term)
+    $default  reduce using rule 36 (Factor)
 
 
 State 45
 
-   11 ReturnStatement: T_RETURN Expression . T_SEMICOLON
-   13 Expression: Expression . T_PLUS Term
-   14           | Expression . T_MINUS Term
+   37 Factor: T_IDENTIFIER T_LBRACKET Param . T_RBRACKET
 
-    T_PLUS       shift, and go to state 29
-    T_MINUS      shift, and go to state 30
-    T_SEMICOLON  shift, and go to state 49
+    T_RBRACKET  shift, and go to state 57
 
 
 State 46
 
-    9 Block: T_CLBRACKET BlockList T_CRBRACKET .
+   29 Expression: Expression T_PLUS Term .
+   32 Term: Term . T_TIMES Factor
+   33     | Term . T_DIVIDE Factor
 
-    $default  reduce using rule 9 (Block)
+    T_TIMES   shift, and go to state 31
+    T_DIVIDE  shift, and go to state 32
+
+    $default  reduce using rule 29 (Expression)
 
 
 State 47
 
-   23 Param: Type T_IDENTIFIER T_COMMA Param .
+   30 Expression: Expression T_MINUS Term .
+   32 Term: Term . T_TIMES Factor
+   33     | Term . T_DIVIDE Factor
 
-    $default  reduce using rule 23 (Param)
+    T_TIMES   shift, and go to state 31
+    T_DIVIDE  shift, and go to state 32
+
+    $default  reduce using rule 30 (Expression)
 
 
 State 48
 
-   21 Factor: T_IDENTIFIER T_LBRACKET Param T_RBRACKET .
+   32 Term: Term T_TIMES Factor .
 
-    $default  reduce using rule 21 (Factor)
+    $default  reduce using rule 32 (Term)
 
 
 State 49
 
-   11 ReturnStatement: T_RETURN Expression T_SEMICOLON .
+   33 Term: Term T_DIVIDE Factor .
 
-    $default  reduce using rule 11 (ReturnStatement)
+    $default  reduce using rule 33 (Term)
+
+
+State 50
+
+   19 IfStatement: T_IF T_LBRACKET . Comp_Expr T_RBRACKET Block
+
+    T_NUMBER      shift, and go to state 18
+    T_IDENTIFIER  shift, and go to state 19
+
+    Comp_Expr   go to state 58
+    Expression  go to state 59
+    Term        go to state 21
+    Factor      go to state 22
+
+
+State 51
+
+   18 AssignStatement: T_IDENTIFIER T_EQUALS . Expression T_SEMICOLON
+
+    T_NUMBER      shift, and go to state 18
+    T_IDENTIFIER  shift, and go to state 19
+
+    Expression  go to state 60
+    Term        go to state 21
+    Factor      go to state 22
+
+
+State 52
+
+   27 ReturnStatement: T_RETURN Expression . T_SEMICOLON
+   29 Expression: Expression . T_PLUS Term
+   30           | Expression . T_MINUS Term
+
+    T_PLUS       shift, and go to state 28
+    T_MINUS      shift, and go to state 29
+    T_SEMICOLON  shift, and go to state 61
+
+
+State 53
+
+   10 Block: T_CLBRACKET BlockList T_CRBRACKET .
+
+    $default  reduce using rule 10 (Block)
+
+
+State 54
+
+   12 BlockList: BlockList Statements .
+
+    $default  reduce using rule 12 (BlockList)
+
+
+State 55
+
+   16 AssignStatement: Type T_IDENTIFIER . T_SEMICOLON
+   17                | Type T_IDENTIFIER . T_EQUALS Expression T_SEMICOLON
+
+    T_SEMICOLON  shift, and go to state 62
+    T_EQUALS     shift, and go to state 63
+
+
+State 56
+
+   39 Param: Type T_IDENTIFIER T_COMMA Param .
+
+    $default  reduce using rule 39 (Param)
+
+
+State 57
+
+   37 Factor: T_IDENTIFIER T_LBRACKET Param T_RBRACKET .
+
+    $default  reduce using rule 37 (Factor)
+
+
+State 58
+
+   19 IfStatement: T_IF T_LBRACKET Comp_Expr . T_RBRACKET Block
+
+    T_RBRACKET  shift, and go to state 64
+
+
+State 59
+
+   20 Comp_Expr: Expression . Comp_Op Expression
+   29 Expression: Expression . T_PLUS Term
+   30           | Expression . T_MINUS Term
+
+    T_PLUS        shift, and go to state 28
+    T_MINUS       shift, and go to state 29
+    T_LESSTHANEQ  shift, and go to state 65
+    T_MORETHANEQ  shift, and go to state 66
+    T_CONDEQ      shift, and go to state 67
+    T_NOTEQ       shift, and go to state 68
+    T_LOGAND      shift, and go to state 69
+    T_LOGOR       shift, and go to state 70
+
+    Comp_Op  go to state 71
+
+
+State 60
+
+   18 AssignStatement: T_IDENTIFIER T_EQUALS Expression . T_SEMICOLON
+   29 Expression: Expression . T_PLUS Term
+   30           | Expression . T_MINUS Term
+
+    T_PLUS       shift, and go to state 28
+    T_MINUS      shift, and go to state 29
+    T_SEMICOLON  shift, and go to state 72
+
+
+State 61
+
+   27 ReturnStatement: T_RETURN Expression T_SEMICOLON .
+
+    $default  reduce using rule 27 (ReturnStatement)
+
+
+State 62
+
+   16 AssignStatement: Type T_IDENTIFIER T_SEMICOLON .
+
+    $default  reduce using rule 16 (AssignStatement)
+
+
+State 63
+
+   17 AssignStatement: Type T_IDENTIFIER T_EQUALS . Expression T_SEMICOLON
+
+    T_NUMBER      shift, and go to state 18
+    T_IDENTIFIER  shift, and go to state 19
+
+    Expression  go to state 73
+    Term        go to state 21
+    Factor      go to state 22
+
+
+State 64
+
+   19 IfStatement: T_IF T_LBRACKET Comp_Expr T_RBRACKET . Block
+
+    T_CLBRACKET  shift, and go to state 23
+
+    Block  go to state 74
+
+
+State 65
+
+   21 Comp_Op: T_LESSTHANEQ .
+
+    $default  reduce using rule 21 (Comp_Op)
+
+
+State 66
+
+   22 Comp_Op: T_MORETHANEQ .
+
+    $default  reduce using rule 22 (Comp_Op)
+
+
+State 67
+
+   23 Comp_Op: T_CONDEQ .
+
+    $default  reduce using rule 23 (Comp_Op)
+
+
+State 68
+
+   24 Comp_Op: T_NOTEQ .
+
+    $default  reduce using rule 24 (Comp_Op)
+
+
+State 69
+
+   25 Comp_Op: T_LOGAND .
+
+    $default  reduce using rule 25 (Comp_Op)
+
+
+State 70
+
+   26 Comp_Op: T_LOGOR .
+
+    $default  reduce using rule 26 (Comp_Op)
+
+
+State 71
+
+   20 Comp_Expr: Expression Comp_Op . Expression
+
+    T_NUMBER      shift, and go to state 18
+    T_IDENTIFIER  shift, and go to state 19
+
+    Expression  go to state 75
+    Term        go to state 21
+    Factor      go to state 22
+
+
+State 72
+
+   18 AssignStatement: T_IDENTIFIER T_EQUALS Expression T_SEMICOLON .
+
+    $default  reduce using rule 18 (AssignStatement)
+
+
+State 73
+
+   17 AssignStatement: Type T_IDENTIFIER T_EQUALS Expression . T_SEMICOLON
+   29 Expression: Expression . T_PLUS Term
+   30           | Expression . T_MINUS Term
+
+    T_PLUS       shift, and go to state 28
+    T_MINUS      shift, and go to state 29
+    T_SEMICOLON  shift, and go to state 76
+
+
+State 74
+
+   19 IfStatement: T_IF T_LBRACKET Comp_Expr T_RBRACKET Block .
+
+    $default  reduce using rule 19 (IfStatement)
+
+
+State 75
+
+   20 Comp_Expr: Expression Comp_Op Expression .
+   29 Expression: Expression . T_PLUS Term
+   30           | Expression . T_MINUS Term
+
+    T_PLUS   shift, and go to state 28
+    T_MINUS  shift, and go to state 29
+
+    $default  reduce using rule 20 (Comp_Expr)
+
+
+State 76
+
+   17 AssignStatement: Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON .
+
+    $default  reduce using rule 17 (AssignStatement)
