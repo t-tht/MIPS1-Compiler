@@ -1,6 +1,9 @@
-#ifndef context_hpp
-#define context_hpp
+#ifndef ast_context_hpp
+#define ast_context_hpp
 
+#include <vector>
+#include <iostream>
+#include <unordered_map>
 #include <string>
 #include <sstream>
 
@@ -10,8 +13,18 @@ class Context{
 private:
 	int indentlevel = 0;
 public:
+	Context(){};
+	~Context(){};
+
+	int indentlevelget()const{
+		return indentlevel;
+	};
+	void indentlevelset(int i){
+		indentlevel = i;
+	};
+
 	std::string indent()const{
-		std::sstream ss;
+		std::stringstream ss;
 		for(int i = 0; i < indentlevel; i++){
 			ss << "\t";
 		}
@@ -19,4 +32,4 @@ public:
 	};
 };
 
-#define
+#endif
