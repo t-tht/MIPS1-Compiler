@@ -1,5 +1,5 @@
-#ifndef ast_context_hpp
-#define ast_context_hpp
+#ifndef ast_interpretcontext_hpp
+#define ast_interpretcontext_hpp
 
 #include <vector>
 #include <iostream>
@@ -7,29 +7,41 @@
 #include <string>
 #include <sstream>
 
-class Context;
+class InterpretContext;
 
-class Context{
-private:
-	int indentlevel = 0;
+class InterpretContext{
 public:
-	Context(){};
-	~Context(){};
+	unsigned int sp;
+	unsigned int frame_size;
 
-	int indentlevelget()const{
-		return indentlevel;
-	};
-	void indentlevelset(int i){
-		indentlevel = i;
-	};
+	int argno;
+	int paramno;
 
-	std::string indent()const{
-		std::stringstream ss;
-		for(int i = 0; i < indentlevel; i++){
-			ss << "\t";
+	bool reg[32];
+
+	std::unordered_map<std::string, unsigned int> variablebindings;
+	//TODO INCLUDE DYNAMIC BINDINGS IF NEEDED
+	std::unordered_map<std::string, unsigned int> globalbindings
+
+	InterpretContext(){
+		for(int i = 0; i < 32; i++){
+			reg[i] = false;
 		}
-		return ss.str();
+		sp = 0;
+		frame_size = 0;
+		argno = 0;
+		paramno = 4;
 	};
+	~InterpretContext(){};
+
+	void regsetfree(){};
+	void regsetused(){};
+
+	void addvar(const std::string* name){};
+
+
+
+
 };
 
 #endif
