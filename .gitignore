@@ -24,3 +24,4 @@ c_translator/bin/c_compiler
 *.output
 c_translator/src/c_parser.tab.cpp
 c_translator/src/c_parser.tab.hpp
+*.log
