@@ -13,14 +13,14 @@ class ReturnStat : public Node{
 	public:
 		ReturnStat(NodePtr _Expr) : Expr(_Expr){};
 		~ReturnStat(){};
-		void translate(std::ostream &dst)const override{
+		void translate(std::ostream &dst)const{
             dst << "return ";
             Expr->translate(dst);
 			dst << std::endl;
 		};
-		void print(std::ostream &dst)const override{
+		void compile(std::ostream &dst)const{
             dst << "return ";
-            Expr->print(dst);
+            Expr->compile(dst);
 		};
 };
 

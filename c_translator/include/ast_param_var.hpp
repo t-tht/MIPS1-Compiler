@@ -13,7 +13,7 @@ class ParamVar : public Node{
 		void translate(std::ostream &dst) const override{
 			dst << *type << " " << *id;
 		};
-		void print(std::ostream &dst) const override{
+		void compile(std::ostream &dst) const override{
 			dst << *type << " " << *id;
 		};
 };

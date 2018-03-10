@@ -27,11 +27,11 @@ public:
         }
         
     }
-    void print(std::ostream &dst) const {
-        dst << "print not implemented yet" <<std::endl;
+    void compile(std::ostream &dst) const {
+        dst << "compile not implemented yet" <<std::endl;
         dst << *type << " "<< *id << std::endl;
         if(Expr != NULL){
-            Expr ->print(dst);
+            Expr ->compile(dst);
         }
     }
 };
