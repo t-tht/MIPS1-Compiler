@@ -21,18 +21,7 @@ class Param : public Node{
 			}
 			
 		};
-<<<<<<< HEAD
 		void compile(std::ostream &dst)const override{};
-=======
-		void print(std::ostream &dst)const override{
-			dst<< *type << " " << *ident;
-			if(right != NULL){
-				dst << ",";
-				right->print(dst);
-			}
-			
-		};
->>>>>>> 379cf3f1576e8485ea768c8799a099d6c4a50a20
 };
 
 #endif

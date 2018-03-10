@@ -10,6 +10,9 @@ class Number : public Node{
 	public:
 		Number(double _value) : value(_value){};
 		~Number(){};
+		double getval() const{
+			return value;
+		};
 		virtual void translate(std::ostream &dst)const override{
 			dst << value;
 		};
