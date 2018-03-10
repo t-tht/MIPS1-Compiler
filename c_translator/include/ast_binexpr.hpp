@@ -16,11 +16,7 @@ class BinExpr : public Node{
 			dst << *op;
 			right->translate(dst);
 		};
-		virtual void print(std::ostream &dst)const override{
-			left->print(dst);
-			dst << *op;
-			right->print(dst);
-		};
+		virtual void compile(std::ostream &dst)const override{};
 };
 
 #endif

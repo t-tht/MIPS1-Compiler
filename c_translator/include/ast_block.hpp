@@ -21,12 +21,12 @@ class Block : public Node{
 				right->translate(dst);
 			}
 		};
-		void print(std::ostream &dst)const override{
+		void compile(std::ostream &dst)const override{
 			if(left != NULL){
-				left->print(dst);
+				left->compile(dst);
 			}
 			if(right != NULL){
-				right->print(dst);
+				right->compile(dst);
 			}
 		};
 };

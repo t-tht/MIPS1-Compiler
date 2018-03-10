@@ -17,6 +17,7 @@ c_translator/src/c_parser.tab.cpp
 c_translator/src/c_parser.tab.hpp
 c_translator/src/c_parser.tab.o
 ubuntu-xenial-16.04-cloudimg-console.log
+<<<<<<< HEAD
 *.log
 ubuntu-xenial-16.04-cloudimg-console.log
 *.log
@@ -26,3 +27,5 @@ c_translator/bin/c_compiler
 c_translator/src/c_parser.tab.cpp
 c_translator/src/c_parser.tab.hpp
 *.log
+=======
+>>>>>>> b9a1d0877ccbdb29602ce0c0f8b6ad7b8aa1b8fd
