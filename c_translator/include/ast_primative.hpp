@@ -16,7 +16,7 @@ class Number : public Node{
 		virtual void translate(std::ostream &dst)const override{
 			dst << value;
 		};
-		virtual void print(std::ostream &dst)const override{
+		virtual void compile(std::ostream &dst)const override{
 			dst << value;
 		};
 };
@@ -30,7 +30,7 @@ class Variable : public Node{
 		virtual void translate(std::ostream &dst)const override{
 			dst << *id;
 		};
-		virtual void print(std::ostream &dst)const override{
+		virtual void compile(std::ostream &dst)const override{
 			dst << *id;
 		};
 };

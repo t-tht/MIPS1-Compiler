@@ -16,16 +16,16 @@ class CompExpr : public Node{
 		};
 		void translate(std::ostream &dst)const override{
 			if(left != NULL){
-				left->print(dst);
+				left->compile(dst);
 			}
 			if(op != NULL){
 				dst << " " << *op << " ";
 			}
 			if(right != NULL){
-				right->print(dst);
+				right->compile(dst);
 			}
 		};
-		void print(std::ostream &dst)const override{};
+		void compile(std::ostream &dst)const override{};
 };
 
 #endif

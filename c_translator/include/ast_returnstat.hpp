@@ -18,9 +18,9 @@ class ReturnStat : public Node{
             Expr->translate(dst);
 			dst << std::endl;
 		};
-		void print(std::ostream &dst)const{
+		void compile(std::ostream &dst)const{
             dst << "return ";
-            Expr->print(dst);
+            Expr->compile(dst);
 		};
 };
 

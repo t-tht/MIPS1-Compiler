@@ -29,12 +29,12 @@ class FuncDec: public Node{
 			dst << "):" << std::endl;
 			block->translate(dst);
 		}
-		void print(std::ostream &dst) const {
-			dst << "print not implemented yet" <<std::endl;
+		void compile(std::ostream &dst) const {
+			dst << "compile not implemented yet" <<std::endl;
 			if(param != NULL){
-				param->print(dst);
+				param->compile(dst);
 			}
-			block->print(dst);
+			block->compile(dst);
 		}
 };
 
