@@ -5,7 +5,6 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
-#include <sstream>
 
 class InterpretContext;
 
@@ -17,7 +16,7 @@ public:
 	int argno;
 	int paramno;
 
-	bool reg[32];
+	bool reg[32];	//check if register is free or occupied
 
 	std::unordered_map<std::string, unsigned int> variablebindings;
 	//TODO INCLUDE DYNAMIC BINDINGS IF NEEDED
