@@ -23,7 +23,7 @@ class IfStatement : public Node{
 				body->translate(dst);
 			}
 		};
-		void compile(std::ostream &dst)const override{};
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{};
 };
 
 #endif

@@ -18,7 +18,7 @@ class ReturnStat : public Node{
             Expr->translate(dst);
 			dst << std::endl;
 		};
-		void compile(std::ostream &dst)const{
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const{
             dst << "return ";
             Expr->compile(dst);
 		};

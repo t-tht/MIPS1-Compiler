@@ -22,15 +22,15 @@ class VarDec: public Node{
 				dst << " = ";
 				Expr ->translate(dst);
 			}
-            
+
 		}
-		void compile(std::ostream &dst) const {
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const {
 			dst << "compile not implemented yet" <<std::endl;
             dst << *type << " "<< *id << std::endl;
             if(Expr != NULL){
                 Expr ->compile(dst);
             }
-		} 
+		}
 };
 
 #endif

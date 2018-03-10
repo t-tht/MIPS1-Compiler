@@ -21,7 +21,7 @@ class Block : public Node{
 				right->translate(dst);
 			}
 		};
-		void compile(std::ostream &dst)const override{
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
 			if(left != NULL){
 				left->compile(dst);
 			}

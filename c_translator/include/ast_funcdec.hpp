@@ -29,12 +29,27 @@ class FuncDec: public Node{
 			dst << "):" << std::endl;
 			block->translate(dst);
 		}
-		void compile(std::ostream &dst) const {
-			dst << "compile not implemented yet" <<std::endl;
-			if(param != NULL){
-				param->compile(dst);
-			}
-			block->compile(dst);
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const {
+			//allocate bytes on stack, -8 used to reserve extra space (mips spec?)
+			std::cout << "addiu		$sp, $sp, -8" << std::endl;
+			//store previous frame pointer
+			std::cout << "sw		$fp, 4($sp)" << std::endl;
+			//create new frame pointer
+			std::cout << "move 		$fp, $sp" << std::endl;
+			//save param
+			std::cout << "" << std::endl;
+			//load param
+			std::cout << "" << std::endl;
+			//do work
+			std::cout << "" << std::endl;
+			//get back to base stack pointer. start unrolling at this point
+			std::cout << "move 		$sp, $fp" << std::endl;
+			//load old frame pointer
+			std::cout << "lw 		$fp, 4($sp)" << std::endl;
+			//release bytes from stack
+			std::cout << "addiu		$sp, $sp, 8" << std::endl;
+			//return
+			std::cout << "j			$31" << std::endl;
 		}
 };
 

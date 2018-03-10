@@ -20,11 +20,11 @@ class FuncCallExpr: public Node{
 			dst << *id << "(";
 			if(param != NULL){
 				param->translate(dst);
-			}		
+			}
 			dst << ")";
 
 		}
-		void compile(std::ostream &dst) const {
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const {
 			dst << "compile not implemented yet" <<std::endl;
 			if(param != NULL){
 				param ->compile(dst);
