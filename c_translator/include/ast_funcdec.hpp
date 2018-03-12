@@ -32,11 +32,11 @@ class FuncDec: public Node{
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 			//allocate bytes on stack, -8 used to reserve extra space (mips spec?)
-			dst << "addiu		$sp, $sp, -8" << std::endl;
+			dst << "addiu\t$sp, $sp, -8" << std::endl;
 			//store previous frame pointer
-			dst << "sw		$fp, 4($sp)" << std::endl;
+			dst << "sw\t$fp, 4($sp)" << std::endl;
 			//create new frame pointer
-			dst << "move 		$fp, $sp" << std::endl;
+			dst << "move\t$fp, $sp" << std::endl;
 			//save param
 			dst << "" << std::endl;
 			//load param
@@ -44,13 +44,13 @@ class FuncDec: public Node{
 			//do work
 			dst << "" << std::endl;
 			//get back to base stack pointer. start unrolling at this point
-			dst << "move 		$sp, $fp" << std::endl;
+			dst << "move\t$sp, $fp" << std::endl;
 			//load old frame pointer
-			dst << "lw 		$fp, 4($sp)" << std::endl;
+			dst << "lw\t$fp, 4($sp)" << std::endl;
 			//release bytes from stack
-			dst << "addiu		$sp, $sp, 8" << std::endl;
+			dst << "addiu\t$sp, $sp, 8" << std::endl;
 			//return
-			dst << "j			$31" << std::endl;
+			dst << "j\t$31" << std::endl;
 		};
 };
 

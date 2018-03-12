@@ -24,7 +24,12 @@ class Block : public Node{
 			}
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			dst << "compile function not yet implemented" << std::endl;
+			if(left != NULL){
+				left->compile(dst, cntx, destloc);
+			}
+			if(right != NULL){
+				right->compile(dst, cntx, destloc);
+			}
 		};
 };
 

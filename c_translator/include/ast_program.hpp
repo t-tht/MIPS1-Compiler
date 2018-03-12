@@ -24,7 +24,12 @@ class Program : public Node{
 			}
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-			//NOT YET IMPLEMENTED
+			if(left != NULL){
+				left->compile(dst, cntx, destloc);
+			}
+			if(right != NULL){
+				right->compile(dst, cntx, destloc);
+			}
 		};
 };
 
