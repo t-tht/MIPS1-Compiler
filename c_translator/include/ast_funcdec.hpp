@@ -31,26 +31,34 @@ class FuncDec: public Node{
 			block->translate(dst);
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
+
+			dst << "\t" << ".text" << std::endl;
+			dst << "\t" << ".align\t2" << std::endl;
+			dst << "\t" << ".globl\t" << *id << std::endl;
+			dst << "\t" << ".set\tnomips16" << std::endl;
+			dst << "\t" << ".set\tnomicromips" << std::endl;
+			dst << "\t" << ".ent\t" << *id << std::endl;
+			dst << "\t" << ".type\t" << *id << ", @function" << std::endl;
+			dst << *id << ":" << std::endl;
+
 			//allocate bytes on stack, -8 used to reserve extra space (mips spec?)
-			dst << "addiu\t$sp, $sp, -8" << std::endl;
+			dst << "\t" << "addiu\t$sp, $sp, -8" << std::endl;
 			//store previous frame pointer
-			dst << "sw\t$fp, 4($sp)" << std::endl;
+			dst << "\t" << "sw\t$fp, 4($sp)" << std::endl;
 			//create new frame pointer
-			dst << "move\t$fp, $sp" << std::endl;
-			//save param
-			dst << "" << std::endl;
-			//load param
-			dst << "" << std::endl;
-			//do work
-			dst << "" << std::endl;
+			dst << "\t" << "move\t$fp, $sp" << std::endl;
+
+			dst << "\t" << "li\t" << "$2, " << "10" << std::endl;
 			//get back to base stack pointer. start unrolling at this point
-			dst << "move\t$sp, $fp" << std::endl;
+			dst << "\t" << "move\t$sp, $fp" << std::endl;
+			dst << "\t" << "movz\t" << "$31, $31, $0" << std::endl;
 			//load old frame pointer
-			dst << "lw\t$fp, 4($sp)" << std::endl;
+			dst << "\t" << "lw\t$fp, 4($sp)" << std::endl;
 			//release bytes from stack
-			dst << "addiu\t$sp, $sp, 8" << std::endl;
+			dst << "\t" << "addiu\t$sp, $sp, 8" << std::endl;
 			//return
-			dst << "j\t$31" << std::endl;
+			dst << "\t" << "j\t$31" << std::endl;
+			dst << "\t" << "nop" << std::endl;
 		};
 };
 
