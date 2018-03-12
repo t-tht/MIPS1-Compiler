@@ -41,10 +41,18 @@ class FuncDec: public Node{
 			dst << "\t" << ".type\t" << *id << ", @function" << std::endl;
 			dst << *id << ":" << std::endl;
 
-			//allocate bytes on stack, -8 used to reserve extra space (mips spec?)
+			dst << "\t" << ".frame\t" << "$fp, " << "8" <<", $31" << std::endl;
+			dst << "\t" << ".mask\t0x40000000, -4" << std::endl;
+			dst << "\t" << ".fmask\t0x00000000, 0" << std::endl;
+			dst << "\t" << ".set\tnoreorder" << std::endl;
+			dst << "\t" << ".set\tnomacro" << std::endl;
+
+			//allocate space on stack
 			dst << "\t" << "addiu\t$sp, $sp, -8" << std::endl;
+
 			//store previous frame pointer
 			dst << "\t" << "sw\t$fp, 4($sp)" << std::endl;
+
 			//create new frame pointer
 			dst << "\t" << "move\t$fp, $sp" << std::endl;
 
@@ -58,7 +66,13 @@ class FuncDec: public Node{
 			dst << "\t" << "addiu\t$sp, $sp, 8" << std::endl;
 			//return
 			dst << "\t" << "j\t$31" << std::endl;
-			dst << "\t" << "nop" << std::endl;
+			dst << "\t" << "nop" << std::endl << std::endl;
+
+			dst << "\t" << ".set\tmacro" << std::endl;
+			dst << "\t" << ".set\treorder" << std::endl;
+			dst << "\t" << ".end\t" << *id << std::endl;
+			dst << "\t" << ".size\t" << *id << ", .-" << *id << std::endl;
+
 		};
 };
 
