@@ -18,7 +18,7 @@ class ReturnStat : public Node{
 			dst << std::endl;
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			//NOT YET IMPLEMENTED
+			dst << "compile function not yet implemented" << std::endl;
 		};
 };
 

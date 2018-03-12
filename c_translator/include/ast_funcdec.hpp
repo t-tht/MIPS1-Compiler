@@ -17,11 +17,11 @@ class FuncDec: public Node{
 		NodePtr param;
         NodePtr block;
 	public:
-		FuncDec(std::string* _type, std::string* _id, NodePtr _param, NodePtr _block): type(_type), id(_id), param(_param), block(_block){}
+		FuncDec(std::string* _type, std::string* _id, NodePtr _param, NodePtr _block): type(_type), id(_id), param(_param), block(_block){};
 		~FuncDec(){
 			delete param;
 			delete block;
-		}
+		};
 		void translate(std::ostream &dst) const override{
 			dst << "def " << *id << "(";
 			if(param != NULL){
@@ -29,7 +29,7 @@ class FuncDec: public Node{
 			}
 			dst << "):" << std::endl;
 			block->translate(dst);
-		}
+		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 			//allocate bytes on stack, -8 used to reserve extra space (mips spec?)
 			dst << "addiu		$sp, $sp, -8" << std::endl;
@@ -51,7 +51,7 @@ class FuncDec: public Node{
 			dst << "addiu		$sp, $sp, 8" << std::endl;
 			//return
 			dst << "j			$31" << std::endl;
-		}
+		};
 };
 
 #endif

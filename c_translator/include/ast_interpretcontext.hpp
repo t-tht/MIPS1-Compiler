@@ -7,6 +7,8 @@
 #include <string>
 #include "ast_global.hpp"
 
+typedef const InterpretContext *InterpretContextPtr;
+
 class InterpretContext;
 
 class InterpretContext{

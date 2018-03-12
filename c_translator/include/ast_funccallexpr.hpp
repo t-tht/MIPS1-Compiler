@@ -26,7 +26,7 @@ class FuncCallExpr: public Node{
 
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-			//NOT YET IMPLEMENTED
+			dst << "compile function not yet implemented" << std::endl;
 		};
 };
 
