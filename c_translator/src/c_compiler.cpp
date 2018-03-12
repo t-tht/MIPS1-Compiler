@@ -1,11 +1,9 @@
 #include "../include/ast.hpp"
 #include <iostream>
 
-extern const ASTnode *parseAST();
-
 int main(int argc, char* argv[]){
 
-    InterpretContext cntx = new InterpretContext();              //not used atm
+    InterpretContext cntx;              //not used atm
     unsigned int destloc = 0;           //not used atm
 
     const Node *ast=parseAST();
