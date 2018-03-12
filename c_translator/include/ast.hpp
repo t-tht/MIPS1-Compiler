@@ -15,7 +15,7 @@
 #include "ast_assignment.hpp"
 #include "ast_compexpr.hpp"
 #include "ast_ifstatement.hpp"
-#include "ast_interpretcontext"
+#include "ast_interpretcontext.hpp"
 
 
 extern const Node *parseAST();

@@ -1,6 +1,8 @@
 #ifndef ast_ifstatement_hpp
 #define ast_ifstatement_hpp
 
+#include "ast_global.hpp"
+
 class IfStatement;
 
 class IfStatement : public Node{
@@ -23,7 +25,9 @@ class IfStatement : public Node{
 				body->translate(dst);
 			}
 		};
-		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{};
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+			//NOT YET IMPLEMENTED
+		};
 };
 
 #endif

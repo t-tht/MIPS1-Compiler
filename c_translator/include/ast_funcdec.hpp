@@ -4,6 +4,7 @@
 #include<string>
 #include<iostream>
 #include"ast_param_var.hpp"
+#include "ast_global.hpp"
 
 
 
@@ -21,7 +22,7 @@ class FuncDec: public Node{
 			delete param;
 			delete block;
 		}
-		void translate(std::ostream &dst) const{
+		void translate(std::ostream &dst) const override{
 			dst << "def " << *id << "(";
 			if(param != NULL){
 				param->translate(dst);
@@ -29,27 +30,27 @@ class FuncDec: public Node{
 			dst << "):" << std::endl;
 			block->translate(dst);
 		}
-		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const {
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 			//allocate bytes on stack, -8 used to reserve extra space (mips spec?)
-			std::cout << "addiu		$sp, $sp, -8" << std::endl;
+			dst << "addiu		$sp, $sp, -8" << std::endl;
 			//store previous frame pointer
-			std::cout << "sw		$fp, 4($sp)" << std::endl;
+			dst << "sw		$fp, 4($sp)" << std::endl;
 			//create new frame pointer
-			std::cout << "move 		$fp, $sp" << std::endl;
+			dst << "move 		$fp, $sp" << std::endl;
 			//save param
-			std::cout << "" << std::endl;
+			dst << "" << std::endl;
 			//load param
-			std::cout << "" << std::endl;
+			dst << "" << std::endl;
 			//do work
-			std::cout << "" << std::endl;
+			dst << "" << std::endl;
 			//get back to base stack pointer. start unrolling at this point
-			std::cout << "move 		$sp, $fp" << std::endl;
+			dst << "move 		$sp, $fp" << std::endl;
 			//load old frame pointer
-			std::cout << "lw 		$fp, 4($sp)" << std::endl;
+			dst << "lw 		$fp, 4($sp)" << std::endl;
 			//release bytes from stack
-			std::cout << "addiu		$sp, $sp, 8" << std::endl;
+			dst << "addiu		$sp, $sp, 8" << std::endl;
 			//return
-			std::cout << "j			$31" << std::endl;
+			dst << "j			$31" << std::endl;
 		}
 };
 

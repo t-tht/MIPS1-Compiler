@@ -4,6 +4,8 @@
 #include<string>
 #include<iostream>
 #include<ast.hpp>
+#include "ast_global.hpp"
+
 
 class AssignmentStatement;
 
@@ -16,7 +18,7 @@ public:
     AssignmentStatement(std::string* _type, std::string* _id, NodePtr _Expr): type(_type), id(_id), Expr(_Expr){}
     ~AssignmentStatement(){
     }
-    void translate(std::ostream &dst) const{
+    void translate(std::ostream &dst) const override{
         if(type != NULL){
             dst << *type;
         }
@@ -27,12 +29,8 @@ public:
         }
 
     }
-    void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const {
-        dst << "compile not implemented yet" <<std::endl;
-        dst << *type << " "<< *id << std::endl;
-        if(Expr != NULL){
-            Expr ->compile(dst);
-        }
+    void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
+        //NOT YET IMPLEMENTED
     }
 };
 

@@ -1,6 +1,8 @@
 #ifndef ast_CompExpr_HPP
 #define ast_CompExpr_HPP
 
+#include "ast_global.hpp"
+
 class CompExpr;
 
 class CompExpr : public Node{
@@ -16,16 +18,18 @@ class CompExpr : public Node{
 		};
 		void translate(std::ostream &dst)const override{
 			if(left != NULL){
-				left->compile(dst);
+				left->translate(dst);
 			}
 			if(op != NULL){
 				dst << " " << *op << " ";
 			}
 			if(right != NULL){
-				right->compile(dst);
+				right->translate(dst);
 			}
 		};
-		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{};
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+			//NOT YET IMPLEMENTED
+		};
 };
 
 #endif

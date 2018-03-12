@@ -1,6 +1,8 @@
 #ifndef ast_block_hpp
 #define ast_block_hpp
 
+#include "ast_global.hpp"
+
 class Block;
 
 class Block : public Node{
@@ -22,12 +24,7 @@ class Block : public Node{
 			}
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			if(left != NULL){
-				left->compile(dst);
-			}
-			if(right != NULL){
-				right->compile(dst);
-			}
+			//NOT YET IMPLEMENTED
 		};
 };
 

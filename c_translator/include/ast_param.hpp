@@ -1,6 +1,8 @@
 #ifndef ast_param_hpp
 #define	ast_param_hpp
 
+#include "ast_global.hpp"
+
 class Param;
 
 class Param : public Node{
@@ -21,7 +23,9 @@ class Param : public Node{
 			}
 
 		};
-		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{};
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+			//NOT YET IMPLEMENTED
+		};
 };
 
 #endif

@@ -1,8 +1,7 @@
 #ifndef ast_vardec_hpp
 #define ast_vardec_hpp
 
-#include<string>
-#include<iostream>
+#include "ast_global.hpp"
 #include<ast.hpp>
 
 class VarDec;
@@ -16,7 +15,7 @@ class VarDec: public Node{
 		VarDec(std::string* _type, std::string* _id, NodePtr _Expr): type(_type), id(_id), Expr(_Expr){}
         ~VarDec(){
 		}
-		void translate(std::ostream &dst) const{
+		void translate(std::ostream &dst) const override{
             dst << *type << " "<< *id;
 			if(Expr != NULL){
 				dst << " = ";
@@ -24,13 +23,9 @@ class VarDec: public Node{
 			}
 
 		}
-		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const {
-			dst << "compile not implemented yet" <<std::endl;
-            dst << *type << " "<< *id << std::endl;
-            if(Expr != NULL){
-                Expr ->compile(dst);
-            }
-		}
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
+			//NOT YET IMPLEMENTED
+		};
 };
 
 #endif

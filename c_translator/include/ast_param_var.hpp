@@ -1,6 +1,8 @@
 #ifndef param_var_hpp
 #define param_var_hpp
 
+#include "ast_global.hpp"
+
 class ParamVar;
 
 class ParamVar : public Node{
@@ -14,7 +16,7 @@ class ParamVar : public Node{
 			dst << *type << " " << *id;
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-			dst << *type << " " << *id;
+			//NOT YET IMPLEMENTED
 		};
 };
 

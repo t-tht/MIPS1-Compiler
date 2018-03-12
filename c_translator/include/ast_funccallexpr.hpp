@@ -4,6 +4,7 @@
 #include<string>
 #include<iostream>
 #include<ast.hpp>
+#include "ast_global.hpp"
 
 class FuncCallExpr;
 
@@ -12,24 +13,21 @@ class FuncCallExpr: public Node{
 		std::string* id;
 		NodePtr param;		//needs fixing later, but atm assume no
 	public:
-		FuncCallExpr(std::string* _id, NodePtr _param): id(_id), param(_param){}
+		FuncCallExpr(std::string* _id, NodePtr _param): id(_id), param(_param){};
 		~FuncCallExpr(){
 			delete param;
-		}
-		void translate(std::ostream &dst) const{
+		};
+		void translate(std::ostream &dst) const override{
 			dst << *id << "(";
 			if(param != NULL){
 				param->translate(dst);
 			}
 			dst << ")";
 
-		}
-		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const {
-			dst << "compile not implemented yet" <<std::endl;
-			if(param != NULL){
-				param ->compile(dst);
-			}
-		}
+		};
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
+			//NOT YET IMPLEMENTED
+		};
 };
 
 #endif

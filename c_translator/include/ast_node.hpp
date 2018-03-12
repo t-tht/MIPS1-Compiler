@@ -1,8 +1,7 @@
 #ifndef ast_node_hpp
 #define ast_node_hpp
 
-#include<string>
-#include<iostream>
+#include "ast_global.hpp"
 
 class Node;
 

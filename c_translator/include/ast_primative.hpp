@@ -1,6 +1,8 @@
 #ifndef ast_primative_hpp
 #define ast_primative_hpp
 
+#include "ast_global.hpp"
+
 class Number;
 class Variable;
 
@@ -17,7 +19,7 @@ class Number : public Node{
 			dst << value;
 		};
 		virtual void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			dst << value;
+			//NOT YET IMPLEMENTED
 		};
 };
 
@@ -31,7 +33,7 @@ class Variable : public Node{
 			dst << *id;
 		};
 		virtual void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			dst << *id;
+			//NOT YET IMPLEMENTED
 		};
 };
 

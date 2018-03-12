@@ -1,8 +1,9 @@
 #ifndef ast_binexpr_hpp
 #define ast_binexpr_hpp
 
-class BinExpr;
+#include "ast_global.hpp"
 
+class BinExpr;
 class BinExpr : public Node{
 	protected:
 		NodePtr left;
@@ -16,7 +17,10 @@ class BinExpr : public Node{
 			dst << *op;
 			right->translate(dst);
 		};
-		virtual void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{};
+		virtual void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+			//NOT YET IMPLEMENTED
+		};
+
 };
 
 #endif

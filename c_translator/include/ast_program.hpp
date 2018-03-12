@@ -1,6 +1,8 @@
 #ifndef ast_program_hpp
 #define ast_program_hpp
 
+#include "ast_global.hpp"
+
 class Program;
 
 class Program : public Node{
@@ -22,11 +24,7 @@ class Program : public Node{
 			}
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-			if(left != NULL){
-				left->compile(dst);
-			}else if(right != NULL){
-				right->compile(dst);
-			}
+			//NOT YET IMPLEMENTED
 		};
 };
 

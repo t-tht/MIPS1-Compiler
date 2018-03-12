@@ -5,6 +5,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include "ast_global.hpp"
 
 class InterpretContext;
 
@@ -20,7 +21,7 @@ public:
 
 	std::unordered_map<std::string, unsigned int> variablebindings;
 	//TODO INCLUDE DYNAMIC BINDINGS IF NEEDED
-	std::unordered_map<std::string, unsigned int> globalbindings
+	std::unordered_map<std::string, unsigned int> globalbindings;
 
 	InterpretContext(){
 		for(int i = 0; i < 32; i++){

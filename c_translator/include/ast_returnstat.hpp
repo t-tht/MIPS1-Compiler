@@ -1,8 +1,7 @@
 #ifndef ast_returnstat_hpp
 #define ast_returnstat_hpp
 
-#include<string>
-#include<iostream>
+#include "ast_global.hpp"
 #include<ast.hpp>
 
 class ReturnStat;
@@ -13,14 +12,13 @@ class ReturnStat : public Node{
 	public:
 		ReturnStat(NodePtr _Expr) : Expr(_Expr){};
 		~ReturnStat(){};
-		void translate(std::ostream &dst)const{
+		void translate(std::ostream &dst)const override{
             dst << "return ";
             Expr->translate(dst);
 			dst << std::endl;
 		};
-		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const{
-            dst << "return ";
-            Expr->compile(dst);
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+			//NOT YET IMPLEMENTED
 		};
 };
 
