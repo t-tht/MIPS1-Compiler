@@ -35,13 +35,8 @@ public:
 
     int argument_no;
     int variable_no;
-<<<<<<< HEAD
     int param_no;
     
-=======
-
-
->>>>>>> master
     //REGISTER METHODS
     //Declaring Registers
     bool reg[32];
