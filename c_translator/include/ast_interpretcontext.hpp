@@ -35,7 +35,7 @@ public:
     
     int argument_no;
     int variable_no;
-    
+    int param_no;
     
     //REGISTER METHODS
     //Declaring Registers

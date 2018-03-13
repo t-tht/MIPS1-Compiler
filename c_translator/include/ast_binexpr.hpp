@@ -18,6 +18,14 @@ class BinExpr : public Node{
 			right->translate(dst);
 		};
 		virtual void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+            if(*op=="+"){
+                //left->compile(dst, context, destloc);
+                //right->compile(dst, context, destloc);
+                cout<< "\taddu\t$" << destloc<< ", $"<< destloc<< ", $" <<
+            }
+            
+            
+            
 			dst << "compile function not yet implemented" << std::endl;
 		};
 
