@@ -1,10 +1,7 @@
 #ifndef ast_funccallexpr_hpp
 #define ast_funccallexpr_hpp
 
-#include<string>
-#include<iostream>
-#include<ast.hpp>
-#include "ast_global.hpp"
+#include "ast.hpp"
 
 class FuncCallExpr;
 
