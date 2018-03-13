@@ -1,11 +1,7 @@
 #ifndef ast_assignment_hpp
 #define ast_assignment_hpp
 
-#include<string>
-#include<iostream>
-#include<ast.hpp>
-#include "ast_global.hpp"
-
+#include "ast.hpp"
 
 class AssignmentStatement;
 

@@ -1,7 +1,7 @@
 #ifndef ast_block_hpp
 #define ast_block_hpp
 
-#include "ast_global.hpp"
+#include "ast.hpp"
 
 class Block;
 

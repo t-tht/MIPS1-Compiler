@@ -1,8 +1,7 @@
 #ifndef ast_returnstat_hpp
 #define ast_returnstat_hpp
 
-#include "ast_global.hpp"
-#include<ast.hpp>
+#include "ast.hpp"
 
 class ReturnStat;
 
@@ -18,7 +17,7 @@ class ReturnStat : public Node{
 			dst << std::endl;
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			dst << "compile function not yet implemented" << std::endl;
+			Expr->compile(dst, cntx, 2);
 		};
 };
 

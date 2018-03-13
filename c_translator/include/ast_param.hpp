@@ -1,7 +1,7 @@
 #ifndef ast_param_hpp
 #define	ast_param_hpp
 
-#include "ast_global.hpp"
+#include "ast.hpp"
 
 class Param;
 

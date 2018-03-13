@@ -1,7 +1,7 @@
 #ifndef ast_CompExpr_HPP
 #define ast_CompExpr_HPP
 
-#include "ast_global.hpp"
+#include "ast.hpp"
 
 class CompExpr;
 
