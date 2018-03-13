@@ -1,7 +1,7 @@
 #ifndef ast_ifstatement_hpp
 #define ast_ifstatement_hpp
 
-#include "ast_global.hpp"
+#include "ast.hpp"
 
 class IfStatement;
 

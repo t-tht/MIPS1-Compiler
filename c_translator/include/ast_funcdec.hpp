@@ -1,12 +1,7 @@
 #ifndef ast_funcdec_hpp
 #define ast_funcdec_hpp
 
-#include<string>
-#include<iostream>
-#include"ast_param_var.hpp"
-#include "ast_global.hpp"
-
-
+#include "ast.hpp"
 
 class FuncDec;
 
@@ -56,7 +51,9 @@ class FuncDec: public Node{
 			//create new frame pointer
 			dst << "\t" << "move\t$fp, $sp" << std::endl;
 
-			dst << "\t" << "li\t" << "$2, " << "10" << std::endl;
+			//dst << "\t" << "li\t" << "$2, " << "10" << std::endl;
+			block->compile(dst, cntx, destloc);
+
 			//get back to base stack pointer. start unrolling at this point
 			dst << "\t" << "move\t$sp, $fp" << std::endl;
 			dst << "\t" << "movz\t" << "$31, $31, $0" << std::endl;

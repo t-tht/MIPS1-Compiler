@@ -1,7 +1,7 @@
 #ifndef ast_primative_hpp
 #define ast_primative_hpp
 
-#include "ast_global.hpp"
+#include "ast.hpp"
 
 class Number;
 class Variable;
@@ -15,10 +15,10 @@ class Number : public Node{
 		double getval() const{
 			return value;
 		};
-		virtual void translate(std::ostream &dst)const override{
+		void translate(std::ostream &dst)const override{
 			dst << value;
 		};
-		virtual void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
 			dst << "compile function not yet implemented" << std::endl;
 		};
 };
@@ -29,10 +29,10 @@ class Variable : public Node{
 	public:
     Variable(std::string* _id) : id(_id){};
 		~Variable(){};
-		virtual void translate(std::ostream &dst)const override{
+		void translate(std::ostream &dst)const override{
 			dst << *id;
 		};
-		virtual void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
 			dst << "compile function not yet implemented" << std::endl;
 		};
 };

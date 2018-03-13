@@ -1,7 +1,7 @@
 #ifndef ast_program_hpp
 #define ast_program_hpp
 
-#include "ast_global.hpp"
+#include "ast.hpp"
 
 class Program;
 

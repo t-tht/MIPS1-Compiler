@@ -1,8 +1,7 @@
 #ifndef ast_vardec_hpp
 #define ast_vardec_hpp
 
-#include "ast_global.hpp"
-#include<ast.hpp>
+#include "ast.hpp"
 
 class VarDec;
 
