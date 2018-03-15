@@ -32,7 +32,7 @@
 
 %%
 
-ROOT:       Program                                                                                                       { g_root = $1; }
+ROOT:       Program                                                                                                 { g_root = $1; }
 
 Program: FunctionDeclaration                                                                                        { $$ = new Program($1, NULL); }
         |Program FunctionDeclaration							                                                    { $$ = new Program($1, $2); }
@@ -82,9 +82,10 @@ Expression : ExpressionList                                                     
 
 ExpressionList : ConstantExpression                                                                                 { $$ = $1; }
             //    |BinaryExpression                                                                                 {}
-            //    |Expression                                                                                         { $$ = $1 }
+            //    |Expression                                                                                       { $$ = $1 }
 
 ConstantExpression : T_NUMBER                                                                                       { $$ = new ConstExpr($1); }
+                    |T_NUMBER T_PLUS T_NUMBER                                                                       { $$ = new ConstExpr($1 + $3); }
 
 //BinaryExpression :
 
@@ -95,8 +96,8 @@ Term : Factor                                                                   
 
 Factor: T_NUMBER                                                                                                    { $$ = new Number($1); }
         |T_IDENTIFIER                                                                                               { $$ = new Variable($1); }
-        | T_IDENTIFIER T_LBRACKET T_RBRACKET                                                                        {  $$ = new FuncCallExpr($1, NULL); }
-		| T_IDENTIFIER T_LBRACKET Param T_RBRACKET                                                                  {  $$ = new FuncCallExpr($1, $3); }
+        | T_IDENTIFIER T_LBRACKET T_RBRACKET                                                                        { $$ = new FuncCallExpr($1, NULL); }
+		| T_IDENTIFIER T_LBRACKET Param T_RBRACKET                                                                  { $$ = new FuncCallExpr($1, $3); }
 
 
 Param : Type T_IDENTIFIER                                                                                           { $$ = new Param($1, $2, NULL); }

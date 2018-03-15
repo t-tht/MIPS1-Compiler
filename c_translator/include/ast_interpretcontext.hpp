@@ -36,7 +36,9 @@ public:
     int argument_no;
     int variable_no;
     int param_no;
-    
+
+    int constexprsum;
+
     //REGISTER METHODS
     //Declaring Registers
     bool reg[32];
@@ -52,12 +54,7 @@ public:
         for(int i = 26; i < 32; i++){
             reg[i]= true;
         }
-
-
-
     };
-
-
 
     //Declaring Binding Map
     std::unordered_map<std::string, unsigned int> VariableBindings;
