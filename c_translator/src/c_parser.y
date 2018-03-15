@@ -24,7 +24,7 @@
 %token T_NUMBER T_IDENTIFIER T_RETURN T_INT
 %token T_ADD T_VOID
 
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements Comp_Expr IfStatement
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements Comp_Expr IfStatement ExpressionList ConstantExpression
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID Comp_Op
 
@@ -80,11 +80,11 @@ Expression : ExpressionList                                                     
             | Expression T_PLUS Term                                                                                { $$ = new BinExpr ($1, new std::string("+"), $3); }
             | Expression T_MINUS Term                                                                               { $$ = new BinExpr ($1,new std::string("-"), $3); }
 
-ExpressionList : ConstantExpression                                                                                 { $$ = new ConstExpr($1); }
+ExpressionList : ConstantExpression                                                                                 { $$ = $1; }
             //    |BinaryExpression                                                                                 {}
             //    |Expression                                                                                         { $$ = $1 }
 
-ConstantExpression : T_NUMBER                                                                                       { $$ = new Number($1); }
+ConstantExpression : T_NUMBER                                                                                       { $$ = new ConstExpr($1); }
 
 //BinaryExpression :
 

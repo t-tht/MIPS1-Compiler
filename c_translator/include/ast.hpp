@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 
+#include "ast_interpretcontext.hpp"
 #include "ast_node.hpp"
 #include "ast_funcdec.hpp"
 #include "ast_returnstat.hpp"
@@ -19,7 +20,6 @@
 #include "ast_assignment.hpp"
 #include "ast_compexpr.hpp"
 #include "ast_ifstatement.hpp"
-#include "ast_interpretcontext.hpp"
 #include "ast_constexpr.hpp"
 
 extern const Node *parseAST();
