@@ -72,6 +72,10 @@ public:
     }
     ~InterpretContext(){};
 
+    vector<unsigned int> freesavedregisters;
+    
+    
+    
     void regsetfree(){};
     void regsetused(){};
 
