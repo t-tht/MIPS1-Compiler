@@ -18,10 +18,20 @@ public:
         dst << val;
     };
 
-    void compile(std::ostream &dst, InterpretContext & unsigned int destloc)const override{
-        dst << "\t" <<"li\t$" << destloc << ", " << std::endl;
+    void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+        if(left != NULL){
+            left->compile(dst, cntx, destloc);
+        }
+        if(right != NULL){
+            right->compile(dst, cntx, destloc);
+            cntx.constexprsum += val;
+        }
+        dst << "\t" <<"li\t$" << destloc << ", " << val << std::endl;
     };
 
+    void evalhelper(InterpretContext &temp){
+
+    };
 };
 
 #endif

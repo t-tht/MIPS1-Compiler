@@ -84,9 +84,8 @@ ExpressionList : ConstantExpression                                             
             //    |BinaryExpression                                                                                 {}
             //    |Expression                                                                                       { $$ = $1 }
 
-ConstantExpression :
-T_NUMBER                                                                                                            { $$ = new ConstExpr($1); }
-|ConstantExpression T_PLUS T_NUMBER                                                                                 { $$ = new ConstExpr($1 + $3); }
+ConstantExpression : T_NUMBER                                                                                       { $$ = new ConstExpr($1); }
+                    |T_NUMBER T_PLUS T_NUMBER                                                                       { $$ = new ConstExpr($1 + $3); }
 
 //BinaryExpression :
 
