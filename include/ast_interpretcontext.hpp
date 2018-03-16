@@ -23,7 +23,6 @@ class InterpretContext;
  |$sp     | 29   |stack pointer        |yes
  |$fp     | 30   |frame pointer        |yes
  |$ra     | 31   |return address       |yes
-
  */
 
 class InterpretContext{
@@ -36,20 +35,53 @@ public:
     int variable_no;
     int param_no;
 
+<<<<<<< HEAD:include/ast_interpretcontext.hpp
 
     
+=======
+>>>>>>> e1aa034ee9852574b855439e81db70646f673467:c_translator/include/ast_interpretcontext.hpp
     //false means the register is not used
     //true means the register is being used
 
-
-    int constexprsum;
-
-
-    //REGISTER METHODS
-    //Declaring Registers
-    bool regs[32];
-
     //Generating free registers
+
+    bool reg[32];       //free registers, 0 = free; 1 = occupied
+    std::vector<unsigned int> freetempreg(){       //returns free temp registers (8-15)
+        std::vector<unsigned int> temp;
+        for(int i = 8; i < 16; i++){
+            if(reg[i] == 0){
+                temp.push_back(i);
+            }
+        }
+        if(temp.size() != 0){
+            return temp;
+        }
+        else{
+            //no free reg
+            exit(1);
+        }
+    };
+    std::vector<unsigned int> freesavedreg(){        //returns free saved registers (16-23)
+        std::vector<unsigned int> temp;
+        for(int i = 16; i < 24; i++){
+            if(reg[i] == 0){
+                temp.push_back(i);
+            }
+        }
+        if(temp.size() != 0){
+            return temp;
+        }
+        else{
+            //no free reg
+            exit(1);
+        }
+    };
+
+    //Declaring Binding Map
+    std::unordered_map<std::string, unsigned int> VariableBindings;
+    std::unordered_map<std::string, unsigned int> DynamicBindings;
+    std::unordered_map<std::string, unsigned int> globalbindings;
+
     InterpretContext(){
         for(int i = 0; i < 32; i++){
             regs[i] = false;
@@ -60,10 +92,7 @@ public:
         for(int i = 26; i < 32; i++){
             regs[i]= true;
         }
-
-
     };
-
     InterpretContext(InterpretContext* cntx){
         for(int i= 0; i< 32; i++){
             regs[i]= cntx->regs[i];
@@ -71,10 +100,11 @@ public:
         stack_pointer = cntx->stack_pointer;
         frame_point= cntx->frame_point;
         frame_size= cntx-> frame_size;
-        
+
         argument_no= cntx-> argument_no;
         variable_no= cntx->variable_no;
         param_no= cntx->param_no;
+<<<<<<< HEAD:include/ast_interpretcontext.hpp
         
     };
 
@@ -107,6 +137,12 @@ public:
 
 
 
+=======
+
+    };
+    ~InterpretContext(){};
+
+>>>>>>> e1aa034ee9852574b855439e81db70646f673467:c_translator/include/ast_interpretcontext.hpp
 
 
 };
