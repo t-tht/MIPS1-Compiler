@@ -1,10 +1,12 @@
 #!/bin/bash
 
-if [[ "$1" != "" ]] ; then
-    compiler="$1"
-else
-    compiler="bin/c_compiler"
-fi
+
+compiler="bin/c_compiler"
+
+
+make clean
+clear
+make bin/c_compiler
 
 have_compiler=0
 if [[ ! -f bin/c_compiler ]] ; then
@@ -14,7 +16,7 @@ fi
 
 input_dir="c_translator/formative"
 
-working="tmp/formative"
+working="tmp/compiler"
 mkdir -p ${working}
 
 for i in ${input_dir}/*.c ; do
@@ -27,8 +29,13 @@ for i in ${input_dir}/*.c ; do
     $working/$base
     REF_C_OUT=$?
     
-    # Run the reference python version
-    python3 ${input_dir}/$base.py
+    # Run the reference MIPS version
+    mips-linux-gnu-gcc -static ${input_dir}/$base.s -o $base
+    if [[ $? -ne 0 ]]; then
+    >&2 echo "ERROR : Couldn't compile driver program using GCC."
+    continue
+    fi
+    qemu-mips working/${NAME}
     REF_P_OUT=$?
     
     if [[ ${have_compiler} -eq 0 ]] ; then
