@@ -18,6 +18,7 @@ class InterpretContext;
  |$t0-$t7 | 8-15 |temporaries          |no
  |$s0-$s7 | 16-23|saved                |yes
  |$t8-$t9 | 24-25|more temporaries     |no
+ 26-27 don't use
  |$gp     | 28   |global pointer       |yes
  |$sp     | 29   |stack pointer        |yes
  |$fp     | 30   |frame pointer        |yes
@@ -37,27 +38,39 @@ public:
     int variable_no;
     int param_no;
     
+    //false means the register is not used
+    //true means the register is being used
     //REGISTER METHODS
     //Declaring Registers
-    bool reg[32];
+    bool regs[32];
 
     //Generating free registers
     InterpretContext(){
         for(int i = 0; i < 32; i++){
-            reg[i] = false;
+            regs[i] = false;
         }
         for(int i = 0; i < 8; i++){
-            reg[i]= true;
+            regs[i]= true;
         }
         for(int i = 26; i < 32; i++){
-            reg[i]= true;
+            regs[i]= true;
         }
-
-
 
     };
 
-
+    InterpretContext(InterpretContext* cntx){
+        for(int i= 0; i< 32; i++){
+            regs[i]= cntx->regs[i];
+        }
+        stack_pointer = cntx->stack_pointer;
+        frame_point= cntx->frame_point;
+        frame_size= cntx-> frame_size;
+        
+        argument_no= cntx-> argument_no;
+        variable_no= cntx->variable_no;
+        param_no= cntx->param_no;
+        
+    };
 
     //Declaring Binding Map
     std::unordered_map<std::string, unsigned int> VariableBindings;
@@ -67,13 +80,11 @@ public:
 
     //Create function to insert a binding on the stack
     //
-    InterpretContext(InterpretContext* ctxt){
-
-    }
     ~InterpretContext(){};
 
-    vector<unsigned int> freesavedregisters;
+
     
+    //vector<unsigned int> check
     
     
     void regsetfree(){};
