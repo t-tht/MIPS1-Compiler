@@ -29,54 +29,25 @@ class InterpretContext{
 public:
     unsigned int stack_pointer;
     unsigned int frame_point;
-
     unsigned int frame_size;
-
 
     int argument_no;
     int variable_no;
     int param_no;
 
-    int constexprsum;
-
-    //REGISTER METHODS
-    //Declaring Registers
     bool reg[32];
-
-    //Generating free registers
-    InterpretContext(){
-        for(int i = 0; i < 32; i++){
-            reg[i] = false;
-        }
-        for(int i = 0; i < 8; i++){
-            reg[i]= true;
-        }
-        for(int i = 26; i < 32; i++){
-            reg[i]= true;
-        }
-    };
-
+    std::vector<unsigned int> freetempreg;
+    std::vector<unsigned int> freesavedreg;
     //Declaring Binding Map
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> DynamicBindings;
-    //TODO INCLUDE DYNAMIC BINDINGS IF NEEDED
-    //std::unordered_map<std::string, unsigned int> globalbindings
+    std::unordered_map<std::string, unsigned int> globalbindings;
 
     //Create function to insert a binding on the stack
-    //
-    InterpretContext(InterpretContext* ctxt){
-
-    }
+    InterpretContext(){};
+    InterpretContext(InterpretContext* ctxt){}
     ~InterpretContext(){};
 
-    vector<unsigned int> freesavedregisters;
-    
-    
-    
-    void regsetfree(){};
-    void regsetused(){};
-
-    void addvar(const std::string* name){};
 
 
 
