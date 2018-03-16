@@ -35,55 +35,11 @@ public:
     int variable_no;
     int param_no;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
     //false means the register is not used
     //true means the register is being used
 
-
-    int constexprsum;
-
-
-    //REGISTER METHODS
-    //Declaring Registers
-    bool regs[32];
-
     //Generating free registers
-    InterpretContext(){
-        for(int i = 0; i < 32; i++){
-            regs[i] = false;
-        }
-        for(int i = 0; i < 8; i++){
-            regs[i]= true;
-        }
-        for(int i = 26; i < 32; i++){
-            regs[i]= true;
-        }
 
-
-    };
-
-    InterpretContext(InterpretContext* cntx){
-        for(int i= 0; i< 32; i++){
-            regs[i]= cntx->regs[i];
-        }
-        stack_pointer = cntx->stack_pointer;
-        frame_point= cntx->frame_point;
-        frame_size= cntx-> frame_size;
-        
-        argument_no= cntx-> argument_no;
-        variable_no= cntx->variable_no;
-        param_no= cntx->param_no;
-        
-    };
-
-=======
-    bool reg[32];
-    std::vector<unsigned int> freetempreg;
-    std::vector<unsigned int> freesavedreg;
->>>>>>> 0e01049a438209e64fa5dc9b58a652e5ede83d45
-=======
     bool reg[32];       //free registers, 0 = free; 1 = occupied
     std::vector<unsigned int> freetempreg(){       //returns free temp registers (8-15)
         std::vector<unsigned int> temp;
@@ -115,33 +71,37 @@ public:
             exit(1);
         }
     };
->>>>>>> tht
+
     //Declaring Binding Map
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> DynamicBindings;
     std::unordered_map<std::string, unsigned int> globalbindings;
 
-    //Create function to insert a binding on the stack
-<<<<<<< HEAD
-    //
+    InterpretContext(){
+        for(int i = 0; i < 32; i++){
+            regs[i] = false;
+        }
+        for(int i = 0; i < 8; i++){
+            regs[i]= true;
+        }
+        for(int i = 26; i < 32; i++){
+            regs[i]= true;
+        }
+    };
+    InterpretContext(InterpretContext* cntx){
+        for(int i= 0; i< 32; i++){
+            regs[i]= cntx->regs[i];
+        }
+        stack_pointer = cntx->stack_pointer;
+        frame_point= cntx->frame_point;
+        frame_size= cntx-> frame_size;
+
+        argument_no= cntx-> argument_no;
+        variable_no= cntx->variable_no;
+        param_no= cntx->param_no;
+
+    };
     ~InterpretContext(){};
-
-
-    
-    //vector<unsigned int> check
-    
-    
-    void regsetfree(){};
-    void regsetused(){};
-
-    void addvar(const std::string* name){};
-=======
-    InterpretContext(){};
-    InterpretContext(InterpretContext* ctxt){}
-    ~InterpretContext(){};
-
->>>>>>> 0e01049a438209e64fa5dc9b58a652e5ede83d45
-
 
 
 
