@@ -24,9 +24,11 @@
 %token T_NUMBER T_IDENTIFIER T_RETURN T_INT
 %token T_ADD T_VOID
 
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements Comp_Expr IfStatement ExpressionList ConstantExpression
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements Comp_Expr IfStatement ExpressionList
+%type <node> BinaryExpression
 %type <number> T_NUMBER
-%type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID Comp_Op
+%type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
+%type <string> Comp_Op BinaryOp
 
 %start ROOT
 
@@ -58,6 +60,9 @@ Statements:  ReturnStatement                                                    
             |AssignStatement                                                                                        { $$ = $1; }
             |IfStatement                                                                                            { $$ = $1; }
 
+ReturnStatement:
+ T_RETURN Expression T_SEMICOLON                                                { $$ = new ReturnStat($2); }
+
 AssignStatement: Type T_IDENTIFIER T_SEMICOLON                                                                      { $$ = new AssignmentStatement( $1,$2, NULL); }
                 | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON                                                 { $$ = new AssignmentStatement($1, $2, $4); }
                 | T_IDENTIFIER T_EQUALS Expression T_SEMICOLON                                                      { $$ = new AssignmentStatement(NULL, $1, $3); }
@@ -73,21 +78,18 @@ Comp_Op: T_LESSTHANEQ                                                           
     |T_LOGAND                                                                                                       { $$ = new std::string("&&"); }
     |T_LOGOR                                                                                                        { $$ = new std::string("||"); }
 
-ReturnStatement: T_RETURN Expression T_SEMICOLON                                                                    { $$ = new ReturnStat($2); }
+Expression :
+ BinaryExpression                                                               { $$ = $1; }
+|Term                                                                           { $$ = $1; }
 
-Expression : ExpressionList                                                                                         { $$ = $1; }
-            |Term                                                                                                   { $$ = $1; }
-            | Expression T_PLUS Term                                                                                { $$ = new BinExpr ($1, new std::string("+"), $3); }
-            | Expression T_MINUS Term                                                                               { $$ = new BinExpr ($1,new std::string("-"), $3); }
+BinaryExpression :
+ Expression BinaryOp Expression                                                 { $$ = new BinExpr($1, $2, $3); }
 
-ExpressionList : ConstantExpression                                                                                 { $$ = $1; }
-            //    |BinaryExpression                                                                                 {}
-            //    |Expression                                                                                       { $$ = $1 }
-
-ConstantExpression : T_NUMBER                                                                                       { $$ = new ConstExpr($1); }
-                    |T_NUMBER T_PLUS T_NUMBER                                                                       { $$ = new ConstExpr($1 + $3); }
-
-//BinaryExpression :
+BinaryOp:
+ T_PLUS                                                                         { $$ = new std::string("+"); }
+|T_MINUS                                                                        { $$ = new std::string("-"); }
+|T_TIMES                                                                        { $$ = new std::string("*"); }
+|T_DIVIDE                                                                       { $$ = new std::string("/"); }
 
 Term : Factor                                                                                                       { $$ = $1; }
         | Term T_TIMES Factor                                                                                       { $$ = new BinExpr($1,new std::string("*"), $3); }
