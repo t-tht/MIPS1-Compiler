@@ -35,12 +35,12 @@ public:
     int variable_no;
     int param_no;
 
-    //false means the register is not used
-    //true means the register is being used
-
-    //Generating free registers
-
     bool regs[32];       //free registers, 0 = free; 1 = occupied
+
+    std::unordered_map<std::string, unsigned int> VariableBindings;
+    std::unordered_map<std::string, unsigned int> DynamicBindings;
+    std::unordered_map<std::string, unsigned int> globalbindings;
+
     std::vector<unsigned int> freetempregs(){       //returns free temp registers (8-15)
         std::vector<unsigned int> temp;
         for(int i = 8; i < 16; i++){
@@ -72,11 +72,6 @@ public:
         }
     };
 
-    //Declaring Binding Map
-    std::unordered_map<std::string, unsigned int> VariableBindings;
-    std::unordered_map<std::string, unsigned int> DynamicBindings;
-    std::unordered_map<std::string, unsigned int> globalbindings;
-
     InterpretContext(){
         for(int i = 0; i < 32; i++){
             regs[i] = false;
@@ -99,37 +94,15 @@ public:
         argument_no= cntx-> argument_no;
         variable_no= cntx->variable_no;
         param_no= cntx->param_no;
-
-        
     };
 
-
-//  bool reg[32];
-//    std::vector<unsigned int> freetempreg;
-//    std::vector<unsigned int> freesavedreg;
-
-    //Declaring Binding Map
-//    std::unordered_map<std::string, unsigned int> VariableBindings;
-//    std::unordered_map<std::string, unsigned int> DynamicBindings;
-//    std::unordered_map<std::string, unsigned int> globalbindings;
-
-    //Create function to insert a binding on the stack
-
-    //
     ~InterpretContext(){};
 
-
-    
-    //vector<unsigned int> check
-    
-    
-    void regsetfree(){};
-    void regsetused(){};
+    void regsetused(unsigned int i){
+        regs[i] = 1;
+    };
 
     void addvar(const std::string* name){};
-
- 
-
 
 };
 

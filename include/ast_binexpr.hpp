@@ -11,7 +11,10 @@ class BinExpr : public Node{
 		std::string* op;
 	public:
 		BinExpr(NodePtr _left, std::string* _op, NodePtr _right) : left(_left), right(_right), op(_op){};
-		~BinExpr(){};
+		~BinExpr(){
+			delete op;
+		};
+
 		void translate(std::ostream &dst)const override{
 			left->translate(dst);
 			dst << *op;
@@ -19,17 +22,33 @@ class BinExpr : public Node{
 		};
 
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			std::vector<unsigned int> free = cntx.freetempregs();
+			std::vector<unsigned int> tmp = cntx.freetempregs();
+			cntx.regsetused(tmp[0]);
 			if(*op == "+"){
+
 				left->compile(dst, cntx, destloc);
-				right->compile(dst, cntx, free[0]);
-				dst << "\t" << "" << "\t" << "$" << destloc << ", $" << destloc << ", $" << free[0] << std::endl;
+				right->compile(dst, cntx, tmp[0]);
+				dst << "\taddu\t$" << destloc << ", $" << destloc << ", $" << tmp[0] << std::endl;
+
 			}else if(*op == "-"){
+
+				left->compile(dst, cntx, destloc);
+				right->compile(dst, cntx, tmp[0]);
+				dst << "\tsub\t$" << destloc << ", $" << destloc << ", $" << tmp[0] << std::endl;
 
 			}else if(*op == "*"){
 
+				left->compile(dst, cntx, destloc);
+				right->compile(dst, cntx, tmp[0]);
+				dst << "\tmult\t$" << destloc << ", $" << tmp[0] << std::endl;
+				dst << "\tmflo\t$" << destloc << std::endl;
+
 			}else if(*op == "/"){
 
+				left->compile(dst, cntx, destloc);
+				right->compile(dst, cntx, tmp[0]);
+				dst << "\tdiv\t$" << destloc << ", $" << tmp[0] << std::endl;
+				dst << "\tmflo\t$" << destloc << std::endl;
 			}
 		};
 
