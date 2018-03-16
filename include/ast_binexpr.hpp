@@ -19,7 +19,7 @@ class BinExpr : public Node{
 		};
 
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			std::vector<unsigned int> free = cntx.freetempreg();
+			std::vector<unsigned int> free = cntx.freetempregs();
 			if(*op == "+"){
 				left->compile(dst, cntx, destloc);
 				right->compile(dst, cntx, free[0]);

@@ -24,12 +24,9 @@
 %token T_NUMBER T_IDENTIFIER T_RETURN T_INT
 %token T_ADD T_VOID
 
-<<<<<<< HEAD:src/c_parser.y
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements Comp_Expr IfStatement
-=======
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements Comp_Expr IfStatement ExpressionList
-%type <node> BinaryExpression
->>>>>>> e1aa034ee9852574b855439e81db70646f673467:c_translator/src/c_parser.y
+
+%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements Comp_Expr IfStatement BinaryExpression
+
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
 %type <string> Comp_Op BinaryOp
@@ -82,20 +79,15 @@ Comp_Op: T_LESSTHANEQ                                                           
     |T_LOGAND                                                                                                       { $$ = new std::string("&&"); }
     |T_LOGOR                                                                                                        { $$ = new std::string("||"); }
 
-<<<<<<< HEAD:src/c_parser.y
-ReturnStatement: T_RETURN Expression T_SEMICOLON                  { $$= new ReturnStat($2); }
 
-Expression : Term                      { $$ = $1; }
-| Expression T_PLUS Term         { $$ = new BinExpr ($1, new std::string("+"), $3); }
-| Expression T_MINUS Term        {$$ = new BinExpr ($1,new std::string("-"), $3);}
-=======
+
+
 Expression :
  BinaryExpression                                                               { $$ = $1; }
 |Term                                                                           { $$ = $1; }
 
 BinaryExpression :
  Expression BinaryOp Expression                                                 { $$ = new BinExpr($1, $2, $3); }
->>>>>>> e1aa034ee9852574b855439e81db70646f673467:c_translator/src/c_parser.y
 
 BinaryOp:
  T_PLUS                                                                         { $$ = new std::string("+"); }
