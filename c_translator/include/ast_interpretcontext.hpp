@@ -37,15 +37,15 @@ public:
     int argument_no;
     int variable_no;
     int param_no;
-<<<<<<< HEAD
+
     
     //false means the register is not used
     //true means the register is being used
-=======
+
 
     int constexprsum;
 
->>>>>>> d645c6db92240b9122f9edb4af49cdab8c4e07a7
+
     //REGISTER METHODS
     //Declaring Registers
     bool regs[32];
@@ -61,7 +61,7 @@ public:
         for(int i = 26; i < 32; i++){
             regs[i]= true;
         }
-<<<<<<< HEAD
+
 
     };
 
@@ -79,10 +79,6 @@ public:
         
     };
 
-=======
-    };
-
->>>>>>> d645c6db92240b9122f9edb4af49cdab8c4e07a7
     //Declaring Binding Map
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> DynamicBindings;
