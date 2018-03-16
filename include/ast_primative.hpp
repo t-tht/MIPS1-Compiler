@@ -19,7 +19,7 @@ class Number : public Node{
 			dst << value;
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			dst << "compile function not yet implemented" << std::endl;
+			dst << "\tli\t$" << destloc << ", " << value << std::endl;
 		};
 };
 
@@ -33,7 +33,7 @@ class Variable : public Node{
 			dst << *id;
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			dst << "compile function not yet implemented" << std::endl;
+			dst << "variable compile function not yet implemented" << std::endl;
 		};
 };
 

@@ -23,7 +23,7 @@ class VarDec: public Node{
 
 		}
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-			dst << "compile function not yet implemented" << std::endl;
+			dst << "vardec compile function not yet implemented" << std::endl;
 		};
 };
 

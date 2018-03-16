@@ -26,7 +26,7 @@ class IfStatement : public Node{
 			}
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			dst << "compile function not yet implemented" << std::endl;
+			dst << "if statement compile function not yet implemented" << std::endl;
 		};
 };
 
