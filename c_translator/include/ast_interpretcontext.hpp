@@ -23,7 +23,6 @@ class InterpretContext;
  |$sp     | 29   |stack pointer        |yes
  |$fp     | 30   |frame pointer        |yes
  |$ra     | 31   |return address       |yes
-
  */
 
 class InterpretContext{
@@ -36,6 +35,7 @@ public:
     int variable_no;
     int param_no;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     
     //false means the register is not used
@@ -83,6 +83,39 @@ public:
     std::vector<unsigned int> freetempreg;
     std::vector<unsigned int> freesavedreg;
 >>>>>>> 0e01049a438209e64fa5dc9b58a652e5ede83d45
+=======
+    bool reg[32];       //free registers, 0 = free; 1 = occupied
+    std::vector<unsigned int> freetempreg(){       //returns free temp registers (8-15)
+        std::vector<unsigned int> temp;
+        for(int i = 8; i < 16; i++){
+            if(reg[i] == 0){
+                temp.push_back(i);
+            }
+        }
+        if(temp.size() != 0){
+            return temp;
+        }
+        else{
+            //no free reg
+            exit(1);
+        }
+    };
+    std::vector<unsigned int> freesavedreg(){        //returns free saved registers (16-23)
+        std::vector<unsigned int> temp;
+        for(int i = 16; i < 24; i++){
+            if(reg[i] == 0){
+                temp.push_back(i);
+            }
+        }
+        if(temp.size() != 0){
+            return temp;
+        }
+        else{
+            //no free reg
+            exit(1);
+        }
+    };
+>>>>>>> tht
     //Declaring Binding Map
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> DynamicBindings;

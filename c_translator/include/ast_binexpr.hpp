@@ -17,19 +17,20 @@ class BinExpr : public Node{
 			dst << *op;
 			right->translate(dst);
 		};
-//        virtual void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-//            if(*op=="+"){
-//                //left->compile(dst, context, destloc);
-//                //right->compile(dst, context, destloc);
-//                cout<< "\taddu\t$" << destloc<< ", $"<< destloc<< ", $" <<
-//            }
-//
-//
-//
 
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+			std::vector<unsigned int> free = cntx.freetempreg();
+			if(*op == "+"){
+				left->compile(dst, cntx, destloc);
+				right->compile(dst, cntx, free[0]);
+				dst << "\t" << "" << "\t" << "$" << destloc << ", $" << destloc << ", $" << free[0] << std::endl;
+			}else if(*op == "-"){
 
-			dst << "compile function not yet implemented" << std::endl;
+			}else if(*op == "*"){
+
+			}else if(*op == "/"){
+
+			}
 		};
 
 };
