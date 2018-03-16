@@ -37,7 +37,6 @@ public:
     int variable_no;
     int param_no;
 
-    int constexprsum;
 
     //REGISTER METHODS
     //Declaring Registers
