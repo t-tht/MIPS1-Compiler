@@ -30,3 +30,5 @@ c_translator/src/c_parser.tab.hpp
 =======
 >>>>>>> b9a1d0877ccbdb29602ce0c0f8b6ad7b8aa1b8fd
 *.log
+ubuntu-xenial-16.04-cloudimg-console.log
+*.log
