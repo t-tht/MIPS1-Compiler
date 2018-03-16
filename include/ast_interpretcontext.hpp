@@ -36,7 +36,7 @@ public:
     int variable_no;
     int param_no;
 
-<<<<<<< HEAD
+
     
     //false means the register is not used
     //true means the register is being used
@@ -78,18 +78,18 @@ public:
         
     };
 
-=======
+
     bool reg[32];
     std::vector<unsigned int> freetempreg;
     std::vector<unsigned int> freesavedreg;
->>>>>>> 0e01049a438209e64fa5dc9b58a652e5ede83d45
+
     //Declaring Binding Map
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> DynamicBindings;
     std::unordered_map<std::string, unsigned int> globalbindings;
 
     //Create function to insert a binding on the stack
-<<<<<<< HEAD
+
     //
     ~InterpretContext(){};
 
@@ -102,12 +102,9 @@ public:
     void regsetused(){};
 
     void addvar(const std::string* name){};
-=======
-    InterpretContext(){};
-    InterpretContext(InterpretContext* ctxt){}
-    ~InterpretContext(){};
 
->>>>>>> 0e01049a438209e64fa5dc9b58a652e5ede83d45
+ 
+
 
 
 

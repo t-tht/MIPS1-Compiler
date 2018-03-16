@@ -20,7 +20,7 @@
 #include "ast_assignment.hpp"
 #include "ast_compexpr.hpp"
 #include "ast_ifstatement.hpp"
-#include "ast_constexpr.hpp"
+//#include "ast_constexpr.hpp"
 
 extern const Node *parseAST();
 
