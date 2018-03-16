@@ -1,12 +1,10 @@
 #!/bin/bash
 
-
-compiler="bin/c_compiler"
-
-
-make clean
-clear
-make bin/c_compiler
+if [[ "$1" != "" ]] ; then
+    compiler="$1"
+else
+    compiler="bin/c_compiler"
+fi
 
 have_compiler=0
 if [[ ! -f bin/c_compiler ]] ; then
@@ -16,7 +14,7 @@ fi
 
 input_dir="c_translator/formative"
 
-working="tmp/compiler"
+working="tmp/formative"
 mkdir -p ${working}
 
 for i in ${input_dir}/*.c ; do
@@ -28,29 +26,21 @@ for i in ${input_dir}/*.c ; do
     # Run the reference C version
     $working/$base
     REF_C_OUT=$?
-    
-    # Run the reference MIPS version
-    mips-linux-gnu-gcc -static ${input_dir}/$base.s -o $base
-    if [[ $? -ne 0 ]]; then
-    >&2 echo "ERROR : Couldn't compile driver program using GCC."
-    continue
-    fi
-    qemu-mips working/${NAME}
-    REF_P_OUT=$?
-    
+
     if [[ ${have_compiler} -eq 0 ]] ; then
-        
-        # Create the DUT python version by invoking the compiler with translation flags
-        $compiler --translate $i -o ${working}/$base-got.py
-        
-        # Run the DUT python version
-        python ${working}/$base-got.py
+
+        # Run the DUT MIPS version
+        $compiler --compile $i -o ${working}/$base.s
+        mips-linux-gnu-gcc -static ${working}/$base.s -o ${working}/$base-s-got
+
+        #run the mips Binary
+        qemu-mips ${working}/$base-s-got
         GOT_P_OUT=$?
+
+
     fi
-    
-    if [[ $REF_C_OUT -ne $REF_P_OUT ]] ; then
-        echo "$base, REF_FAIL, Expected ${REF_C_OUT}, got ${REF_P_OUT}"
-    elif [[ ${have_compiler} -ne 0 ]] ; then
+
+    if [[ ${have_compiler} -ne 0 ]] ; then
         echo "$base, Fail, No C compiler/translator"
     elif [[ $REF_C_OUT -ne $GOT_P_OUT ]] ; then
         echo "$base, Fail, Expected ${REF_C_OUT}, got ${GOT_P_OUT}"

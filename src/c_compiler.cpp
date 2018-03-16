@@ -18,6 +18,10 @@ freopen(argv[4], "w", stdout);
 
 if(std::string(argv[1])== "--translate"){
         ast->translate(std::cout);
+    std::cout<<"\n# Boilerplat" << std::endl;
+    std::cout<<"if __name__ == \"__main__\":" << std::endl;
+    std::cout<<"\timport sys\n\tret=main()\n\tsys.exit(ret)"<<std::endl;
+    std::cout<< "\n";
    }
 
 
