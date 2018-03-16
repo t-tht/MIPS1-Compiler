@@ -25,54 +25,66 @@
 %token T_ADD T_VOID
 
 
-%type <node> Program ReturnStatement FunctionDeclaration Block Expression Term Factor Param  VariableDeclaration BlockList AssignStatement Statements Comp_Expr IfStatement BinaryExpression
-
+%type <node> Program Block BlockList Term Factor Param
+%type <node> FunctionDeclaration VariableDeclaration
+%type <node> Statements IfStatement AssignStatement ReturnStatement
+%type <node> Expression BinaryExpression CompareExpression
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
-%type <string> Comp_Op BinaryOp
+%type <string> BinaryOp CompareOp
 
 %start ROOT
 
 %%
 
-ROOT:       Program                                                                                                 { g_root = $1; }
-
-Program: FunctionDeclaration                                                                                        { $$ = new Program($1, NULL); }
-        |Program FunctionDeclaration							                                                    { $$ = new Program($1, $2); }
-        |VariableDeclaration                                                                                        { $$ = new Program($1, NULL); }
-
-FunctionDeclaration: Type T_IDENTIFIER T_LBRACKET T_RBRACKET Block                                                  { $$ = new FuncDec($1, $2, NULL, $5); }
-					|Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block                                            { $$ = new FuncDec($1, $2, $4, $6); }
+ROOT:
+ Program                                                                                                 { g_root = $1; }
 
 
-VariableDeclaration: Type T_IDENTIFIER T_SEMICOLON                                                                  { $$ = new VarDec($1, $2, NULL); }
-                    | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON                                             { $$ = new VarDec($1, $2, $4); }
+Program:
+ FunctionDeclaration                                                                                        { $$ = new Program($1, NULL); }
+|Program FunctionDeclaration							                                                    { $$ = new Program($1, $2); }
+|VariableDeclaration                                                                                        { $$ = new Program($1, NULL); }
 
 
+FunctionDeclaration:
+ Type T_IDENTIFIER T_LBRACKET T_RBRACKET Block                                                  { $$ = new FuncDec($1, $2, NULL, $5); }
+|Type T_IDENTIFIER T_LBRACKET Param T_RBRACKET Block                                            { $$ = new FuncDec($1, $2, $4, $6); }
 
 
-Block: T_CLBRACKET BlockList T_CRBRACKET                                                                            { $$ = $2; }
+VariableDeclaration:
+ Type T_IDENTIFIER T_SEMICOLON                                                                  { $$ = new VarDec($1, $2, NULL); }
+|Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON                                             { $$ = new VarDec($1, $2, $4); }
 
 
-BlockList:  Statements                                                                                              { $$ =  new Block($1, NULL); }
-            |BlockList Statements                                                                                   { $$ = new Block($1, $2); }
+Block:
+ T_CLBRACKET BlockList T_CRBRACKET                                                                            { $$ = $2; }
 
-Statements:  ReturnStatement                                                                                        { $$ = $1; }
-            |AssignStatement                                                                                        { $$ = $1; }
-            |IfStatement                                                                                            { $$ = $1; }
+
+BlockList:
+ Statements                                                                                              { $$ =  new Block($1, NULL); }
+|BlockList Statements                                                                                   { $$ = new Block($1, $2); }
+
+
+Statements:
+ ReturnStatement                                                                                        { $$ = $1; }
+|AssignStatement                                                                                        { $$ = $1; }
+|IfStatement                                                                                            { $$ = $1; }
+
 
 ReturnStatement:
  T_RETURN Expression T_SEMICOLON                                                { $$ = new ReturnStat($2); }
+
 
 AssignStatement: Type T_IDENTIFIER T_SEMICOLON                                                                      { $$ = new AssignmentStatement( $1,$2, NULL); }
                 | Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON                                                 { $$ = new AssignmentStatement($1, $2, $4); }
                 | T_IDENTIFIER T_EQUALS Expression T_SEMICOLON                                                      { $$ = new AssignmentStatement(NULL, $1, $3); }
 
-IfStatement: T_IF T_LBRACKET Comp_Expr T_RBRACKET Block                                                             { $$ = new IfStatement($3, $5); }
+IfStatement: T_IF T_LBRACKET CompareExpression T_RBRACKET Block                                                             { $$ = new IfStatement($3, $5); }
 
-Comp_Expr: Expression Comp_Op Expression                                                                            { $$ = new CompExpr($1, $2, $3); }
+CompareExpression: Expression CompareOp Expression                                                                            { $$ = new CompExpr($1, $2, $3); }
 
-Comp_Op: T_LESSTHANEQ                                                                                               { $$ = new std::string("<="); }
+CompareOp: T_LESSTHANEQ                                                                                               { $$ = new std::string("<="); }
     |T_MORETHANEQ                                                                                                   { $$ = new std::string("=>"); }
     |T_CONDEQ                                                                                                       { $$ = new std::string("=="); }
     |T_NOTEQ                                                                                                        { $$ = new std::string("!="); }
