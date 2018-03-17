@@ -36,7 +36,7 @@ class FuncDec: public Node{
 			dst << "\t" << ".type\t" << *id << ", @function" << std::endl;
 			dst << *id << ":" << std::endl;
 
-			dst << "\t" << ".frame\t" << "$fp, " << "8" <<", $31" << std::endl;
+			dst << "\t" << ".frame\t" << "$fp, " << "24" <<", $31" << std::endl;
 			dst << "\t" << ".mask\t0x40000000, -4" << std::endl;
 			dst << "\t" << ".fmask\t0x00000000, 0" << std::endl;
 			dst << "\t" << ".set\tnoreorder" << std::endl;
