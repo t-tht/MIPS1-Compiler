@@ -53,7 +53,7 @@ public:
         }
         else{
             //no free reg
-            exit(1);
+            std::cout << " no free reg" << std::endl;
         }
     };
     std::vector<unsigned int> freesavedregs(){        //returns free saved registers (16-23)
