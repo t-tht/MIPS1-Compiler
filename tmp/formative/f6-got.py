@@ -1,2 +1,9 @@
 def main():
-int x x = 5 x = x*xreturn x
+int x x = 5 x = x*x	return x
+
+# Boilerplat
+if __name__ == "__main__":
+	import sys
+	ret=main()
+	sys.exit(ret)
+

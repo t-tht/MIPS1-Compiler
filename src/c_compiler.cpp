@@ -13,7 +13,6 @@ freopen(argv[4], "w", stdout);
 
    if(std::string(argv[1])== "--compile"){
         ast->compile(std::cout, cntx, destloc);
-
    }
 
 if(std::string(argv[1])== "--translate"){
