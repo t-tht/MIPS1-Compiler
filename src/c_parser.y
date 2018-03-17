@@ -102,10 +102,10 @@ BinaryExpression :
  Expression BinaryOp Expression                                                 { $$ = new BinExpr($1, $2, $3); }
 
 BinaryOp:
- T_PLUS                                                                         { $$ = new std::string("+"); }
-|T_MINUS                                                                        { $$ = new std::string("-"); }
-|T_TIMES                                                                        { $$ = new std::string("*"); }
-|T_DIVIDE                                                                       { $$ = new std::string("/"); }
+ T_PLUS                                                                                                             { $$ = new std::string("+"); }
+|T_MINUS                                                                                                            { $$ = new std::string("-"); }
+|T_TIMES                                                                                                            { $$ = new std::string("*"); }
+|T_DIVIDE                                                                                                           { $$ = new std::string("/"); }
 
 Term : Factor                                                                                                       { $$ = $1; }
         | Term T_TIMES Factor                                                                                       { $$ = new BinExpr($1,new std::string("*"), $3); }

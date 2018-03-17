@@ -22,6 +22,9 @@
 #include "ast_ifstatement.hpp"
 //#include "ast_constexpr.hpp"
 
+//TODO: assignment, binexpr ( 2 more todo) , block, comprexpr, funcCallExpr, funcdec (write the proper pointers), if statement not implemented, param_var, param, variable, var dec
+//what has been done, program, block, return stat, bin expr 2 signs
+
 extern const Node *parseAST();
 
 #endif

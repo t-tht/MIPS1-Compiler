@@ -14,8 +14,8 @@ main:
 	addiu	$sp, $sp, -8
 	sw	$fp, 4($sp)
 	move	$fp, $sp
-	li	$2, 10
-	li	$8, 10
+	li	$2, 5
+	li	$8, 6
 	addu	$2, $2, $8
 	move	$sp, $fp
 	movz	$31, $31, $0
