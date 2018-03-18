@@ -11,7 +11,7 @@ class Param : public Node{
     	std::string* id;
 		NodePtr right;
 	public:
-    Param(std::string* _type, std::string* _id, NodePtr _right ) : type(_type), id(_id), right(_right){};
+    	Param(std::string* _type, std::string* _id, NodePtr _right ) : type(_type), id(_id), right(_right){};
 		~Param(){
 			delete right;
 		};
