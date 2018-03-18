@@ -12,6 +12,7 @@ class FuncCallExpr: public Node{
 	public:
 		FuncCallExpr(std::string* _id, NodePtr _param): id(_id), param(_param){};
 		~FuncCallExpr(){
+			delete id;
 			delete param;
 		};
 		void translate(std::ostream &dst) const override{
@@ -24,7 +25,7 @@ class FuncCallExpr: public Node{
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 
-			dst << "\t.option\tpic0" << std::endl;
+			// dst << "\t.option\tpic0" << std::endl;
 			dst << "\tjal\t" << *id << std::endl;
 			dst << "\tnop" << std::endl;
 
