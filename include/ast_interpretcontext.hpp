@@ -26,8 +26,9 @@ class InterpretContext;
  */
 
 class InterpretContext{
+private:
+    unsigned int sp;
 public:
-    unsigned int stack_pointer;
     unsigned int frame_point;
     unsigned int frame_size;
 
@@ -40,37 +41,6 @@ public:
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> DynamicBindings;
     std::unordered_map<std::string, unsigned int> globalbindings;
-
-    std::vector<unsigned int> freetempregs(){       //returns free temp registers (8-15)
-        std::vector<unsigned int> temp;
-        for(int i = 8; i < 16; i++){
-            if(regs[i] == 0){
-                temp.push_back(i);
-            }
-        }
-        if(temp.size() != 0){
-            return temp;
-        }
-        else{
-            //no free reg
-            exit(1);
-        }
-    };
-    std::vector<unsigned int> freesavedregs(){        //returns free saved registers (16-23)
-        std::vector<unsigned int> temp;
-        for(int i = 16; i < 24; i++){
-            if(regs[i] == 0){
-                temp.push_back(i);
-            }
-        }
-        if(temp.size() != 0){
-            return temp;
-        }
-        else{
-            //no free reg
-            exit(1);
-        }
-    };
 
     InterpretContext(){
         for(int i = 0; i < 32; i++){
@@ -87,7 +57,7 @@ public:
         for(int i= 0; i< 32; i++){
             regs[i]= cntx->regs[i];
         }
-        stack_pointer = cntx->stack_pointer;
+        sp = cntx->sp;
         frame_point= cntx->frame_point;
         frame_size= cntx-> frame_size;
 
@@ -97,6 +67,49 @@ public:
     };
 
     ~InterpretContext(){};
+
+    std::vector<unsigned int> freesavedregs(){        //returns free saved registers (16-23)
+        std::vector<unsigned int> temp;
+        for(int i = 16; i < 24; i++){
+            if(regs[i] == 0){
+                temp.push_back(i);
+            }
+        }
+        if(temp.size() != 0){
+            return temp;
+        }
+        else{
+            //no free reg
+            exit(1);
+        }
+    };
+    std::vector<unsigned int> freetempregs(){       //returns free temp registers (8-15)
+        std::vector<unsigned int> temp;
+        for(int i = 8; i < 16; i++){
+            if(regs[i] == 0){
+                temp.push_back(i);
+            }
+        }
+        if(temp.size() != 0){
+            return temp;
+        }
+        else{
+            //no free reg
+            std::cout << " no free reg" << std::endl;
+        }
+    };
+
+    void spIncrement(){
+        sp += 4;
+    };
+
+    void spSet(int i){
+        sp = i;
+    };
+
+    unsigned int spGet(){
+        return sp;
+    };
 
     void regsetused(unsigned int i){
         regs[i] = 1;

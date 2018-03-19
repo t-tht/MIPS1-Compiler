@@ -19,7 +19,7 @@ class Number : public Node{
 			dst << value;
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			dst << "\tli\t$" << destloc << ", " << value << std::endl;
+			dst << "\tli\t\t$" << destloc << ", " << value << std::endl;
 		};
 };
 

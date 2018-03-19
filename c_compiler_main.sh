@@ -14,7 +14,11 @@ fi
 
 input_dir="c_translator/main"
 
+<<<<<<< HEAD
 working="tmp/main"
+=======
+working="tmp/formative/main"
+>>>>>>> master
 mkdir -p ${working}
 
 for i in ${input_dir}/*.c ; do

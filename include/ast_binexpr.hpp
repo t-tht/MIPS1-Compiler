@@ -6,12 +6,14 @@
 class BinExpr;
 class BinExpr : public Node{
 	protected:
-		NodePtr left;
-		NodePtr right;
+		const NodePtr left;
+		const NodePtr right;
 		std::string* op;
 	public:
-		BinExpr(NodePtr _left, std::string* _op, NodePtr _right) : left(_left), right(_right), op(_op){};
+		BinExpr(const NodePtr _left, std::string* _op, const NodePtr _right) : left(_left), right(_right), op(_op){};
 		~BinExpr(){
+			delete left;
+			delete right;
 			delete op;
 		};
 
@@ -34,7 +36,7 @@ class BinExpr : public Node{
 
 				left->compile(dst, cntx, destloc);
 				right->compile(dst, cntx, tmp[0]);
-				dst << "\tsub\t$" << destloc << ", $" << destloc << ", $" << tmp[0] << std::endl;
+				dst << "\tsubu\t$" << destloc << ", $" << destloc << ", $" << tmp[0] << std::endl;
 
 			}else if(*op == "*"){
 

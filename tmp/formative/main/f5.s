@@ -6,7 +6,7 @@
 	.ent	f
 	.type	f, @function
 f:
-	.frame	$fp, 8, $31
+	.frame	$fp, 24, $31
 	.mask	0x40000000, -4
 	.fmask	0x00000000, 0
 	.set	noreorder
@@ -42,10 +42,10 @@ main:
 	addiu	$sp, $sp, -8
 	sw	$fp, 4($sp)
 	move	$fp, $sp
-function call compile function not yet implemented
-	jal	f()
-	li	$8, 4
-	addu	$2, $2, $8
+	.option	pic0
+	jal	f
+	nop
+	move	$2, $2
 	move	$sp, $fp
 	movz	$31, $31, $0
 	lw	$fp, 4($sp)

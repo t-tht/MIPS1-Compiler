@@ -1,10 +1,3 @@
-
-int f()
-{
-    return 10;
-}
-
-int main()
-{
-    return f()+12;
+int main(int x, int y){
+return 10;
 }
