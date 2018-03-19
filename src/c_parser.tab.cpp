@@ -1355,7 +1355,7 @@ yyreduce:
 
   case 11:
 #line 65 "src/c_parser.y" /* yacc.c:1646  */
-    { (yyval.node) =  new Block((yyvsp[0].node), NULL); }
+    { (yyval.node) =  new Block((yyvsp[0].node), NULL);}
 #line 1360 "src/c_parser.tab.cpp" /* yacc.c:1646  */
     break;
 

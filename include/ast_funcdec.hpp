@@ -47,21 +47,21 @@ class FuncDec: public Node{
 			dst << "\t" << ".set\tnomacro" << std::endl;
 			dst << std::endl;
 
-<<<<<<< HEAD
-            
-            
-			//allocate space on stack
-			dst << "\t" << "addiu\t$sp, $sp, -8" << std::endl;
-
-            //it needs to store return address here if we plan to jal
-            
-			//store previous frame pointer
-			dst << "\t" << "sw\t$fp, 4($sp)" << std::endl;
-=======
-
-			dst << "\t" << "addiu\t$sp, $sp, -" << cntx.frame_size << std::endl; //save space
-			cntx.spSet(0);
->>>>>>> master
+//<<<<<<< HEAD
+//            
+//            
+//            //allocate space on stack
+//            dst << "\t" << "addiu\t$sp, $sp, -8" << std::endl;
+//
+//            //it needs to store return address here if we plan to jal
+//            
+//            //store previous frame pointer
+//            dst << "\t" << "sw\t$fp, 4($sp)" << std::endl;
+//=======
+//
+//            dst << "\t" << "addiu\t$sp, $sp, -" << cntx.frame_size << std::endl; //save space
+//            cntx.spSet(0);
+//>>>>>>> master
 
 			if(/*!leaf*/1){
 				cntx.spIncrement();
