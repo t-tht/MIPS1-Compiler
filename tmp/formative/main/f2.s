@@ -14,9 +14,12 @@ main:
 	addiu	$sp, $sp, -8
 	sw	$fp, 4($sp)
 	move	$fp, $sp
-assignment compile function not yet implemented
-assignment compile function not yet implemented
-variable compile function not yet implemented
+	li	$2, 10
+	li	$8, 10
+	li	$9, 2
+	mult	$8, $9
+	mflo	$8
+	addu	$2, $2, $8
 	move	$sp, $fp
 	movz	$31, $31, $0
 	lw	$fp, 4($sp)

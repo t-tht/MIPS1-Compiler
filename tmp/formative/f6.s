@@ -6,7 +6,7 @@
 	.ent	main
 	.type	main, @function
 main:
-	.frame	$fp, 8, $31
+	.frame	$fp, 24, $31
 	.mask	0x40000000, -4
 	.fmask	0x00000000, 0
 	.set	noreorder

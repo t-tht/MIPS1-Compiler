@@ -62,7 +62,7 @@ Block:
 
 
 BlockList:
- Statements                                                                                              { $$ =  new Block($1, NULL); }
+ Statements                                                                                              { $$ =  new Block($1, NULL);}
 |BlockList Statements                                                                                   { $$ = new Block($1, $2); }
 
 
