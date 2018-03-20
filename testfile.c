@@ -1,3 +1,3 @@
-int main(int x, int y){
-return 10;
+int main(int x, int y, int a, int b){
+return 10+20+30;
 }
