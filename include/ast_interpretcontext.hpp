@@ -30,13 +30,11 @@ private:
     unsigned int sp;
     unsigned int scopelevel;
     unsigned int functionlevel;
-public:
-    unsigned int frame_point;
     unsigned int frame_size;
-
-    unsigned int argument_no;
-    unsigned int variable_no;
+    unsigned int arg_no;
+    unsigned int var_no;
     unsigned int param_no;
+public:
 
     bool regs[32];       //free registers, 0 = free; 1 = occupied
 
@@ -56,17 +54,22 @@ public:
         for(int i = 26; i < 32; i++){
             regs[i]= true;
         }
+        sp = 0;
+        scopelevel = 0;
+        functionlevel = 0;
+        frame_size = 0;
+        arg_no = 0;
+        var_no = 0;
+        param_no = 0;
     };
     InterpretContext(InterpretContext* cntx){
         for(int i= 0; i< 32; i++){
             regs[i]= cntx->regs[i];
         }
         sp = cntx->sp;
-        frame_point= cntx->frame_point;
         frame_size= cntx-> frame_size;
-
-        argument_no= cntx-> argument_no;
-        variable_no= cntx->variable_no;
+        arg_no= cntx-> arg_no;
+        var_no= cntx->var_no;
         param_no= cntx->param_no;
     };
 
@@ -103,8 +106,24 @@ public:
         }
     };
 
+    unsigned int fpSizeGet(){return frame_size;};
+    void fpSizeCalc(){
+        frame_size += 1; //frame pointer
+        frame_size += 1; //global pointer
+        frame_size += 1; //sp
+        frame_size += 1; //ra
+        frame_size += arg_no;
+        frame_size += param_no;
+        frame_size += var_no;
+
+        if(frame_size % 2 != 0){
+            frame_size++;
+        }
+        frame_size *= 4;
+    };
+
     void paramAdd(){param_list.push_back(1);};
-    int paramCount(){return param_list.size();}
+    unsigned int paramCount(){param_no = param_list.size();return param_no;}
     void paramClear(){param_list.clear();};
     void spIncrement(){sp += 4;};
     void spSet(int i){sp = i;};

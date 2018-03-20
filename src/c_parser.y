@@ -24,7 +24,6 @@
 %token T_NUMBER T_IDENTIFIER T_RETURN T_INT
 %token T_ADD T_VOID
 
-
 %type <node> Program Block BlockList Term Factor
 %type <node> FunctionDeclaration VariableDeclaration Arg
 %type <node> FunctionCall Param

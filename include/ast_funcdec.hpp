@@ -2,6 +2,7 @@
 #define ast_funcdec_hpp
 
 #include "ast.hpp"
+#include "ast_param.hpp"
 
 class FuncDec;
 
@@ -29,6 +30,8 @@ public:
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 
+		std::ostream temp(NULL);
+
 		dst << "\t" << ".text" << std::endl;
 		dst << "\t" << ".align\t2" << std::endl;
 		dst << "\t" << ".globl\t" << *id << std::endl;
@@ -38,9 +41,22 @@ public:
 		dst << "\t" << ".type\t" << *id << ", @function" << std::endl;
 		dst << *id << ":" << std::endl;
 
-		cntx.frame_size = 8;
+		//counting parameters without output
+		if(param!= NULL){
+			param->compile(temp, cntx, destloc);
+		}else{
+			cntx.paramClear();
+		}
+		//setting values TODO Include arg and var no
+		cntx.paramCount();
+		//determine frame size
+		cntx.fpSizeCalc();
+		//resetting values TODO Include arg and var no
+		cntx.paramClear();
 
-		dst << "\t" << ".frame\t" << "$fp, " << cntx.frame_size <<", $31" << std::endl;
+		dst << "\t\t#f size: " << cntx.fpSizeGet() << std::endl;
+
+		dst << "\t" << ".frame\t" << "$fp, " << cntx.fpSizeGet() <<", $ra" << std::endl;
 		dst << "\t" << ".mask\t0x40000000, -4" << std::endl;
 		dst << "\t" << ".fmask\t0x00000000, 0" << std::endl;
 		dst << "\t" << ".set\tnoreorder" << std::endl;
@@ -48,7 +64,7 @@ public:
 		dst << std::endl;
 
 
-		dst << "\t" << "addiu\t$sp, $sp, -" << cntx.frame_size << std::endl; //allocate space on stack
+		dst << "\t" << "addiu\t$sp, $sp, -" << cntx.fpSizeGet() << std::endl; //allocate space on stack
 		cntx.spSet(0);//reset sp offset
 
 		/*
@@ -58,11 +74,11 @@ public:
 
 		if(/*!leaf*/0){//if it is NOT a leaf function (calls another function), save $ra
 			cntx.spIncrement();
-			dst << "\t" << "sw\t\t$31, " << cntx.frame_size-cntx.spGet() << "($sp)" << std::endl;
+			dst << "\t" << "sw\t\t$ra, " << cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl;
 		}
-		
+
 		cntx.spIncrement();
-		dst << "\t" << "sw\t\t$fp, "<< cntx.frame_size-cntx.spGet() << "($sp)" << std::endl;
+		dst << "\t" << "sw\t\t$fp, "<< cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl;
 		dst << "\t" << "move\t$fp, $sp" << std::endl << std::endl;
 
 		if(param != NULL){
@@ -72,7 +88,7 @@ public:
 
 			if(param_no != 0){
 				for(int i = 0; i < param_no; i++){
-					dst << "\tsw\t\t$" << 4+i << ", " << (cntx.frame_size+4*(i)) << "($fp)" << std::endl;
+					dst << "\tsw\t\t$" << 4+i << ", " << (cntx.fpSizeGet()+4*(i)) << "($fp)" << std::endl;
 				}
 				cntx.spSet(param_no*4); //TODO CHECK THIS
 			}
@@ -86,10 +102,10 @@ public:
 
 		//get back to base stack pointer. start unrolling at this point
 		dst << "\t" << "move\t$sp, $fp" << std::endl;
-		dst << "\t" << "lw\t\t$fp, " << cntx.frame_size-4 <<"($sp)" << std::endl;
-		dst << "\t" << "addiu\t$sp, $sp, " << cntx.frame_size << std::endl;
+		dst << "\t" << "lw\t\t$fp, " << cntx.fpSizeGet()-4 <<"($sp)" << std::endl;
+		dst << "\t" << "addiu\t$sp, $sp, " << cntx.fpSizeGet() << std::endl;
 		//return
-		dst << "\t" << "j\t\t$31" << std::endl;
+		dst << "\t" << "j\t\t$ra" << std::endl;
 		dst << "\t" << "nop" << std::endl << std::endl;
 
 		dst << "\t" << ".set\tmacro" << std::endl;
