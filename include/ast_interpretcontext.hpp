@@ -28,19 +28,23 @@ class InterpretContext;
 class InterpretContext{
 private:
     unsigned int sp;
+    unsigned int scopelevel;
+    unsigned int functionlevel;
 public:
     unsigned int frame_point;
     unsigned int frame_size;
 
-    int argument_no;
-    int variable_no;
-    int param_no;
+    unsigned int argument_no;
+    unsigned int variable_no;
+    unsigned int param_no;
 
     bool regs[32];       //free registers, 0 = free; 1 = occupied
 
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> DynamicBindings;
     std::unordered_map<std::string, unsigned int> globalbindings;
+
+    std::vector<int> param_list;
 
     InterpretContext(){
         for(int i = 0; i < 32; i++){
@@ -99,21 +103,19 @@ public:
         }
     };
 
-    void spIncrement(){
-        sp += 4;
-    };
-
-    void spSet(int i){
-        sp = i;
-    };
-
-    unsigned int spGet(){
-        return sp;
-    };
-
-    void regsetused(unsigned int i){
-        regs[i] = 1;
-    };
+    void paramAdd(){param_list.push_back(1);};
+    int paramCount(){return param_list.size();}
+    void paramClear(){param_list.clear();};
+    void spIncrement(){sp += 4;};
+    void spSet(int i){sp = i;};
+    unsigned int spGet()const{return sp;};
+    void scopeIncrement(){scopelevel++;};
+    void scopeDecrement(){scopelevel--;};
+    unsigned int scopeGet()const{return scopelevel;};
+    void functionLevelIncrement(){functionlevel++;}
+    void functionLevelDecrement(){functionlevel--;};
+    unsigned int functionLevelGet(){return functionlevel;};
+    void regsetused(unsigned int i){regs[i] = 1;};
 
     void addvar(const std::string* name){};
 

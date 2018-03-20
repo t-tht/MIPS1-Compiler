@@ -24,11 +24,10 @@ class FuncCallExpr: public Node{
 
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-
-			// dst << "\t.option\tpic0" << std::endl;
+			//cntx.functionLevelIncrement();
 			dst << "\tjal\t" << *id << std::endl;
+			//cntx.functionLevelDecrement();
 			dst << "\tnop" << std::endl;
-
 			dst << "\tmove\t$" << destloc << ", $2" << std::endl;
 		};
 };
