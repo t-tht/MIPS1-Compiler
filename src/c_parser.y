@@ -62,13 +62,8 @@ Block:
 
 
 BlockList:
-<<<<<<< HEAD
- Statements                                                                                              { $$ =  new Block($1, NULL);}
-|BlockList Statements                                                                                   { $$ = new Block($1, $2); }
-=======
  Statements                                                                     { $$ =  new Block($1, NULL); }
 |BlockList Statements                                                           { $$ = new Block($1, $2); }
->>>>>>> tht
 
 
 Statements:
@@ -108,9 +103,10 @@ Expression :
 |Term                                                                           { $$ = $1; }
 |FunctionCall                                                                   { $$ = $1; }
 
+
 FunctionCall:
 T_IDENTIFIER T_LBRACKET T_RBRACKET                                              { $$ = new FuncCallExpr($1, NULL); }
-|T_IDENTIFIER T_LBRACKET Arg T_RBRACKET                                       { $$ = new FuncCallExpr($1, $3); }
+|T_IDENTIFIER T_LBRACKET Arg T_RBRACKET                                         { $$ = new FuncCallExpr($1, $3); }
 //need to change param to arg for ambiguity
 
 BinaryExpression :

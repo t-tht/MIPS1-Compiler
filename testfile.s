@@ -6,21 +6,21 @@
 	.ent	main
 	.type	main, @function
 main:
-		#f size: 16
-	.frame	$fp, 16, $ra
+		#f size: 32
+	.frame	$fp, 32, $ra
 	.mask	0x40000000, -4
 	.fmask	0x00000000, 0
 	.set	noreorder
 	.set	nomacro
 
-	addiu	$sp, $sp, -16
-	sw		$fp, 12($sp)
+	addiu	$sp, $sp, -32
+	sw		$fp, 28($sp)
 	move	$fp, $sp
 
-	sw		$4, 16($fp)
-	sw		$5, 20($fp)
-	sw		$6, 24($fp)
-	sw		$7, 28($fp)
+	sw		$4, 32($fp)
+	sw		$5, 36($fp)
+	sw		$6, 40($fp)
+	sw		$7, 44($fp)
 
 	li		$2, 10
 	li		$8, 20
@@ -29,8 +29,8 @@ main:
 	addu	$2, $2, $8
 
 	move	$sp, $fp
-	lw		$fp, 12($sp)
-	addiu	$sp, $sp, 16
+	lw		$fp, 28($sp)
+	addiu	$sp, $sp, 32
 	j		$ra
 	nop
 
