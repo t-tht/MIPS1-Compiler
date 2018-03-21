@@ -26,7 +26,7 @@ class InterpretContext;
  */
 
 class InterpretContext{
-private:
+public:
     unsigned int sp;
     unsigned int scopelevel;
     unsigned int functionlevel;
@@ -34,15 +34,12 @@ private:
     unsigned int arg_no;
     unsigned int var_no;
     unsigned int param_no;
-public:
 
     bool regs[32];       //free registers, 0 = free; 1 = occupied
 
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> DynamicBindings;
     std::unordered_map<std::string, unsigned int> globalbindings;
-
-    std::vector<int> param_list;
 
     InterpretContext(){
         for(int i = 0; i < 32; i++){
@@ -122,9 +119,6 @@ public:
         frame_size *= 4;
     };
 
-    void paramAdd(){param_list.push_back(1);};
-    unsigned int paramCount(){param_no = param_list.size();return param_no;}
-    void paramClear(){param_list.clear();};
     void spIncrement(){sp += 4;};
     void spSet(int i){sp = i;};
     unsigned int spGet()const{return sp;};

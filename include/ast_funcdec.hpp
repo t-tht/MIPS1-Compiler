@@ -30,8 +30,15 @@ public:
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 
-		std::ostream temp(NULL);
+		cntx = new InterpretContext;
 
+		//initialising variables
+		if(param!= NULL){
+			param->GetSize(cntx);
+		}
+		cntx.fpSizeCalc();
+
+		//default text stuff
 		dst << "\t" << ".text" << std::endl;
 		dst << "\t" << ".align\t2" << std::endl;
 		dst << "\t" << ".globl\t" << *id << std::endl;
@@ -40,22 +47,6 @@ public:
 		dst << "\t" << ".ent\t" << *id << std::endl;
 		dst << "\t" << ".type\t" << *id << ", @function" << std::endl;
 		dst << *id << ":" << std::endl;
-
-		//counting parameters without output
-		if(param!= NULL){
-			param->compile(temp, cntx, destloc);
-		}else{
-			cntx.paramClear();
-		}
-		//setting values TODO Include arg and var no
-		cntx.paramCount();
-		//determine frame size
-		cntx.fpSizeCalc();
-		//resetting values TODO Include arg and var no
-		cntx.paramClear();
-
-		dst << "\t\t#f size: " << cntx.fpSizeGet() << std::endl;
-
 		dst << "\t" << ".frame\t" << "$fp, " << cntx.fpSizeGet() <<", $ra" << std::endl;
 		dst << "\t" << ".mask\t0x40000000, -4" << std::endl;
 		dst << "\t" << ".fmask\t0x00000000, 0" << std::endl;
@@ -63,44 +54,30 @@ public:
 		dst << "\t" << ".set\tnomacro" << std::endl;
 		dst << std::endl;
 
-
 		dst << "\t" << "addiu\t$sp, $sp, -" << cntx.fpSizeGet() << std::endl; //allocate space on stack
-		cntx.spSet(0);//reset sp offset
-
-		/*
-		TODO : 	implemented leaf detection
-		implement find arg_no
-		*/
-
-		if(/*!leaf*/0){//if it is NOT a leaf function (calls another function), save $ra
-			cntx.spIncrement();
-			dst << "\t" << "sw\t\t$ra, " << cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl;
-		}
+		cntx.spSet(0);
 
 		cntx.spIncrement();
-		dst << "\t" << "sw\t\t$fp, "<< cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl;
+		dst << "\t" << "sw\t\t$ra, " << cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl; //save $ra
+		cntx.spIncrement();
+		dst << "\t" << "sw\t\t$fp, "<< cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl; //save fp
 		dst << "\t" << "move\t$fp, $sp" << std::endl << std::endl;
 
-		if(param != NULL){
-			param->compile(dst, cntx, destloc);
-			int param_no = cntx.paramCount();
-			cntx.paramClear();
 
-			if(param_no != 0){
-				for(int i = 0; i < param_no; i++){
-					dst << "\tsw\t\t$" << 4+i << ", " << (cntx.fpSizeGet()+4*(i)) << "($fp)" << std::endl;
-				}
-				cntx.spSet(param_no*4); //TODO CHECK THIS
+		if(cntx.param_no){
+			for(unsigned int i = 0; i < cntx.param_no; i++){
+				dst << "\tsw\t\t$" << 4+i << ", " << cntx.sp << "($fp)" << std::endl;
+				cntx.spIncrement();
 			}
+			cntx.spSet(cntx.param_no*4); //TODO CHECK THIS
 		}
 
-		dst << std::endl;
 		if(block != NULL){
-		block->compile(dst, cntx, destloc);
+			block->compile(dst, cntx, destloc);
 		}
-		dst << std::endl;
 
-		//get back to base stack pointer. start unrolling at this point
+
+		dst << std::endl;
 		dst << "\t" << "move\t$sp, $fp" << std::endl;
 		dst << "\t" << "lw\t\t$fp, " << cntx.fpSizeGet()-4 <<"($sp)" << std::endl;
 		dst << "\t" << "addiu\t$sp, $sp, " << cntx.fpSizeGet() << std::endl;
@@ -113,7 +90,9 @@ public:
 		dst << "\t" << ".end\t" << *id << std::endl;
 		dst << "\t" << ".size\t" << *id << ", .-" << *id << std::endl;
 
+		delete* cntx;
 	};
+	void GetSize(InterpretContext &cntx) const override{};
 };
 
 #endif
