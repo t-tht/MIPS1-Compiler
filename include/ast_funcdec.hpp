@@ -65,9 +65,14 @@ public:
 		if(cntx.param_no){
 			for(unsigned int i = 0; i < cntx.param_no; i++){
 				dst << "\tsw\t\t$" << 4+i << ", " << cntx.sp << "($fp)" << std::endl;
-				cntx.AddToStack(4+i);
+				std::string s = std::to_string(4+i);
+				cntx.AddToStack(s);
 			}
 		}
+		// for(int i = 0; i < 4; i++){
+		// 	std::string s = std::to_string(4+i);
+		// 	dst << "#" <<cntx.FindOnStack(s) << std::endl;
+		// }
 
 
 		if(block != NULL){

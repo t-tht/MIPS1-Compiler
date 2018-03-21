@@ -17,14 +17,14 @@ main:
 	sw		$fp, 24($sp)
 	move	$fp, $sp
 
-	sw		$4, 28($fp)
-	sw		$5, 32($fp)
-	sw		$6, 36($fp)
-	sw		$7, 40($fp)
-#28
-#32
-#36
-#40
+	sw		$4, 8($fp)
+	sw		$5, 12($fp)
+	sw		$6, 16($fp)
+	sw		$7, 20($fp)
+#8
+#12
+#16
+#20
 	li		$2, 10
 
 	move	$sp, $fp
