@@ -38,8 +38,46 @@ public:
     bool regs[32];       //free registers, 0 = free; 1 = occupied
 
     std::unordered_map<std::string, unsigned int> VariableBindings;
-    std::unordered_map<std::string, unsigned int> DynamicBindings;
-    std::unordered_map<std::string, unsigned int> globalbindings;
+    std::unordered_map<std::string, unsigned int> GlobalBindings;
+    std::unordered_map<std::string, unsigned int> Stack;
+
+    void AddToStack(std::string id){
+        Stack.emplace(std::make_pair(id,sp));
+        spIncrement();
+    };
+    unsigned int FindOnStack(std::string id){
+        auto search = Stack.find(id);
+        if(search != Stack.end()){
+            return search->second;
+        }
+        else{
+            return -1;
+        }
+    };
+
+    void AddVariable(std::string id, int val){
+        VariableBindings.emplace(std::make_pair(id,val));
+    };
+    void FindVariable(){    //returns variable value
+        auto search = VariableBindings.find(id);
+        if(search != VariableBindings.end()){
+            return search->second;
+        }else{
+            return -1;
+        }
+    };
+
+    void AddGlobal(std::string id, int val){
+        GlobalBindings.emplace(std::make_pair(id,val));
+    };
+    void FindGlobal(){
+        auto search = GlobalBindings.find(id);
+        if(search != GlobalBindings.end()){
+            return search->second;
+        }else{
+            return -1;
+        }
+    };
 
     InterpretContext(){
         for(int i = 0; i < 32; i++){

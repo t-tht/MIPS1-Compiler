@@ -36,7 +36,6 @@ public:
 		dst << "\tjal\t" << *id << std::endl;
 		//cntx.functionLevelDecrement();
 		dst << "\tnop" << std::endl;
-		dst << "\tmove\t$" << destloc << ", $2" << std::endl;
 	};
 	void GetSize(InterpretContext &cntx) const override{};
 };

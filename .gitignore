@@ -38,3 +38,7 @@ bin/c_compiler
 src/c_parser.tab.cpp
 test
 testfile.c
+bin/c_compiler
+src/c_parser.tab.cpp
+test
+testfile.c
