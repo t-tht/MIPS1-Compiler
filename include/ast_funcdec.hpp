@@ -79,7 +79,7 @@ public:
 
 		cntx.spIncrement();
 		dst << "\t" << "sw\t\t$fp, "<< cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl;
-		dst << "\t" << "move\t$fp, $sp" << std::endl << std::endl;
+		dst << "\t" << "move\t$fp, $sp" << std::endl;
 
 		if(param != NULL){
 			param->compile(dst, cntx, destloc);
