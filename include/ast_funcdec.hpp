@@ -30,8 +30,6 @@ public:
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 
-		cntx = new InterpretContext;
-
 		//initialising variables
 		if(param!= NULL){
 			param->GetSize(cntx);
@@ -54,6 +52,7 @@ public:
 		dst << "\t" << ".set\tnomacro" << std::endl;
 		dst << std::endl;
 
+
 		dst << "\t" << "addiu\t$sp, $sp, -" << cntx.fpSizeGet() << std::endl; //allocate space on stack
 		cntx.spSet(0);
 
@@ -63,14 +62,13 @@ public:
 		dst << "\t" << "sw\t\t$fp, "<< cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl; //save fp
 		dst << "\t" << "move\t$fp, $sp" << std::endl << std::endl;
 
-
 		if(cntx.param_no){
 			for(unsigned int i = 0; i < cntx.param_no; i++){
 				dst << "\tsw\t\t$" << 4+i << ", " << cntx.sp << "($fp)" << std::endl;
-				cntx.spIncrement();
+				cntx.AddToStack(4+i);
 			}
-			cntx.spSet(cntx.param_no*4); //TODO CHECK THIS
 		}
+
 
 		if(block != NULL){
 			block->compile(dst, cntx, destloc);
@@ -90,7 +88,6 @@ public:
 		dst << "\t" << ".end\t" << *id << std::endl;
 		dst << "\t" << ".size\t" << *id << ", .-" << *id << std::endl;
 
-		delete* cntx;
 	};
 	void GetSize(InterpretContext &cntx) const override{};
 };

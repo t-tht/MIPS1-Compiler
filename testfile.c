@@ -1,7 +1,3 @@
-int f(){
+int main(int a,int b,int c,int d){
     return 10;
-}
-
-int main(){
-    return f();
 }

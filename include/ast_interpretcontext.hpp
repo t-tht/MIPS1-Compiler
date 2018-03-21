@@ -40,6 +40,7 @@ public:
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> DynamicBindings;
     std::unordered_map<std::string, unsigned int> globalbindings;
+    std::unordered_map<unsigned int, unsigned int> Stack;
 
     InterpretContext(){
         for(int i = 0; i < 32; i++){
@@ -118,6 +119,20 @@ public:
         }
         frame_size *= 4;
     };
+
+void AddToStack(unsigned int id){
+    Stack.emplace(std::make_pair(id,sp));
+    spIncrement();
+};
+unsigned int FindOnStack(unsigned int id){
+    auto search = Stack.find(id);
+    if(search != Stack.end()){
+        return search->second;
+    }
+    else{
+        return -1;
+    }
+};
 
     void spIncrement(){sp += 4;};
     void spSet(int i){sp = i;};
