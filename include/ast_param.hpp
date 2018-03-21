@@ -10,7 +10,6 @@ protected:
 	std::string* type;
 	std::string* id;
 	NodePtr right;
-	// unsigned int count = 14;
 public:
 	Param(std::string* _type, std::string* _id, NodePtr _right ) : type(_type), id(_id), right(_right){};
 	~Param(){
@@ -25,9 +24,14 @@ public:
 
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-		cntx.paramAdd();
 		if(right != NULL){
 			right->compile(dst,cntx,destloc);
+		}
+	};
+	void GetSize(InterpretContext &cntx) const override{
+		cntx.param_no++;
+		if(right != NULL){
+			right->GetSize(cntx);
 		}
 	};
 };

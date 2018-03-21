@@ -21,6 +21,7 @@ class Number : public Node{
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
 			dst << "\tli\t\t$" << destloc << ", " << value << std::endl;
 		};
+		void GetSize(InterpretContext &cntx) const override{};
 };
 
 class Variable : public Node{
@@ -35,6 +36,7 @@ class Variable : public Node{
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
 			dst << "variable compile function not yet implemented" << std::endl;
 		};
+		void GetSize(InterpretContext &cntx) const override{};
 };
 
 #endif
