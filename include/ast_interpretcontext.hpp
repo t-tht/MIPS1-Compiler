@@ -26,21 +26,58 @@ class InterpretContext;
  */
 
 class InterpretContext{
-private:
-    unsigned int sp;
 public:
-    unsigned int frame_point;
+    unsigned int sp;
+    unsigned int scopelevel;
+    unsigned int functionlevel;
     unsigned int frame_size;
-
-    int argument_no;
-    int variable_no;
-    int param_no;
+    unsigned int arg_no;
+    unsigned int var_no;
+    unsigned int param_no;
 
     bool regs[32];       //free registers, 0 = free; 1 = occupied
 
     std::unordered_map<std::string, unsigned int> VariableBindings;
-    std::unordered_map<std::string, unsigned int> DynamicBindings;
-    std::unordered_map<std::string, unsigned int> globalbindings;
+    std::unordered_map<std::string, unsigned int> GlobalBindings;
+    std::unordered_map<std::string, unsigned int> Stack;
+
+    void AddToStack(std::string id){
+        Stack.emplace(std::make_pair(id,sp));
+        spIncrement();
+    };
+    unsigned int FindOnStack(std::string id){
+        auto search = Stack.find(id);
+        if(search != Stack.end()){
+            return search->second;
+        }
+        else{
+            return -1;
+        }
+    };
+
+    void AddVariable(std::string id, int val){
+        VariableBindings.emplace(std::make_pair(id,val));
+    };
+    void FindVariable(){    //returns variable value
+        auto search = VariableBindings.find(id);
+        if(search != VariableBindings.end()){
+            return search->second;
+        }else{
+            return -1;
+        }
+    };
+
+    void AddGlobal(std::string id, int val){
+        GlobalBindings.emplace(std::make_pair(id,val));
+    };
+    void FindGlobal(){
+        auto search = GlobalBindings.find(id);
+        if(search != GlobalBindings.end()){
+            return search->second;
+        }else{
+            return -1;
+        }
+    };
 
     InterpretContext(){
         for(int i = 0; i < 32; i++){
@@ -52,17 +89,22 @@ public:
         for(int i = 26; i < 32; i++){
             regs[i]= true;
         }
+        sp = 0;
+        scopelevel = 0;
+        functionlevel = 0;
+        frame_size = 0;
+        arg_no = 0;
+        var_no = 0;
+        param_no = 0;
     };
     InterpretContext(InterpretContext* cntx){
         for(int i= 0; i< 32; i++){
             regs[i]= cntx->regs[i];
         }
         sp = cntx->sp;
-        frame_point= cntx->frame_point;
         frame_size= cntx-> frame_size;
-
-        argument_no= cntx-> argument_no;
-        variable_no= cntx->variable_no;
+        arg_no= cntx-> arg_no;
+        var_no= cntx->var_no;
         param_no= cntx->param_no;
     };
 
@@ -99,21 +141,32 @@ public:
         }
     };
 
-    void spIncrement(){
-        sp += 4;
+    unsigned int fpSizeGet(){return frame_size;};
+    void fpSizeCalc(){
+        frame_size += 1; //frame pointer
+        frame_size += 1; //global pointer
+        frame_size += 1; //sp
+        frame_size += 1; //ra
+        frame_size += arg_no;
+        frame_size += param_no;
+        frame_size += var_no;
+
+        if(frame_size % 2 != 0){
+            frame_size++;
+        }
+        frame_size *= 4;
     };
 
-    void spSet(int i){
-        sp = i;
-    };
-
-    unsigned int spGet(){
-        return sp;
-    };
-
-    void regsetused(unsigned int i){
-        regs[i] = 1;
-    };
+    void spIncrement(){sp += 4;};
+    void spSet(int i){sp = i;};
+    unsigned int spGet()const{return sp;};
+    void scopeIncrement(){scopelevel++;};
+    void scopeDecrement(){scopelevel--;};
+    unsigned int scopeGet()const{return scopelevel;};
+    void functionLevelIncrement(){functionlevel++;}
+    void functionLevelDecrement(){functionlevel--;};
+    unsigned int functionLevelGet(){return functionlevel;};
+    void regsetused(unsigned int i){regs[i] = 1;};
 
     void addvar(const std::string* name){};
 

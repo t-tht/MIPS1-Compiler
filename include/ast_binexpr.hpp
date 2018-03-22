@@ -53,7 +53,7 @@ class BinExpr : public Node{
 				dst << "\tmflo\t$" << destloc << std::endl;
 			}
 		};
-
+		void GetSize(InterpretContext &cntx) const override{};
 };
 
 #endif

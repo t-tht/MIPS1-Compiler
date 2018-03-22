@@ -31,6 +31,7 @@ class Block : public Node{
 				right->compile(dst, cntx, destloc);
 			}
 		};
+		void GetSize(InterpretContext &cntx) const override{};
 };
 
 #endif

@@ -6,25 +6,31 @@
 	.ent	main
 	.type	main, @function
 main:
-	.frame	$fp, 8, $31
+	.frame	$fp, 32, $ra
 	.mask	0x40000000, -4
 	.fmask	0x00000000, 0
 	.set	noreorder
 	.set	nomacro
 
-	addiu	$sp, $sp, -8
-	sw		$31, 4($sp)
-	sw		$fp, 0($sp)
+	addiu	$sp, $sp, -32
+	sw		$ra, 28($sp)
+	sw		$fp, 24($sp)
 	move	$fp, $sp
-	sw		$4, 12($fp)
-	sw		$5, 16($fp)
-	sw		$6, 20($fp)
-	sw		$7, 24($fp)
+
+	sw		$4, 8($fp)
+	sw		$5, 12($fp)
+	sw		$6, 16($fp)
+	sw		$7, 20($fp)
+#8
+#12
+#16
+#20
 	li		$2, 10
+
 	move	$sp, $fp
-	lw		$fp, 4($sp)
-	addiu	$sp, $sp, 8
-	j		$31
+	lw		$fp, 28($sp)
+	addiu	$sp, $sp, 32
+	j		$ra
 	nop
 
 	.set	macro

@@ -23,8 +23,14 @@ class VarDec: public Node{
 
 		}
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-			dst << "vardec compile function not yet implemented" << std::endl;
+			//
+			// cntx.AddVariable(*id, 0);
+			// dst << "\tli\t\t$" << destloc << ", ";
+			// Expr->compile(dst, cntx, destloc);
+			// dst << std::endl;
+			// dst << "\tsw\t\t$" << destloc << ", "<<  << "($fp)" << std::endl;
 		};
+		void GetSize(InterpretContext &cntx) const override{};
 };
 
 #endif
