@@ -58,7 +58,7 @@ public:
     void AddVariable(std::string id, int val){
         VariableBindings.emplace(std::make_pair(id,val));
     };
-    void FindVariable(){    //returns variable value
+    unsigned int FindVariable(std::string id){    //returns variable value
         auto search = VariableBindings.find(id);
         if(search != VariableBindings.end()){
             return search->second;
@@ -70,7 +70,7 @@ public:
     void AddGlobal(std::string id, int val){
         GlobalBindings.emplace(std::make_pair(id,val));
     };
-    void FindGlobal(){
+    unsigned int FindGlobal(std::string id){
         auto search = GlobalBindings.find(id);
         if(search != GlobalBindings.end()){
             return search->second;
@@ -160,12 +160,15 @@ public:
     void spIncrement(){sp += 4;};
     void spSet(int i){sp = i;};
     unsigned int spGet()const{return sp;};
+
     void scopeIncrement(){scopelevel++;};
     void scopeDecrement(){scopelevel--;};
     unsigned int scopeGet()const{return scopelevel;};
+
     void functionLevelIncrement(){functionlevel++;}
     void functionLevelDecrement(){functionlevel--;};
     unsigned int functionLevelGet(){return functionlevel;};
+
     void regsetused(unsigned int i){regs[i] = 1;};
 
     void addvar(const std::string* name){};
