@@ -16,7 +16,7 @@ public:
 		delete right;
 	};
 	void translate(std::ostream &dst)const override{
-		dst<< *type << " " << *id;
+		dst<< *id;
 		if(right != NULL){
 			dst << ",";
 			right->translate(dst);

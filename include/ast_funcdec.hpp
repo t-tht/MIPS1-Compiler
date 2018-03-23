@@ -26,6 +26,15 @@ public:
 			param->translate(dst);
 		}
 		dst << "):" << std::endl;
+        if(globalvars.size()!=0){
+            for(int i=0; i<tab; i++){
+                dst<< "\t";
+            }
+            for(int i=0; i<globalvars.size(); i++){
+                dst<< "global " << globalvars[i];
+                dst<< std::endl;
+            }
+        }
 		block->translate(dst);
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{

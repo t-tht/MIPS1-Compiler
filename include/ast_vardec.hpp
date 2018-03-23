@@ -15,11 +15,16 @@ class VarDec: public Node{
         ~VarDec(){
 		}
 		void translate(std::ostream &dst) const override{
-            dst << *type << " "<< *id;
+            globalvars.push_back(*id);
+            dst << *id;
 			if(Expr != NULL){
 				dst << " = ";
 				Expr ->translate(dst);
 			}
+            else{
+                dst<< "=0";
+            }
+            dst<<std::endl;
 
 		}
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{

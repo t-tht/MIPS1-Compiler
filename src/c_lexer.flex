@@ -26,11 +26,12 @@ extern "C" int fileno(FILE *stream);
 \=\>                                     { return T_MORETHANEQ;}
 \=\=                                     { return T_CONDEQ;}
 \!\=                                     { return T_NOTEQ;}
+\<                                       { return T_LESSTHAN; }
+\>                                      { return T_MORETHAN; }
+
 
 \&\&                                    {return T_LOGAND;}
 \|\|                                    {return T_LOGOR;}
-
-
 
 return									{return T_RETURN;}
 int										{return T_INT;}
@@ -42,6 +43,8 @@ if                                      {return T_IF;}
 
 [ \t\r\n]+		{;}
 
+"//".*                                    { }
+[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]       { }
 .               { fprintf(stderr, "Invalid token\n"); exit(1); }
 %%
 

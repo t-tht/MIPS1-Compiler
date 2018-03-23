@@ -20,7 +20,7 @@
   std::string *string;
 }
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS
-%token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS T_LESSTHANEQ T_MORETHANEQ T_CONDEQ T_NOTEQ T_LOGAND T_LOGOR T_IF
+%token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS T_LESSTHANEQ T_MORETHANEQ T_CONDEQ T_NOTEQ T_LOGAND T_LOGOR T_IF T_MORETHAN T_LESSTHAN
 %token T_NUMBER T_IDENTIFIER T_RETURN T_INT
 %token T_ADD T_VOID
 
@@ -96,7 +96,8 @@ CompareOp:
 |T_NOTEQ                                                                        { $$ = new std::string("!="); }
 |T_LOGAND                                                                       { $$ = new std::string("&&"); }
 |T_LOGOR                                                                        { $$ = new std::string("||"); }
-
+|T_MORETHAN                                                                      { $$ = new std::string(">"); }
+|T_LESSTHAN                                                                      { $$ = new std::string("<"); }
 
 Expression :
  BinaryExpression                                                               { $$ = $1; }
@@ -138,7 +139,8 @@ Arg:    //for function calls
  T_IDENTIFIER                                                                   { $$ = new Param(NULL, $1, NULL); }
 |Type T_IDENTIFIER                                                              { $$ = new Param($1, $2, NULL); }
 |Arg T_COMMA T_IDENTIFIER                                                       { $$ = new Param(NULL, $3, $1); }
-|Arg T_COMMA Type T_IDENTIFIER                                                  { $$ = new Param($3, $4, $1); }
+|Arg T_COMMA Type T_IDENTIFIER                                                { $$ = new Param($3, $4, $1); }
+| T_NUMBER                                                  { $$ = new Number($1); }
 
 
 Type:
