@@ -4,29 +4,31 @@
 
 int main(int argc, char* argv[]){
 
-freopen(argv[2], "r", stdin);
-freopen(argv[4], "w", stdout);
+    freopen(argv[2], "r", stdin);
+    freopen(argv[4], "w", stdout);
 
     const Node *ast=parseAST();
-   InterpretContext cntx;
- unsigned int destloc = 0;
+    InterpretContext cntx;
+    unsigned int destloc = 0;
 
 
-   if(std::string(argv[1])== "--compile"){
+    if(std::string(argv[1])== "--compile"){
+        ast->GetContext(cntx);
+        cntx.PrintReg(std::cout);
         ast->compile(std::cout, cntx, destloc);
-   }
+    }
 
-if(std::string(argv[1])== "--translate"){
+    if(std::string(argv[1])== "--translate"){
         ast->translate(std::cout);
-    std::cout<<"\n# Boilerplat" << std::endl;
-    std::cout<<"if __name__ == \"__main__\":" << std::endl;
-    std::cout<<"\timport sys\n\tret=main()\n\tsys.exit(ret)"<<std::endl;
-    std::cout<< "\n";
-   }
+        std::cout<<"\n# Boilerplat" << std::endl;
+        std::cout<<"if __name__ == \"__main__\":" << std::endl;
+        std::cout<<"\timport sys\n\tret=main()\n\tsys.exit(ret)"<<std::endl;
+        std::cout<< "\n";
+    }
 
 
     fclose(stdin);
-fclose(stdout);
+    fclose(stdout);
 
 
     return 0;

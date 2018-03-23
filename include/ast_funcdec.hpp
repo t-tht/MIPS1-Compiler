@@ -26,14 +26,12 @@ public:
 			param->translate(dst);
 		}
 		dst << "):" << std::endl;
-		block->translate(dst);
+		if(block!=NULL){
+			block->translate(dst);
+		}
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 
-		//initialising variables
-		if(param!= NULL){
-			param->GetSize(cntx);
-		}
 		cntx.fpSizeCalc();
 
 		//default text stuff
@@ -56,8 +54,8 @@ public:
 		dst << "\t" << "addiu\t$sp, $sp, -" << cntx.fpSizeGet() << std::endl; //allocate space on stack
 		cntx.spSet(0);
 
-		cntx.spIncrement();
-		dst << "\t" << "sw\t\t$ra, " << cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl; //save $ra
+		// cntx.spIncrement();
+		//dst << "\t" << "sw\t\t$ra, " << cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl; //save $ra
 		cntx.spIncrement();
 		dst << "\t" << "sw\t\t$fp, "<< cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl; //save fp
 		dst << "\t" << "move\t$fp, $sp" << std::endl << std::endl;
@@ -66,13 +64,13 @@ public:
 			for(unsigned int i = 0; i < cntx.param_no; i++){
 				dst << "\tsw\t\t$" << 4+i << ", " << cntx.sp << "($fp)" << std::endl;
 				std::string s = std::to_string(4+i);
-				cntx.AddToStack(s);
+				//cntx.AddToStack(s);
+			}
+			for(int i = 0; i < 4; i++){
+				std::string s = std::to_string(4+i);
+				//dst << "#" <<cntx.FindOnStack(s) << std::endl;
 			}
 		}
-		// for(int i = 0; i < 4; i++){
-		// 	std::string s = std::to_string(4+i);
-		// 	dst << "#" <<cntx.FindOnStack(s) << std::endl;
-		// }
 
 
 		if(block != NULL){
@@ -94,7 +92,22 @@ public:
 		dst << "\t" << ".size\t" << *id << ", .-" << *id << std::endl;
 
 	};
-	void GetSize(InterpretContext &cntx) const override{};
+
+
+
+	unsigned int GetContext(InterpretContext &cntx) const override{
+		if(param!=NULL){
+			cntx.ResetParamNo();
+			param->GetContext(cntx);
+			for(unsigned int i = 0; i < cntx.GetParamNo(); i++){
+				cntx.RegSetUsed(4+i);
+			}
+		}
+		if(block!=NULL){
+			block->GetContext(cntx);
+		}
+		return 0;
+	};
 };
 
 #endif

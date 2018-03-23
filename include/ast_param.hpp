@@ -28,11 +28,12 @@ public:
 			right->compile(dst,cntx,destloc);
 		}
 	};
-	void GetSize(InterpretContext &cntx) const override{
-		cntx.param_no++;
-		if(right != NULL){
-			right->GetSize(cntx);
+	unsigned int GetContext(InterpretContext &cntx) const override{
+		cntx.ParamNoIncrement();
+		if(right!=NULL){
+			right->GetContext(cntx);
 		}
+		return 0;
 	};
 };
 

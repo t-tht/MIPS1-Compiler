@@ -12,7 +12,7 @@ class Node{
 		virtual ~Node(){};
 		virtual void translate(std::ostream &dst) const =0;
 		virtual void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const =0;
-		virtual void GetSize(InterpretContext &cntx) const = 0;
+		virtual unsigned int GetContext(InterpretContext &cntx) const = 0;
 
 };
 

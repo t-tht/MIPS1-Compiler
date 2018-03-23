@@ -8,27 +8,27 @@ class FuncCallExpr;
 class FuncCallExpr: public Node{
 protected:
 	std::string* id;
-	NodePtr param;		//needs fixing later, but atm assume no
+	NodePtr arg;		//needs fixing later, but atm assume no
 public:
-	FuncCallExpr(std::string* _id, NodePtr _param): id(_id), param(_param){};
+	FuncCallExpr(std::string* _id, NodePtr _arg): id(_id), arg(_arg){};
 	~FuncCallExpr(){
 		delete id;
-		delete param;
+		delete arg;
 	};
 	void translate(std::ostream &dst) const override{
 		dst << *id << "(";
-		if(param != NULL){
-			param->translate(dst);
+		if(arg != NULL){
+			arg->translate(dst);
 		}
 		dst << ")";
 
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 		InterpretContext temp;
-		if(param != NULL){
-			param->GetSize(temp);
+		if(arg != NULL){
+			arg->GetContext(temp);
 		}
-		for(unsigned int i = 0; i < temp.param_no; i++){
+		for(unsigned int i = 0; i < temp.arg_no; i++){
 			dst << "\tlw\t\t$" << 4+i << ", " << cntx.sp << "($fp)" << std::endl;
 			cntx.spIncrement();
 		}
@@ -37,7 +37,13 @@ public:
 		//cntx.functionLevelDecrement();
 		dst << "\tnop" << std::endl;
 	};
-	void GetSize(InterpretContext &cntx) const override{};
+	unsigned int GetContext(InterpretContext &cntx) const override{
+		cntx.RegSetUsed(31);		//need return address
+		if(arg != NULL){
+			arg->GetContext(cntx);
+		}
+		return 0;
+	};
 };
 
 #endif
