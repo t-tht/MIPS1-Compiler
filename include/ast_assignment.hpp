@@ -26,6 +26,7 @@ public:
 
     }
     void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{};
+    
     unsigned int GetContext(InterpretContext &cntx) const override{
         unsigned int exprv = Expr->GetContext(cntx);
         cntx.UpdateVariable(*id,exprv);

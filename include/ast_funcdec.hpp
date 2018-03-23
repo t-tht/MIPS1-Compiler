@@ -32,8 +32,6 @@ public:
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 
-		cntx.fpSizeCalc();
-
 		//default text stuff
 		dst << "\t" << ".text" << std::endl;
 		dst << "\t" << ".align\t2" << std::endl;
@@ -50,38 +48,18 @@ public:
 		dst << "\t" << ".set\tnomacro" << std::endl;
 		dst << std::endl;
 
+		cntx.AllocateStack(dst);
 
-		dst << "\t" << "addiu\t$sp, $sp, -" << cntx.fpSizeGet() << std::endl; //allocate space on stack
-		cntx.spSet(0);
-
-		// cntx.spIncrement();
-		//dst << "\t" << "sw\t\t$ra, " << cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl; //save $ra
-		cntx.spIncrement();
-		dst << "\t" << "sw\t\t$fp, "<< cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl; //save fp
-		dst << "\t" << "move\t$fp, $sp" << std::endl << std::endl;
-
-		if(cntx.param_no){
-			for(unsigned int i = 0; i < cntx.param_no; i++){
-				dst << "\tsw\t\t$" << 4+i << ", " << cntx.sp << "($fp)" << std::endl;
-				std::string s = std::to_string(4+i);
-				//cntx.AddToStack(s);
-			}
-			for(int i = 0; i < 4; i++){
-				std::string s = std::to_string(4+i);
-				//dst << "#" <<cntx.FindOnStack(s) << std::endl;
-			}
+		if(param != NULL){
+			dst << "\t#pushing param onto stack" << std::endl;
+			param->compile(dst, cntx, destloc);
 		}
-
-
-		if(block != NULL){
-			block->compile(dst, cntx, destloc);
-		}
+		dst << std::endl;
+		if(block != NULL){block->compile(dst, cntx, destloc);}
 
 
 		dst << std::endl;
-		dst << "\t" << "move\t$sp, $fp" << std::endl;
-		dst << "\t" << "lw\t\t$fp, " << cntx.fpSizeGet()-4 <<"($sp)" << std::endl;
-		dst << "\t" << "addiu\t$sp, $sp, " << cntx.fpSizeGet() << std::endl;
+		cntx.DeallocateStack(dst);
 		//return
 		dst << "\t" << "j\t\t$ra" << std::endl;
 		dst << "\t" << "nop" << std::endl << std::endl;
@@ -97,17 +75,14 @@ public:
 
 	unsigned int GetContext(InterpretContext &cntx) const override{
 		if(param!=NULL){
-			cntx.ResetParamNo();
 			param->GetContext(cntx);
-			for(unsigned int i = 0; i < cntx.GetParamNo(); i++){
-				cntx.RegSetUsed(4+i);
-			}
 		}
 		if(block!=NULL){
 			block->GetContext(cntx);
 		}
 		return 0;
 	};
+
 };
 
 #endif

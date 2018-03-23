@@ -45,17 +45,24 @@ main:
 	.set	noreorder
 	.set	nomacro
 
+	#allocate stack
 	addiu	$sp, $sp, -128
-	sw		$fp, 124($sp)
+	sw		$ra, 124($sp)
+	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-	li		$0, 10
-	li		$8, 20
-	addu	$0, $0, $8
-	addu	$0, $0, $9
+	#pushing param onto stack
+	sw		$4, 128($fp)
+	sw		$5, 132($fp)
+	sw		$6, 136($fp)
+	sw		$7, 140($fp)
 
+	li		$2, 10
+
+	#deallocating stack
 	move	$sp, $fp
-	lw		$fp, 124($sp)
+	lw		$fp, 120($sp)
+	lw		$ra, 124($sp)
 	addiu	$sp, $sp, 128
 	j		$ra
 	nop
