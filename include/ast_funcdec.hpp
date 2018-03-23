@@ -51,11 +51,14 @@ public:
 		cntx.AllocateStack(dst);
 
 		if(param != NULL){
-			dst << "\t#pushing param onto stack" << std::endl;
+			dst << "#pushing param onto stack" << std::endl;
 			param->compile(dst, cntx, destloc);
 		}
 		dst << std::endl;
-		if(block != NULL){block->compile(dst, cntx, destloc);}
+		if(block != NULL){
+			dst << "#compiling function body" << std::endl;
+			block->compile(dst, cntx, destloc);
+		}
 
 
 		dst << std::endl;

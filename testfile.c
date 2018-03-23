@@ -1,3 +1,5 @@
 int main(int x, int y, int z, int a ,int b){
-    return 10;
+    int g = 10;
+    int h = 20;
+    return g+h;
 }

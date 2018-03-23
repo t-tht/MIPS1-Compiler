@@ -26,6 +26,7 @@ public:
 		if(Expr != NULL){
 			Expr->compile(dst, cntx, destloc);
 		}
+		dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
 
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{

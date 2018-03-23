@@ -24,8 +24,8 @@ public:
 
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-		if(cntx.FindOnStack(*id) < 4){
-			dst << "\tsw\t\t$" << cntx.FindOnStack(*id)+4 << ", " << cntx.FindOnStack(*id)*4+cntx.frame_size << "($fp)" << std::endl;
+		if(cntx.FindOnStack(*id) < 4*4){
+			dst << "\tsw\t\t$" << cntx.FindOnStack(*id)+4 << ", " << cntx.FindOnStack(*id)+cntx.frame_size << "($fp)" << std::endl;
 		}
 		if(right!= NULL){
 			right->compile(dst, cntx, destloc);

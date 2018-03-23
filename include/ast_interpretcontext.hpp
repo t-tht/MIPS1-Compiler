@@ -131,7 +131,10 @@ public:
 
 
     void AddVariable(std::string id, unsigned int val){
-        VariableBindings.emplace(std::make_pair(id,val));
+        if(FindVariable(id)){
+        }else{
+            VariableBindings.emplace(std::make_pair(id,val));
+        }
     };
     unsigned int FindVariable(std::string id){    //returns variable value
         auto search = VariableBindings.find(id);
@@ -162,7 +165,7 @@ public:
 
     void AddToStack(std::string id){
         Stack.emplace(std::make_pair(id,spOffset));
-        spOffset++;
+        spOffset+=4;
     };
     unsigned int FindOnStack(std::string id){
         auto search = Stack.find(id);
@@ -205,7 +208,7 @@ public:
     /*Printing functions*/
     void AllocateStack(std::ostream &dst){
         unsigned int size = frame_size;
-        dst << "\t#allocate stack" << std::endl;
+        dst << "#allocate stack" << std::endl;
         dst << "\taddiu\t$sp, $sp, -" << size+sp << std::endl;
         dst << "\tsw\t\t$ra, " << size+sp-4 << "($sp)" << std::endl;
         dst << "\tsw\t\t$fp, " << size+sp-8 << "($sp)" << std::endl;
@@ -214,7 +217,7 @@ public:
         //fpReset();
     }
     void DeallocateStack(std::ostream &dst){
-        dst << "\t#deallocating stack" << std::endl;
+        dst << "#deallocating stack" << std::endl;
         dst << "\tmove\t$sp, $fp" << std::endl;
         dst << "\tlw\t\t$fp, " << sp-8 << "($sp)" << std::endl;
         dst << "\tlw\t\t$ra, " << sp-4 << "($sp)" << std::endl;
