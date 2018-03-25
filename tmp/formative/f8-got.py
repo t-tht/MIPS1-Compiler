@@ -3,10 +3,10 @@ def f():
 global x
 x=x+1
 
-	return x
+return x
 def main():
 global x
-	return 	f()+	f()
+return f()+f()
 
 # Boilerplat
 if __name__ == "__main__":

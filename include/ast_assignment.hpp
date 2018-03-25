@@ -15,6 +15,9 @@ public:
     ~AssignmentStatement(){
     }
     void translate(std::ostream &dst) const override{ 
+        for(int i=0; i<tab; i++){
+            dst<< "\t";
+        }
         dst<< *id;
         if(Expr != NULL){
             dst << "=";

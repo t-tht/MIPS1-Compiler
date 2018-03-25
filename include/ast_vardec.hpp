@@ -16,6 +16,9 @@ class VarDec: public Node{
 		}
 		void translate(std::ostream &dst) const override{
             globalvars.push_back(*id);
+            for(int i=0; i<tab; i++){
+                dst<< "\t";
+            }
             dst << *id;
 			if(Expr != NULL){
 				dst << " = ";

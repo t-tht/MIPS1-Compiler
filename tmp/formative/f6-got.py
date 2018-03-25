@@ -5,7 +5,7 @@ x=5
 
 x=x*x
 
-	return x
+return x
 
 # Boilerplat
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ def main():
 global x
 x=1
 
-	return x
+return x
 
 # Boilerplat
 if __name__ == "__main__":

@@ -16,14 +16,12 @@ class Block : public Node{
 			delete right;
 		};
 		void translate(std::ostream &dst)const override{
-            tab++;
             if(left != NULL){
 				left->translate(dst);
 			}
 			if(right != NULL){
 				right->translate(dst);
 			}
-            tab--;
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
 			if(left != NULL){

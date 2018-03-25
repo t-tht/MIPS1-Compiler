@@ -13,6 +13,9 @@ class ParamVar : public Node{
 		ParamVar(std::string* _type, std::string* _id) : type(_type), id(_id){};
 		~ParamVar(){};
 		void translate(std::ostream &dst) const override{
+            for(int i=0; i<tab; i++){
+                dst<< "\t";
+            }
 			dst << *type << " " << *id;
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{

@@ -19,12 +19,15 @@ class IfStatement : public Node{
             for(int i=0; i<tab; i++){
                 dst<< "\t";
             }
-			dst << "if(";
+            dst << "if(";
 			if(cond != NULL){
 				cond->translate(dst);
 			}
 			dst << "):" << std::endl;
 			if(body != NULL){
+                for(int i=0; i<tab; i++){
+                    dst<< "\t";
+                }
 				body->translate(dst);
 			}
 		};
