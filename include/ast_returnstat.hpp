@@ -13,10 +13,9 @@ public:
 	~ReturnStat(){};
 	void translate(std::ostream &dst)const override{
         for(int i=0; i<tab; i++){
-                    dst<< "\t";
+            dst<< "\t";
         }
-
-		dst << "return ";
+        dst << "return ";
 		Expr->translate(dst);
 		dst << std::endl;
 	};

@@ -16,10 +16,13 @@ class Block : public Node{
 			delete right;
 		};
 		void translate(std::ostream &dst)const override{
+            int x=0;
             if(left != NULL){
 				left->translate(dst);
+                x=tab;
 			}
 			if(right != NULL){
+                tab=x;
 				right->translate(dst);
 			}
 		};

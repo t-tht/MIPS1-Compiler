@@ -25,10 +25,9 @@ class IfStatement : public Node{
 			}
 			dst << "):" << std::endl;
 			if(body != NULL){
-                for(int i=0; i<tab; i++){
-                    dst<< "\t";
-                }
+                tab++;
 				body->translate(dst);
+                tab--;
 			}
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{

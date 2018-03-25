@@ -113,6 +113,7 @@ T_IDENTIFIER T_LBRACKET T_RBRACKET                                              
 BinaryExpression :
  Expression BinaryOp Expression                                                 { $$ = new BinExpr($1, $2, $3); }
 
+
 BinaryOp:
  T_PLUS                                                                         { $$ = new std::string("+"); }
 |T_MINUS                                                                        { $$ = new std::string("-"); }
@@ -140,7 +141,8 @@ Arg:    //for function calls
 |Type T_IDENTIFIER                                                              { $$ = new Param($1, $2, NULL); }
 |Arg T_COMMA T_IDENTIFIER                                                       { $$ = new Param(NULL, $3, $1); }
 |Arg T_COMMA Type T_IDENTIFIER                                                { $$ = new Param($3, $4, $1); }
-| T_NUMBER                                                  { $$ = new Number($1); }
+|Arg T_COMMA T_NUMBER                                                           { $$ = new Param($3,$1); }
+|T_NUMBER                                                                        { $$ = new Number($1); }
 
 
 Type:

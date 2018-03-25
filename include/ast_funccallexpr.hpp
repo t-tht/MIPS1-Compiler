@@ -16,9 +16,6 @@ public:
 		delete param;
 	};
 	void translate(std::ostream &dst) const override{
-        for(int i=0; i<tab; i++){
-            dst<< "\t";
-        }
         dst << *id << "(";
 		if(param != NULL){
 			param->translate(dst);

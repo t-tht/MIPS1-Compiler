@@ -1,12 +1,11 @@
 x=0
 def f():
-global x
-x=x+1
-
-return x
+	global x
+	x=x+1
+	return x
 def main():
-global x
-return f()+f()
+	global x
+	return f()+f()
 
 # Boilerplat
 if __name__ == "__main__":
