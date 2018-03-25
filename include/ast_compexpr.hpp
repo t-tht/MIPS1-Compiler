@@ -21,7 +21,7 @@ class CompExpr : public Node{
 				left->translate(dst);
 			}
 			if(op != NULL){
-				dst << " " << *op << " ";
+				dst << *op;
 			}
 			if(right != NULL){
 				right->translate(dst);

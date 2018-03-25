@@ -15,14 +15,18 @@ public:
     ~AssignmentStatement(){
     }
     void translate(std::ostream &dst) const override{
-        if(type != NULL){
-            dst << *type;
+        for(int i=0; i<tab; i++){
+            dst<< "\t";
         }
-        dst<< " "<< *id;
+        dst<< *id;
         if(Expr != NULL){
-            dst << " = ";
+            dst << "=";
             Expr ->translate(dst);
         }
+        else{
+            dst<<"=0";
+        }
+        dst<< std::endl;
 
     }
     void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{};

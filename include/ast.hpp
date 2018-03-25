@@ -5,6 +5,10 @@
 #include <vector>
 #include <string>
 
+extern int tab;
+extern std::vector<std::string> globalvars;
+
+
 #include "ast_interpretcontext.hpp"
 #include "ast_node.hpp"
 #include "ast_funcdec.hpp"

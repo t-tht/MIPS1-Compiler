@@ -26,22 +26,25 @@ extern "C" int fileno(FILE *stream);
 \=\>                                     { return T_MORETHANEQ;}
 \=\=                                     { return T_CONDEQ;}
 \!\=                                     { return T_NOTEQ;}
+\<                                       { return T_LESSTHAN; }
+\>                                      { return T_MORETHAN; }
+
 
 \&\&                                    {return T_LOGAND;}
 \|\|                                    {return T_LOGOR;}
-
-
 
 return									{return T_RETURN;}
 int										{return T_INT;}
 void									{return T_VOID;}
 if                                      {return T_IF;}
 
-[-]?[0-9]+([.][0-9]*)?					{yylval.number=strtod(yytext, 0); return T_NUMBER;}
+[0-9]+([.][0-9]*)?					{yylval.number=strtod(yytext, 0); return T_NUMBER;}
 [a-z]+									{yylval.string=new std::string(yytext); return T_IDENTIFIER;}
 
 [ \t\r\n]+		{;}
 
+"//".*                                    { }
+[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]       { }
 .               { fprintf(stderr, "Invalid token\n"); exit(1); }
 %%
 

@@ -1,5 +1,7 @@
 def main():
-int z z = 7	return z
+	z=0
+	z=7
+	return z
 
 # Boilerplat
 if __name__ == "__main__":

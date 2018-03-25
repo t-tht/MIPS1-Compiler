@@ -12,8 +12,10 @@ public:
 	ReturnStat(NodePtr _Expr) : Expr(_Expr){};
 	~ReturnStat(){};
 	void translate(std::ostream &dst)const override{
-		dst<< "\t";
-		dst << "return ";
+        for(int i=0; i<tab; i++){
+            dst<< "\t";
+        }
+        dst << "return ";
 		Expr->translate(dst);
 		dst << std::endl;
 	};

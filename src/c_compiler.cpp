@@ -1,6 +1,8 @@
 #include "../include/ast.hpp"
 #include "../include/ast_interpretcontext.hpp"
 #include <iostream>
+int tab=0;
+std::vector<std::string> globalvars;
 
 int main(int argc, char* argv[]){
 
@@ -17,9 +19,13 @@ int main(int argc, char* argv[]){
         ast->compile(std::cout, cntx, 2);
         cntx.PrintReg(std::cout);
     }
+   if(std::string(argv[1])== "--compile"){
+      ast->compile(std::cout, cntx, destloc);
+   }
 
     if(std::string(argv[1])== "--translate"){
         ast->translate(std::cout);
+<<<<<<< HEAD
         std::cout<<"\n# Boilerplat" << std::endl;
         std::cout<<"if __name__ == \"__main__\":" << std::endl;
         std::cout<<"\timport sys\n\tret=main()\n\tsys.exit(ret)"<<std::endl;
@@ -29,6 +35,14 @@ int main(int argc, char* argv[]){
 
     fclose(stdin);
     fclose(stdout);
+  std::cout<<"\n# Boilerplat" << std::endl;
+  std::cout<<"if __name__ == \"__main__\":" << std::endl;
+  std::cout<<"\timport sys\n\tret=main()\n\tsys.exit(ret)"<<std::endl;
+    std::cout<< "\n";
+       }
+
+   fclose(stdin);
+   fclose(stdout);
 
 
     return 0;

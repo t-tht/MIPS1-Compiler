@@ -19,6 +19,9 @@ public:
 		dst << *id << "(";
 		if(arg != NULL){
 			arg->translate(dst);
+        dst << *id << "(";
+		if(param != NULL){
+			param->translate(dst);
 		}
 		dst << ")";
 

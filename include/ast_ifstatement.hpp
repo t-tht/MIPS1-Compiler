@@ -16,13 +16,18 @@ class IfStatement : public Node{
 			delete body;
 		};
 		void translate(std::ostream &dst)const override{
-			dst << "if(";
+            for(int i=0; i<tab; i++){
+                dst<< "\t";
+            }
+            dst << "if(";
 			if(cond != NULL){
 				cond->translate(dst);
 			}
 			dst << "):" << std::endl;
 			if(body != NULL){
+                tab++;
 				body->translate(dst);
+                tab--;
 			}
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
