@@ -26,15 +26,11 @@ public:
 			param->translate(dst);
 		}
 		dst << "):" << std::endl;
-		block->translate(dst);
+		if(block!=NULL){
+			block->translate(dst);
+		}
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-
-		//initialising variables
-		if(param!= NULL){
-			param->GetSize(cntx);
-		}
-		cntx.fpSizeCalc();
 
 		//default text stuff
 		dst << "\t" << ".text" << std::endl;
@@ -52,38 +48,21 @@ public:
 		dst << "\t" << ".set\tnomacro" << std::endl;
 		dst << std::endl;
 
+		cntx.AllocateStack(dst);
 
-		dst << "\t" << "addiu\t$sp, $sp, -" << cntx.fpSizeGet() << std::endl; //allocate space on stack
-		cntx.spSet(0);
-
-		cntx.spIncrement();
-		dst << "\t" << "sw\t\t$ra, " << cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl; //save $ra
-		cntx.spIncrement();
-		dst << "\t" << "sw\t\t$fp, "<< cntx.fpSizeGet()-cntx.spGet() << "($sp)" << std::endl; //save fp
-		dst << "\t" << "move\t$fp, $sp" << std::endl << std::endl;
-
-		if(cntx.param_no){
-			for(unsigned int i = 0; i < cntx.param_no; i++){
-				dst << "\tsw\t\t$" << 4+i << ", " << cntx.sp << "($fp)" << std::endl;
-				std::string s = std::to_string(4+i);
-				cntx.AddToStack(s);
-			}
+		if(param != NULL){
+			dst << "#pushing param onto stack" << std::endl;
+			param->compile(dst, cntx, destloc);
 		}
-		// for(int i = 0; i < 4; i++){
-		// 	std::string s = std::to_string(4+i);
-		// 	dst << "#" <<cntx.FindOnStack(s) << std::endl;
-		// }
-
-
+		dst << std::endl;
 		if(block != NULL){
+			dst << "#compiling function body" << std::endl;
 			block->compile(dst, cntx, destloc);
 		}
 
 
 		dst << std::endl;
-		dst << "\t" << "move\t$sp, $fp" << std::endl;
-		dst << "\t" << "lw\t\t$fp, " << cntx.fpSizeGet()-4 <<"($sp)" << std::endl;
-		dst << "\t" << "addiu\t$sp, $sp, " << cntx.fpSizeGet() << std::endl;
+		cntx.DeallocateStack(dst);
 		//return
 		dst << "\t" << "j\t\t$ra" << std::endl;
 		dst << "\t" << "nop" << std::endl << std::endl;
@@ -94,7 +73,19 @@ public:
 		dst << "\t" << ".size\t" << *id << ", .-" << *id << std::endl;
 
 	};
-	void GetSize(InterpretContext &cntx) const override{};
+
+
+
+	unsigned int GetContext(InterpretContext &cntx) const override{
+		if(param!=NULL){
+			param->GetContext(cntx);
+		}
+		if(block!=NULL){
+			block->GetContext(cntx);
+		}
+		return 0;
+	};
+
 };
 
 #endif

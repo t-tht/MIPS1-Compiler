@@ -9,54 +9,132 @@
 
 class InterpretContext;
 
-/*
- Convention
- |Name    | Reg# |      Usage          |Preserved on call?
- |$zero   | 0    |the constant value 0 |n.a.
- |$v0-$v1 | 2-3  |values for results   |no
- |$a0-$a3 | 4-7  |arguments            |yes
- |$t0-$t7 | 8-15 |temporaries          |no
- |$s0-$s7 | 16-23|saved                |yes
- |$t8-$t9 | 24-25|more temporaries     |no
- 26-27 don't use
- |$gp     | 28   |global pointer       |yes
- |$sp     | 29   |stack pointer        |yes
- |$fp     | 30   |frame pointer        |yes
- |$ra     | 31   |return address       |yes
- */
+typedef InterpretContext* InterpretContextPtr;
 
 class InterpretContext{
+
 public:
+
+    InterpretContext(){
+        for(int i = 0; i < 32; i++){
+            reg[i] = 0;
+        }
+        reg[30] = 1;
+        sp = 0;
+        spOffset = 0;
+        scopelevel = 0;
+        functionlevel = 0;
+        frame_size = 128;
+        arg_no = 0;
+        var_no = 0;
+        param_no = 0;
+    };
+    ~InterpretContext(){};
+
     unsigned int sp;
+    unsigned int spOffset;
     unsigned int scopelevel;
     unsigned int functionlevel;
     unsigned int frame_size;
     unsigned int arg_no;
-    unsigned int var_no;
     unsigned int param_no;
+    unsigned int var_no;
+    bool reg[32];       //free registers, 0 = free; 1 = occupied
 
-    bool regs[32];       //free registers, 0 = free; 1 = occupied
+    /*printing functions*/
+    void PrintReg(std::ostream& dst)const{
+        dst << "#Occupied Registers" << std::endl;
+        for(int i = 0; i < 32; i++){
+            dst << "#" << i << ": ";
+            if(reg[i] == 1){
+                dst<< "yes" << std::endl;
+            }else{
+                dst << std::endl;
+            }
+        }
+    }
+    /*getter functions*/
+
+    /*setter functions*/
+    void RegSetUsed(unsigned int i){
+        if(i < 32){
+            reg[i] = 1;
+        }
+    };
+
+    void RegSetAvailable(unsigned int i){
+        if(i < 32){
+            reg[i] = 0;
+        }
+    };
+    /*incrementing & decrementing functions*/
+
+    std::vector<unsigned int> AvailableArgReg(){       //returns free temp registers (8-15)
+        std::vector<unsigned int> temp;
+        for(int i = 4; i < 8; i++){
+            if(reg[i] == 0){
+                temp.push_back(i);
+            }
+        }
+        if(temp.size() != 0){
+            return temp;
+        }
+        else{
+            //no free reg
+            std::cout << " no available arg reg" << std::endl;
+        }
+    };
+    void StackUpdate(){
+        if(param_no){
+            for(unsigned int i = 4; i < param_no+4; i++){
+                RegSetUsed(i);
+            }
+        }
+    }
+
+    std::vector<unsigned int> AvailableTempReg(){       //returns free temp registers (8-15)
+        std::vector<unsigned int> temp;
+        for(int i = 8; i < 16; i++){
+            if(reg[i] == 0){
+                temp.push_back(i);
+            }
+        }
+        if(temp.size() != 0){
+            return temp;
+        }
+        else{
+            //no free reg
+            std::cout << " no available temp reg" << std::endl;
+        }
+    };
+
+    std::vector<unsigned int> AvailableSavedReg(){        //returns free saved registers (16-23)
+        std::vector<unsigned int> temp;
+        for(int i = 16; i < 24; i++){
+            if(reg[i] == 0){
+                temp.push_back(i);
+            }
+        }
+        if(temp.size() != 0){
+            return temp;
+        }
+        else{
+            //no free reg
+            std::cout << " no available saved reg" << std::endl;
+        }
+    };
+
 
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> GlobalBindings;
     std::unordered_map<std::string, unsigned int> Stack;
 
-    void AddToStack(std::string id){
-        Stack.emplace(std::make_pair(id,sp));
-        spIncrement();
-    };
-    unsigned int FindOnStack(std::string id){
-        auto search = Stack.find(id);
-        if(search != Stack.end()){
-            return search->second;
-        }
-        else{
-            return -1;
-        }
-    };
 
-    void AddVariable(std::string id, int val){
-        VariableBindings.emplace(std::make_pair(id,val));
+    void AddVariable(std::string id, unsigned int val){
+        if(FindVariable(id)){
+        }else{
+            VariableBindings.emplace(std::make_pair(id,val));
+        }
     };
     unsigned int FindVariable(std::string id){    //returns variable value
         auto search = VariableBindings.find(id);
@@ -66,8 +144,14 @@ public:
             return -1;
         }
     };
+    void UpdateVariable(std::string id, unsigned int val){
+        auto search = VariableBindings.find(id);
+        if(search != VariableBindings.end()){
+            search->second = val;
+        }
+    };
 
-    void AddGlobal(std::string id, int val){
+    void AddGlobal(std::string id, unsigned int val){
         GlobalBindings.emplace(std::make_pair(id,val));
     };
     unsigned int FindGlobal(std::string id){
@@ -79,87 +163,39 @@ public:
         }
     };
 
-    InterpretContext(){
-        for(int i = 0; i < 32; i++){
-            regs[i] = false;
-        }
-        for(int i = 0; i < 8; i++){
-            regs[i]= true;
-        }
-        for(int i = 26; i < 32; i++){
-            regs[i]= true;
-        }
-        sp = 0;
-        scopelevel = 0;
-        functionlevel = 0;
-        frame_size = 0;
-        arg_no = 0;
-        var_no = 0;
-        param_no = 0;
+    void AddToStack(std::string id){
+        Stack.emplace(std::make_pair(id,spOffset));
+        spOffset+=4;
     };
-    InterpretContext(InterpretContext* cntx){
-        for(int i= 0; i< 32; i++){
-            regs[i]= cntx->regs[i];
-        }
-        sp = cntx->sp;
-        frame_size= cntx-> frame_size;
-        arg_no= cntx-> arg_no;
-        var_no= cntx->var_no;
-        param_no= cntx->param_no;
-    };
-
-    ~InterpretContext(){};
-
-    std::vector<unsigned int> freesavedregs(){        //returns free saved registers (16-23)
-        std::vector<unsigned int> temp;
-        for(int i = 16; i < 24; i++){
-            if(regs[i] == 0){
-                temp.push_back(i);
-            }
-        }
-        if(temp.size() != 0){
-            return temp;
+    unsigned int FindOnStack(std::string id){
+        auto search = Stack.find(id);
+        if(search != Stack.end()){
+            return search->second;  //returns stack offset
         }
         else{
-            //no free reg
-            exit(1);
+            return -1;
         }
     };
-    std::vector<unsigned int> freetempregs(){       //returns free temp registers (8-15)
-        std::vector<unsigned int> temp;
-        for(int i = 8; i < 16; i++){
-            if(regs[i] == 0){
-                temp.push_back(i);
-            }
-        }
-        if(temp.size() != 0){
-            return temp;
-        }
-        else{
-            //no free reg
-            std::cout << " no free reg" << std::endl;
-        }
-    };
+
+
 
     unsigned int fpSizeGet(){return frame_size;};
-    void fpSizeCalc(){
-        frame_size += 1; //frame pointer
-        frame_size += 1; //global pointer
-        frame_size += 1; //sp
-        frame_size += 1; //ra
-        frame_size += arg_no;
-        frame_size += param_no;
-        frame_size += var_no;
-
-        if(frame_size % 2 != 0){
-            frame_size++;
-        }
-        frame_size *= 4;
-    };
+    // void fpSizeCalc(){frame_size = 128;};
+    //void fpReset(){frame_pointer = 0;};
 
     void spIncrement(){sp += 4;};
+    void spDecrement(){sp -= 4;};
     void spSet(int i){sp = i;};
-    unsigned int spGet()const{return sp;};
+
+    void ArgNoIncrement(){arg_no++;};
+    void ArgNoDecrement(){arg_no--;};
+    unsigned int GetArgNo(){return arg_no;};
+    void ResetArgNo(){arg_no = 0;};
+
+    void ParamNoIncrement(){param_no++;};
+    void ParamNoDecrement(){param_no--;};
+    unsigned int GetParamNo(){return param_no;};
+    void ResetParamNo(){param_no = 0;};
 
     void scopeIncrement(){scopelevel++;};
     void scopeDecrement(){scopelevel--;};
@@ -169,9 +205,25 @@ public:
     void functionLevelDecrement(){functionlevel--;};
     unsigned int functionLevelGet(){return functionlevel;};
 
-    void regsetused(unsigned int i){regs[i] = 1;};
-
-    void addvar(const std::string* name){};
+    /*Printing functions*/
+    void AllocateStack(std::ostream &dst){
+        unsigned int size = frame_size;
+        dst << "#allocate stack" << std::endl;
+        dst << "\taddiu\t$sp, $sp, -" << size+sp << std::endl;
+        dst << "\tsw\t\t$ra, " << size+sp-4 << "($sp)" << std::endl;
+        dst << "\tsw\t\t$fp, " << size+sp-8 << "($sp)" << std::endl;
+        dst << "\tmove\t$fp, $sp" << std::endl << std::endl;
+        spSet(size);
+        //fpReset();
+    }
+    void DeallocateStack(std::ostream &dst){
+        dst << "#deallocating stack" << std::endl;
+        dst << "\tmove\t$sp, $fp" << std::endl;
+        dst << "\tlw\t\t$fp, " << sp-8 << "($sp)" << std::endl;
+        dst << "\tlw\t\t$ra, " << sp-4 << "($sp)" << std::endl;
+        dst << "\taddiu\t$sp, $sp, " << sp << std::endl;
+        //fpReset();
+    }
 
 };
 

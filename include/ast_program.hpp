@@ -31,7 +31,15 @@ class Program : public Node{
 				right->compile(dst, cntx, destloc);
 			}
 		};
-		void GetSize(InterpretContext &cntx) const override{};
+		unsigned int GetContext(InterpretContext &cntx) const override{
+			if(left != NULL){
+				left->GetContext(cntx);
+			}
+			if(right != NULL){
+				right->GetContext(cntx);
+			}
+			return 0;
+		};
 };
 
 #endif

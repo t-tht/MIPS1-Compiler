@@ -30,7 +30,7 @@ class CompExpr : public Node{
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
 			dst << "compare expression compile function not yet implemented" << std::endl;
 		};
-		void GetSize(InterpretContext &cntx) const override{};
+		unsigned int GetContext(InterpretContext &cntx) const override{return 0;};
 };
 
 #endif

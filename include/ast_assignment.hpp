@@ -25,10 +25,13 @@ public:
         }
 
     }
-    void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-        dst << "assignment compile function not yet implemented" << std::endl;
+    void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{};
+    
+    unsigned int GetContext(InterpretContext &cntx) const override{
+        unsigned int exprv = Expr->GetContext(cntx);
+        cntx.UpdateVariable(*id,exprv);
+        return 0;
     };
-    void GetSize(InterpretContext &cntx) const override{};
 };
 
 #endif

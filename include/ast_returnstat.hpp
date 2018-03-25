@@ -22,7 +22,13 @@ public:
 			Expr->compile(dst, cntx, 2);
 		}
 	};
-	void GetSize(InterpretContext &cntx) const override{};
+	unsigned int GetContext(InterpretContext &cntx) const override{
+		int exprv = 0;
+		if(Expr != NULL){
+			exprv = Expr->GetContext(cntx);
+		}
+		return exprv;
+	};
 };
 
 #endif

@@ -62,9 +62,10 @@ Block:
 
 
 BlockList:
- Statements                                                                     { $$ =  new Block($1, NULL); }
+ Statements                                                                     { $$ = new Block($1, NULL); }
 |BlockList Statements                                                           { $$ = new Block($1, $2); }
-
+|VariableDeclaration                                                            { $$ = new Block($1, NULL); }
+|BlockList VariableDeclaration                                                  { $$ = new Block($1, $2); }
 
 Statements:
  ReturnStatement                                                                { $$ = $1; }
@@ -77,9 +78,8 @@ ReturnStatement:
 
 
 AssignStatement:
- Type T_IDENTIFIER T_SEMICOLON                                                  { $$ = new AssignmentStatement( $1,$2, NULL); }
-|Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON                              { $$ = new AssignmentStatement($1, $2, $4); }
-|T_IDENTIFIER T_EQUALS Expression T_SEMICOLON                                   { $$ = new AssignmentStatement(NULL, $1, $3); }
+ T_IDENTIFIER T_EQUALS Expression T_SEMICOLON                                   { $$ = new AssignmentStatement(NULL, $1, $3); }
+
 
 IfStatement:
  T_IF T_LBRACKET CompareExpression T_RBRACKET Block                             { $$ = new IfStatement($3, $5); }

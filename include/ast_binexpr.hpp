@@ -5,27 +5,30 @@
 
 class BinExpr;
 class BinExpr : public Node{
-	protected:
-		const NodePtr left;
-		const NodePtr right;
-		std::string* op;
-	public:
-		BinExpr(const NodePtr _left, std::string* _op, const NodePtr _right) : left(_left), right(_right), op(_op){};
-		~BinExpr(){
-			delete left;
-			delete right;
-			delete op;
-		};
+protected:
+	const NodePtr left;
+	const NodePtr right;
+	std::string* op;
+public:
+	BinExpr(const NodePtr _left, std::string* _op, const NodePtr _right) : left(_left), right(_right), op(_op){};
+	~BinExpr(){
+		delete left;
+		delete right;
+		delete op;
+	};
 
-		void translate(std::ostream &dst)const override{
+	void translate(std::ostream &dst)const override{
+		if((left != NULL) && (right != NULL)){
 			left->translate(dst);
 			dst << *op;
 			right->translate(dst);
-		};
+		}
+	};
 
-		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			std::vector<unsigned int> tmp = cntx.freetempregs();
-			cntx.regsetused(tmp[0]);
+	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+		if((left != NULL) && (right != NULL)){
+			std::vector<unsigned int> tmp = cntx.AvailableTempReg();
+			cntx.RegSetUsed(tmp[0]);
 			if(*op == "+"){
 
 				left->compile(dst, cntx, destloc);
@@ -52,8 +55,28 @@ class BinExpr : public Node{
 				dst << "\tdiv\t$" << destloc << ", $" << tmp[0] << std::endl;
 				dst << "\tmflo\t$" << destloc << std::endl;
 			}
-		};
-		void GetSize(InterpretContext &cntx) const override{};
+		}
+	};
+	unsigned int GetContext(InterpretContext &cntx) const override{
+		unsigned int leftv, rightv;
+		if(left != NULL){
+			leftv = left->GetContext(cntx);
+		}
+		if(right != NULL){
+			rightv = right->GetContext(cntx);
+		}
+		if(*op == "+"){
+			return leftv+rightv;
+		}else if(*op == "-"){
+			return leftv-rightv;
+		}else if(*op == "*"){
+			return leftv*rightv;
+		}else if(*op == "/"){
+			return leftv/rightv;
+		}else{
+			return -1;
+		}
+	};
 };
 
 #endif
