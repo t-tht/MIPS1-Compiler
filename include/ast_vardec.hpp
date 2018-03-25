@@ -26,12 +26,13 @@ public:
 		if(Expr != NULL){
 			Expr->compile(dst, cntx, destloc);
 		}
-		dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
+		dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id)/*+cntx.frame_size*/ << "($fp)" << std::endl;
 
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{
 		unsigned int exprv = Expr->GetContext(cntx);
 		cntx.AddVariable(*id,exprv);
+		cntx.AddToStack(*id);
 		return 0;
 	};
 };

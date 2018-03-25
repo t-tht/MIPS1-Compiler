@@ -14,8 +14,8 @@ int main(int argc, char* argv[]){
 
     if(std::string(argv[1])== "--compile"){
         ast->GetContext(cntx);
-        //cntx.PrintReg(std::cout);
         ast->compile(std::cout, cntx, 2);
+        cntx.PrintReg(std::cout);
     }
 
     if(std::string(argv[1])== "--translate"){
