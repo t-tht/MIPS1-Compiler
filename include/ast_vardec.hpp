@@ -14,28 +14,22 @@ public:
 	VarDec(std::string* _type, std::string* _id, NodePtr _Expr): type(_type), id(_id), Expr(_Expr){}
 	~VarDec(){
 	}
-	void translate(std::ostream &dst) const override{
-		dst << *type << " "<< *id;
-		if(Expr != NULL){
-			dst << " = ";
-			Expr->translate(dst);
-		}
-		void translate(std::ostream &dst) const override{
-            globalvars.push_back(*id);
-            for(int i=0; i<tab; i++){
-                dst<< "\t";
-            }
-            dst << *id;
-			if(Expr != NULL){
-				dst << " = ";
-				Expr ->translate(dst);
-			}
-            else{
-                dst<< "=0";
-            }
-            dst<<std::endl;
-
-	}
+    void translate(std::ostream &dst) const override{
+        globalvars.push_back(*id);
+        for(int i=0; i<tab; i++){
+            dst<< "\t";
+        }
+        dst << *id;
+        if(Expr != NULL){
+            dst << " = ";
+            Expr ->translate(dst);
+        }
+        else{
+            dst<< "=0";
+        }
+        dst<<std::endl;
+        
+    }
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
 		if(Expr != NULL){
 			Expr->compile(dst, cntx, destloc);

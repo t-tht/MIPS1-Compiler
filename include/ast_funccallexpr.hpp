@@ -8,6 +8,7 @@ class FuncCallExpr;
 class FuncCallExpr: public Node{
 protected:
 	std::string* id;
+    NodePtr param;
 	NodePtr arg;		//needs fixing later, but atm assume no
 public:
 	FuncCallExpr(std::string* _id, NodePtr _arg): id(_id), arg(_arg){};
@@ -19,6 +20,7 @@ public:
 		dst << *id << "(";
 		if(arg != NULL){
 			arg->translate(dst);
+        }
         dst << *id << "(";
 		if(param != NULL){
 			param->translate(dst);
@@ -27,18 +29,19 @@ public:
 
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-		InterpretContext temp;
-		if(arg != NULL){
-			arg->GetContext(temp);
-		}
-		for(unsigned int i = 0; i < temp.arg_no; i++){
-			dst << "\tlw\t\t$" << 4+i << ", " << cntx.sp << "($fp)" << std::endl;
-			cntx.spIncrement();
-		}
-		//cntx.functionLevelIncrement();
-		dst << "\tjal\t" << *id << std::endl;
-		//cntx.functionLevelDecrement();
-		dst << "\tnop" << std::endl;
+//        InterpretContext temp;
+//        if(arg != NULL){
+//            arg->GetContext(temp);
+//        }
+//        for(unsigned int i = 0; i < temp.arg_no; i++){
+//            dst << "\tlw\t\t$" << 4+i << ", " << cntx.sp << "($fp)" << std::endl;
+//            cntx.spIncrement();
+//        }
+//        //cntx.functionLevelIncrement();
+//        dst << "\tjal\t" << *id << std::endl;
+//        //cntx.functionLevelDecrement();
+//        dst << "\tnop" << std::endl;
+        dst << "not implemented" << std::endl;
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{
 		cntx.RegSetUsed(31);		//need return address
