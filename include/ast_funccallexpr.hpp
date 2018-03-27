@@ -8,7 +8,7 @@ class FuncCallExpr;
 class FuncCallExpr: public Node{
 protected:
 	std::string* id;
-	NodePtr arg;		//needs fixing later, but atm assume no
+	NodePtr arg;
 public:
 	FuncCallExpr(std::string* _id, NodePtr _arg): id(_id), arg(_arg){};
 	~FuncCallExpr(){
@@ -24,17 +24,11 @@ public:
 
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-		InterpretContext temp;
-		if(arg != NULL){
-			arg->GetContext(temp);
+		if(arg){
+			arg->GetContext(cntx);
+			arg->compile(dst,cntx,4);
 		}
-		for(unsigned int i = 0; i < temp.arg_no; i++){
-			dst << "\tlw\t\t$" << 4+i << ", " << cntx.sp << "($fp)" << std::endl;
-			cntx.spIncrement();
-		}
-		//cntx.functionLevelIncrement();
 		dst << "\tjal\t" << *id << std::endl;
-		//cntx.functionLevelDecrement();
 		dst << "\tnop" << std::endl;
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{

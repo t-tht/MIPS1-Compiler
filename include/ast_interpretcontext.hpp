@@ -9,8 +9,6 @@
 
 class InterpretContext;
 
-typedef InterpretContext* InterpretContextPtr;
-
 class InterpretContext{
 
 public:
@@ -21,7 +19,7 @@ public:
         }
         reg[30] = 1;
         sp = 0;
-        spOffset = 0;
+        spOffset = 116;
         scopelevel = 0;
         functionlevel = 0;
         frame_size = 128;
@@ -29,6 +27,11 @@ public:
         var_no = 0;
         param_no = 0;
     };
+    InterpretContext(InterpretContext &cntx){
+        for(int i = 0; i < 32; i++){
+            reg[i] = cntx.reg[i];
+        }
+    }
     ~InterpretContext(){};
 
     unsigned int sp;
@@ -76,12 +79,7 @@ public:
                 temp.push_back(i);
             }
         }
-        if(temp.size()){
-            return temp;
-        }
-        else{
-        
-        }
+        return temp;
     }
 
     std::vector<unsigned int> AvailableArgReg(){       //returns free temp registers (8-15)
@@ -91,13 +89,7 @@ public:
                 temp.push_back(i);
             }
         }
-        if(temp.size() != 0){
-            return temp;
-        }
-        else{
-            //no free reg
-            std::cout << " no available arg reg" << std::endl;
-        }
+        return temp;
     };
     void StackUpdate(){
         if(param_no){
@@ -114,13 +106,7 @@ public:
                 temp.push_back(i);
             }
         }
-        if(temp.size() != 0){
-            return temp;
-        }
-        else{
-            //no free reg
-            std::cout << " no available temp reg" << std::endl;
-        }
+        return temp;
     };
 
     std::vector<unsigned int> AvailableSavedReg(){        //returns free saved registers (16-23)
@@ -130,30 +116,14 @@ public:
                 temp.push_back(i);
             }
         }
-        if(temp.size() != 0){
-            return temp;
-        }
-        else{
-            //no free reg
-            std::cout << " no available saved reg" << std::endl;
-        }
+        return temp;
     };
 
 
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> GlobalBindings;
     std::unordered_map<std::string, unsigned int> Stack;
-
-    /*
-    0   $ra
-    4   $fp
-    8
-    12
-    16
-    20
-    24
-    */
-
+    std::unordered_map<std::string, unsigned int> PassedArg;
 
     void AddVariable(std::string id, unsigned int val){
         if(FindVariable(id)){
@@ -161,6 +131,7 @@ public:
             VariableBindings.emplace(std::make_pair(id,val));
         }
     };
+
     unsigned int FindVariable(std::string id){    //returns variable value
         auto search = VariableBindings.find(id);
         if(search != VariableBindings.end()){
@@ -190,19 +161,22 @@ public:
 
     void AddToStack(std::string id){
         Stack.emplace(std::make_pair(id,spOffset));
-        spOffset+=4;
+        spOffset -= 4;
     };
+
+    void AddToStack(std::string id, int _offset){
+        Stack.emplace(std::make_pair(id,_offset));
+    };
+
     unsigned int FindOnStack(std::string id){
         auto search = Stack.find(id);
         if(search != Stack.end()){
-            return search->second;  //returns stack offset
+            return search->second;
         }
         else{
             return -1;
         }
     };
-
-
 
     unsigned int fpSizeGet(){return frame_size;};
     // void fpSizeCalc(){frame_size = 128;};

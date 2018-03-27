@@ -28,7 +28,7 @@ public:
 		if(Expr != NULL){
 			Expr->compile(dst, cntx, destloc);
 		}else{
-			dst << "\tli\t\t$" << destloc << ", 0" << std::endl; 
+			dst << "\tli\t\t$" << destloc << ", 0" << std::endl;
 		}
 		dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
 

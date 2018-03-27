@@ -24,16 +24,18 @@ public:
 
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-		if(cntx.FindOnStack(*id) < 4*4){
-			dst << "\tsw\t\t$" << cntx.FindOnStack(*id)+4 << ", " << cntx.FindOnStack(*id)/*+cntx.frame_size*/ << "($fp)" << std::endl;
+		if(destloc < 8){
+			dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
+			destloc++;
 		}
-		if(right!= NULL){
+		if(right != NULL){
 			right->compile(dst, cntx, destloc);
 		}
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{
 		cntx.ParamNoIncrement();
-		cntx.AddToStack(*id);
+		unsigned int offset = 128 + ((cntx.GetParamNo()-1)*4);
+		cntx.AddToStack(*id, offset);
 		if(right!=NULL){
 			right->GetContext(cntx);
 		}

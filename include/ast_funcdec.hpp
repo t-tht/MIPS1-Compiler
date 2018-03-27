@@ -32,6 +32,7 @@ public:
 	};
 	void compile(std::ostream &dst, InterpretContext &_cntx, unsigned int destloc) const override{
 		InterpretContext cntx;
+		this->GetContext(cntx);
 
 		//default text stuff
 		dst << "\t" << ".text" << std::endl;
@@ -52,10 +53,9 @@ public:
 		cntx.AllocateStack(dst);
 
 		if(param != NULL){
-			dst << "#pushing param onto stack" << std::endl;
-			param->compile(dst, cntx, destloc);
+			param->compile(dst, cntx, 4);
 		}
-		
+
 		if(block != NULL){
 			dst << "#compiling function body" << std::endl;
 			block->compile(dst, cntx, destloc);
