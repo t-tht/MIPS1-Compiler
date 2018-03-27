@@ -30,7 +30,8 @@ public:
 			block->translate(dst);
 		}
 	};
-	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
+	void compile(std::ostream &dst, InterpretContext &_cntx, unsigned int destloc) const override{
+		InterpretContext cntx;
 
 		//default text stuff
 		dst << "\t" << ".text" << std::endl;
@@ -54,7 +55,7 @@ public:
 			dst << "#pushing param onto stack" << std::endl;
 			param->compile(dst, cntx, destloc);
 		}
-		dst << std::endl;
+		
 		if(block != NULL){
 			dst << "#compiling function body" << std::endl;
 			block->compile(dst, cntx, destloc);
