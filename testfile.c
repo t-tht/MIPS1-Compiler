@@ -1,9 +1,8 @@
 int main(){
+    int a = 1;
     int b = 2;
-    int c = 4;
-    int e = 6;
-    int f = 8;
-    int a = b + c;
-    int d = e + f + a;
-    return a + d;
+    int c;
+    a = 3;
+    b = 4;
+return a+b+c;
 }

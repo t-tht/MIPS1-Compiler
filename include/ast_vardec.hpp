@@ -27,12 +27,19 @@ public:
 		// dst << "#destloc " << destloc << std::endl;
 		if(Expr != NULL){
 			Expr->compile(dst, cntx, destloc);
+		}else{
+			dst << "\tli\t\t$" << destloc << ", 0" << std::endl; 
 		}
-		dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id)/*+cntx.frame_size*/ << "($fp)" << std::endl;
+		dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
 
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{
-		unsigned int exprv = Expr->GetContext(cntx);
+		unsigned int exprv;
+		if(Expr != NULL){
+			exprv = Expr->GetContext(cntx);
+		}else{
+			exprv = 0;
+		}
 		cntx.AddVariable(*id,exprv);
 		cntx.AddToStack(*id);
 		return 0;

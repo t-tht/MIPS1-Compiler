@@ -20,26 +20,20 @@ main:
 
 
 #compiling function body
+	li		$2, 1
+	sw		$2, 0($fp)
 	li		$2, 2
+	sw		$2, 4($fp)
+	li		$2, 0
+	sw		$2, 8($fp)
+	li		$2, 3
 	sw		$2, 0($fp)
 	li		$2, 4
 	sw		$2, 4($fp)
-	li		$2, 6
-	sw		$2, 8($fp)
-	li		$2, 8
-	sw		$2, 12($fp)
 	lw		$2, 0($fp)
 	lw		$3, 4($fp)
-	addu	$2, $2, $3
-	sw		$2, 16($fp)
-	lw		$2, 8($fp)
-	lw		$3, 12($fp)
-	lw		$8, 16($fp)
+	lw		$8, 8($fp)
 	addu	$3, $3, $8
-	addu	$2, $2, $3
-	sw		$2, 20($fp)
-	lw		$2, 16($fp)
-	lw		$3, 20($fp)
 	addu	$2, $2, $3
 
 #deallocating stack

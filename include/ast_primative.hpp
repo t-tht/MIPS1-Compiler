@@ -12,9 +12,6 @@ private:
 public:
 	Number(double _value) : value(_value){};
 	~Number(){};
-	double getval() const{
-		return value;
-	};
 	void translate(std::ostream &dst)const override{
 		dst << value;
 	};
@@ -22,7 +19,9 @@ public:
 		// dst << "#number primative" << std::endl;
 		dst << "\tli\t\t$" << destloc << ", " << value << std::endl;
 	};
-	unsigned int GetContext(InterpretContext &cntx) const override{return value;};
+	unsigned int GetContext(InterpretContext &cntx) const override{
+		return value;
+	};
 };
 
 class Variable : public Node{
