@@ -1,0 +1,4 @@
+/tmp/ccMY4RpB.o: In function `main':
+GLOBAL_driver.c:(.text+0x1c): undefined reference to `global'
+GLOBAL_driver.c:(.text+0x24): undefined reference to `global'
+collect2: error: ld returned 1 exit status

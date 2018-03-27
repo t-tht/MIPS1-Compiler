@@ -1,0 +1,4 @@
+/tmp/ccMADFZC.o: In function `main':
+LOCAL_ARRAY_driver.c:(.text+0x1c): undefined reference to `local_array'
+LOCAL_ARRAY_driver.c:(.text+0x24): undefined reference to `local_array'
+collect2: error: ld returned 1 exit status

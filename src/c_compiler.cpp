@@ -4,7 +4,6 @@
 int tab=0;
 std::vector<std::string> globalvars;
 
-
 int main(int argc, char* argv[]){
     
     freopen(argv[2], "r", stdin);

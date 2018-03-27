@@ -1,0 +1,8 @@
+test_deliverable/test_cases/IF_ELSE_F_driver.c: In function ‘main’:
+test_deliverable/test_cases/IF_ELSE_F_driver.c:4:14: warning: implicit declaration of function ‘ifelset’ [-Wimplicit-function-declaration]
+     return !(ifelset(3));
+              ^
+/tmp/ccWZBj3O.o: In function `main':
+IF_ELSE_F_driver.c:(.text+0x20): undefined reference to `ifelset'
+IF_ELSE_F_driver.c:(.text+0x28): undefined reference to `ifelset'
+collect2: error: ld returned 1 exit status
