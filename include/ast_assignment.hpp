@@ -11,9 +11,8 @@ protected:
     std::string* id;
     NodePtr Expr;
 public:
-    AssignmentStatement(std::string* _type, std::string* _id, NodePtr _Expr): type(_type), id(_id), Expr(_Expr){}
-    ~AssignmentStatement(){
-    }
+    AssignmentStatement(std::string* _type, std::string* _id, NodePtr _Expr): type(_type), id(_id), Expr(_Expr){};
+    ~AssignmentStatement(){};
     void translate(std::ostream &dst) const override{
         for(int i=0; i<tab; i++){
             dst<< "\t";
@@ -28,9 +27,14 @@ public:
         }
         dst<< std::endl;
 
-    }
-    void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{};
-    
+    };
+    void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
+        if(Expr != NULL){
+            Expr->compile(dst, cntx, destloc);
+        }
+        dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
+    };
+
     unsigned int GetContext(InterpretContext &cntx) const override{
         unsigned int exprv = Expr->GetContext(cntx);
         cntx.UpdateVariable(*id,exprv);
