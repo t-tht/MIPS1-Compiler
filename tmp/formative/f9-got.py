@@ -8,7 +8,7 @@ def function(b,a):
 		return b
 	return 13
 def main():
-	return function(0,0function()+function(2,1function()+function(3,4function()+function(7,6function()
+	return function(0,0)+function(2,1)+function(3,4)+function(7,6)
 
 # Boilerplat
 if __name__ == "__main__":

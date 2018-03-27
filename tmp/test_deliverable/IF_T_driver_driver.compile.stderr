@@ -1,4 +1,0 @@
-/tmp/ccS0AiAt.o: In function `main':
-IF_T_driver.c:(.text+0x24): undefined reference to `ift'
-IF_T_driver.c:(.text+0x2c): undefined reference to `ift'
-collect2: error: ld returned 1 exit status

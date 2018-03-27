@@ -18,7 +18,6 @@ f:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-
 #compiling function body
 	li		$2, 10
 
@@ -49,14 +48,14 @@ main:
 	.set	nomacro
 
 #allocate stack
-	addiu	$sp, $sp, -256
-	sw		$ra, 252($sp)
-	sw		$fp, 248($sp)
+	addiu	$sp, $sp, -128
+	sw		$ra, 124($sp)
+	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-
 #compiling function body
-not implemented
+	jal	f
+	nop
 
 #deallocating stack
 	move	$sp, $fp
@@ -70,36 +69,3 @@ not implemented
 	.set	reorder
 	.end	main
 	.size	main, .-main
-#Occupied Registers
-#0: 
-#1: 
-#2: 
-#3: 
-#4: 
-#5: 
-#6: 
-#7: 
-#8: 
-#9: 
-#10: 
-#11: 
-#12: 
-#13: 
-#14: 
-#15: 
-#16: 
-#17: 
-#18: 
-#19: 
-#20: 
-#21: 
-#22: 
-#23: 
-#24: 
-#25: 
-#26: 
-#27: 
-#28: 
-#29: 
-#30: yes
-#31: yes

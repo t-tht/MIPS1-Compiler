@@ -1,7 +1,0 @@
-test_deliverable/test_cases/IF_ELSE_T_driver.c: In function ‘main’:
-test_deliverable/test_cases/IF_ELSE_T_driver.c:4:14: error: too few arguments to function ‘ifelset’
-     return !(ifelset(2));
-              ^
-test_deliverable/test_cases/IF_ELSE_T_driver.c:1:5: note: declared here
- int ifelset(int x, int y);
-     ^

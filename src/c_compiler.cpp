@@ -12,7 +12,7 @@ int main(int argc, char* argv[]){
     const Node *ast=parseAST();
     InterpretContext cntx;
 
-    if(std::string(argv[1])== "--compile"){
+    if(std::string(argv[1])== "-S"){
         ast->GetContext(cntx);
         ast->compile(std::cout, cntx, 2);
     }

@@ -18,11 +18,10 @@ main:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-
 #compiling function body
 	li		$2, 5
-	li		$8, 6
-	addu	$2, $2, $8
+	li		$3, 6
+	addu	$2, $2, $3
 
 #deallocating stack
 	move	$sp, $fp
@@ -36,36 +35,3 @@ main:
 	.set	reorder
 	.end	main
 	.size	main, .-main
-#Occupied Registers
-#0: 
-#1: 
-#2: 
-#3: 
-#4: 
-#5: 
-#6: 
-#7: 
-#8: yes
-#9: 
-#10: 
-#11: 
-#12: 
-#13: 
-#14: 
-#15: 
-#16: 
-#17: 
-#18: 
-#19: 
-#20: 
-#21: 
-#22: 
-#23: 
-#24: 
-#25: 
-#26: 
-#27: 
-#28: 
-#29: 
-#30: yes
-#31: 

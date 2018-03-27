@@ -1,4 +1,4 @@
-int ifelset(int x, int y);
+int ifelset(int x);
 
 int main(){
     return !(ifelset(2));

@@ -1,4 +1,0 @@
-/tmp/cc4MSCQi.o: In function `main':
-SELF_RECURSION_driver.c:(.text+0x20): undefined reference to `recursion'
-SELF_RECURSION_driver.c:(.text+0x28): undefined reference to `recursion'
-collect2: error: ld returned 1 exit status

@@ -5,7 +5,7 @@ def f():
 	return x
 def main():
 	global x
-	return f(f()+f(f()
+	return f()+f()
 
 # Boilerplat
 if __name__ == "__main__":

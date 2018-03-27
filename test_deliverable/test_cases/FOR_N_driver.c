@@ -1,5 +1,5 @@
-int forn(int i, int j);
+int forn(int j);
 
 int main(){
-    return !( forn(0,7)==7);
+    return ( forn(7)==7);
 }

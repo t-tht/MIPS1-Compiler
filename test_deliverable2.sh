@@ -1,8 +1,6 @@
 #!/bin/bash
 
 #clear
-echo""
-
 if [[ -z "$1" ]]; then
 COMPILER=bin/c_compiler
 else
@@ -11,9 +9,10 @@ fi
 
 mkdir -p working
 
-for DRIVER in test_deliverable/testcases/*_driver.c ; do
+for DRIVER in test_deliverable/test_cases/*_driver.c ; do
+
 NAME=$(basename $DRIVER _driver.c)
-TESTCODE=test_deliverable/testcases/$NAME.c
+TESTCODE=test_deliverable/test_cases/$NAME.c
 
 >&2 echo "Test case $NAME"
 
@@ -25,7 +24,7 @@ continue
 fi
 
 # Compile test function with compiler under test to assembly
-cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+$COMPILER -S $TESTCODE working/$NAME.s  2> working/${NAME}.compile.stderr
 if [[ $? -ne 0 ]]; then
 >&2 echo "ERROR : Compiler returned error message."
 continue
