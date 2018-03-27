@@ -69,6 +69,21 @@ public:
     };
     /*incrementing & decrementing functions*/
 
+    std::vector<unsigned int> AvailableDestReg(){  //returns either 2 or 3 for destreg
+        std::vector<unsigned int> temp;
+        for(int i = 2; i < 4; i++){
+            if(!reg[i]){
+                temp.push_back(i);
+            }
+        }
+        if(temp.size()){
+            return temp;
+        }
+        else{
+        
+        }
+    }
+
     std::vector<unsigned int> AvailableArgReg(){       //returns free temp registers (8-15)
         std::vector<unsigned int> temp;
         for(int i = 4; i < 8; i++){
@@ -128,6 +143,16 @@ public:
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> GlobalBindings;
     std::unordered_map<std::string, unsigned int> Stack;
+
+    /*
+    0   $ra
+    4   $fp
+    8
+    12
+    16
+    20
+    24
+    */
 
 
     void AddVariable(std::string id, unsigned int val){

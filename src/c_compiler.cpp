@@ -9,12 +9,12 @@ int main(int argc, char* argv[]){
 
     const Node *ast=parseAST();
     InterpretContext cntx;
-    unsigned int destloc = 0;
 
 
     if(std::string(argv[1])== "--compile"){
         ast->GetContext(cntx);
         ast->compile(std::cout, cntx, 2);
+        std::cout << std::endl;
         cntx.PrintReg(std::cout);
     }
 

@@ -18,8 +18,11 @@ public:
 		dst << std::endl;
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+		// dst << "#return statement" << std::endl;
 		if(Expr != NULL){
+			cntx.RegSetUsed(2);
 			Expr->compile(dst, cntx, 2);
+			cntx.RegSetAvailable(2);
 		}
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{

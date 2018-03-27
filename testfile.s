@@ -18,18 +18,29 @@ main:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-#pushing param onto stack
-	sw		$4, 0($fp)
-	sw		$8, 4($fp)
-	sw		$12, 8($fp)
-	sw		$16, 12($fp)
 
 #compiling function body
-	li		$2, 10
+	li		$2, 2
+	sw		$2, 0($fp)
+	li		$2, 4
+	sw		$2, 4($fp)
+	li		$2, 6
+	sw		$2, 8($fp)
+	li		$2, 8
+	sw		$2, 12($fp)
+	lw		$2, 0($fp)
+	lw		$3, 4($fp)
+	addu	$2, $2, $3
+	sw		$2, 16($fp)
+	lw		$2, 8($fp)
+	lw		$3, 12($fp)
+	lw		$8, 16($fp)
+	addu	$3, $3, $8
+	addu	$2, $2, $3
 	sw		$2, 20($fp)
-	li		$2, 20
-	sw		$2, 24($fp)
-	addu	$2, $2, $8
+	lw		$2, 16($fp)
+	lw		$3, 20($fp)
+	addu	$2, $2, $3
 
 #deallocating stack
 	move	$sp, $fp
@@ -43,6 +54,7 @@ main:
 	.set	reorder
 	.end	main
 	.size	main, .-main
+
 #Occupied Registers
 #0: 
 #1: 
@@ -52,7 +64,7 @@ main:
 #5: 
 #6: 
 #7: 
-#8: yes
+#8: 
 #9: 
 #10: 
 #11: 

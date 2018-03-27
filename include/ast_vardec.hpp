@@ -23,6 +23,8 @@ public:
 
 	}
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
+		// dst << "#variable declaration" << std::endl;
+		// dst << "#destloc " << destloc << std::endl;
 		if(Expr != NULL){
 			Expr->compile(dst, cntx, destloc);
 		}

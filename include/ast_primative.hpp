@@ -19,6 +19,7 @@ public:
 		dst << value;
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+		// dst << "#number primative" << std::endl;
 		dst << "\tli\t\t$" << destloc << ", " << value << std::endl;
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{return value;};
@@ -31,9 +32,12 @@ public:
 	Variable(std::string* _id) : id(_id){};
 	~Variable(){};
 	void translate(std::ostream &dst)const override{
+		// dst << "#variable primative" << std::endl;
 		dst << *id;
 	};
-	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{};
+	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+		dst << "\tlw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
+	};
 	unsigned int GetContext(InterpretContext &cntx) const override{
 		return cntx.FindVariable(*id);
 	};
