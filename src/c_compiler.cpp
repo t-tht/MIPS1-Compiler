@@ -5,21 +5,18 @@ int tab=0;
 std::vector<std::string> globalvars;
 
 int main(int argc, char* argv[]){
-    
+
     freopen(argv[2], "r", stdin);
     freopen(argv[4], "w", stdout);
-    
+
     const Node *ast=parseAST();
     InterpretContext cntx;
-    unsigned int destloc = 0;
-    
-    
+
     if(std::string(argv[1])== "--compile"){
         ast->GetContext(cntx);
         ast->compile(std::cout, cntx, 2);
-        cntx.PrintReg(std::cout);
     }
-    
+
     if(std::string(argv[1])== "--translate"){
         ast->translate(std::cout);
         std::cout<<"\n# Boilerplat" << std::endl;
@@ -27,11 +24,11 @@ int main(int argc, char* argv[]){
         std::cout<<"\timport sys\n\tret=main()\n\tsys.exit(ret)"<<std::endl;
         std::cout<< "\n";
     }
-    
-    
+
+
     fclose(stdin);
     fclose(stdout);
-    
-    
+
+
     return 0;
 }

@@ -20,6 +20,7 @@ public:
 		dst << std::endl;
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+		// dst << "#return statement" << std::endl;
 		if(Expr != NULL){
 			Expr->compile(dst, cntx, 2);
 		}

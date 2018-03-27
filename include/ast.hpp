@@ -23,7 +23,7 @@ extern std::vector<std::string> globalvars;
 #include "ast_assignment.hpp"
 #include "ast_compexpr.hpp"
 #include "ast_ifstatement.hpp"
-//#include "ast_constexpr.hpp"
+#include "ast_arg.hpp"
 
 //TODO: assignment, binexpr ( 2 more todo) , block, comprexpr, funcCallExpr, funcdec (write the proper pointers), if statement not implemented, param_var, param, variable, var dec
 //what has been done, program, block, return stat, bin expr 2 signs

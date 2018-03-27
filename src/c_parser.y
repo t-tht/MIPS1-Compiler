@@ -137,12 +137,10 @@ Param:  //for function declaration
 
 
 Arg:    //for function calls
- T_IDENTIFIER                                                                   { $$ = new Param(NULL, $1, NULL); }
-|Type T_IDENTIFIER                                                              { $$ = new Param($1, $2, NULL); }
-|Arg T_COMMA T_IDENTIFIER                                                       { $$ = new Param(NULL, $3, $1); }
-|Arg T_COMMA Type T_IDENTIFIER                                                { $$ = new Param($3, $4, $1); }
-|Arg T_COMMA T_NUMBER                                                           { $$ = new Param($3,$1); }
-|T_NUMBER                                                                        { $$ = new Number($1); }
+ T_IDENTIFIER                                                                   { $$ = new Arg(NULL, $1, NULL); }
+|Type T_IDENTIFIER                                                              { $$ = new Arg($1, $2, NULL); }
+|T_IDENTIFIER T_COMMA Arg                                                       { $$ = new Arg(NULL, $1, $3); }
+|Type T_IDENTIFIER T_COMMA Arg                                                  { $$ = new Arg($1, $2, $4); }
 
 
 Type:
