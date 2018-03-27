@@ -42,17 +42,17 @@ extern int yydebug;
 /* "%code requires" blocks.  */
 #line 1 "src/c_parser.y" /* yacc.c:1909  */
 
-    #include "ast.hpp"
-    
-    #include <cassert>
-    
-    extern const Node *g_root; // A way of getting the AST out
-    
-    //! This is to fix problems when generating C++
-    // We are declaring the functions provided by Flex, so
-    // that Bison generated code can call them.
-    int yylex(void);
-    void yyerror(const char *);
+  #include "ast.hpp"
+
+  #include <cassert>
+
+  extern const Node *g_root; // A way of getting the AST out
+
+  //! This is to fix problems when generating C++
+  // We are declaring the functions provided by Flex, so
+  // that Bison generated code can call them.
+  int yylex(void);
+  void yyerror(const char *);
 
 #line 58 "src/c_parser.tab.hpp" /* yacc.c:1909  */
 
@@ -97,9 +97,9 @@ union YYSTYPE
 {
 #line 17 "src/c_parser.y" /* yacc.c:1909  */
 
-    const Node *node;
-    double number;
-    std::string *string;
+  const Node *node;
+  double number;
+  std::string *string;
 
 #line 105 "src/c_parser.tab.hpp" /* yacc.c:1909  */
 };
