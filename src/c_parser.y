@@ -141,23 +141,13 @@ Param:  //for function declaration
 
 
 Arg:    //for function calls
-<<<<<<< HEAD
- T_IDENTIFIER                                                                   { $$ = new Arg(NULL, $1, NULL); }
-|Type T_IDENTIFIER                                                              { $$ = new Arg($1, $2, NULL); }
-|T_NUMBER                                                                       { $$ = new Arg($1); }
-|T_NUMBER T_COMMA Arg                                                           { $$ = new Arg($1, $3); }
-|T_IDENTIFIER T_COMMA Arg                                                       { $$ = new Arg(NULL, $1, $3); }
-|Type T_IDENTIFIER T_COMMA Arg                                                  { $$ = new Arg($1, $2, $4); }
-
-
-=======
  T_IDENTIFIER                                                                   { $$ = new Arg(NULL, $1, 0, NULL); }
 |Type T_IDENTIFIER                                                              { $$ = new Arg($1, $2, 0, NULL); }
 |T_IDENTIFIER T_COMMA Arg                                                       { $$ = new Arg(NULL, $1, 0, $3); }
 |Type T_IDENTIFIER T_COMMA Arg                                                  { $$ = new Arg($1, $2, 0, $4); }
 |T_NUMBER                                                                       { $$ = new Arg(NULL, NULL, $1, NULL); }
 |T_NUMBER T_COMMA Arg                                                           { $$ = new Arg(NULL, NULL, $1, $3); }
->>>>>>> tht
+
 
 Type:
  T_INT                                                                          { $$ = new std::string("int"); }

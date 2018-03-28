@@ -9,20 +9,9 @@ class Arg : public Node{
 protected:
     std::string* type;
     std::string* id;
-<<<<<<< HEAD
-    double Number;
-    NodePtr right;
-public:
-    Arg(std::string* _type, std::string* _id, NodePtr _right ) : type(_type), id(_id), right(_right){};
-    Arg(double _Number ) : Number(_Number){};
-    Arg(double _Number, NodePtr _right) : Number(_Number), right(_right){};
-<<<<<<< HEAD
-=======
-=======
->>>>>>> tht
     double val;
     NodePtr right;
->>>>>>> 3ea5ab6d4fc2f756dea1c59ff3b6d87c6db7e870
+
 public:
     Arg(std::string* _type, std::string* _id, double _val, NodePtr _right ) : type(_type), id(_id), val(_val), right(_right){};
     ~Arg(){
