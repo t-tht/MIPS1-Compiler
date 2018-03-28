@@ -6,7 +6,7 @@ std::vector<std::string> globalvars;
 
 int main(int argc, char* argv[]){
 
-    freopen(argv[2], "r", stdin);
+   freopen(argv[2], "r", stdin);
     freopen(argv[4], "w", stdout);
 
     const Node *ast=parseAST();

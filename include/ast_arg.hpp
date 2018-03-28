@@ -9,13 +9,33 @@ class Arg : public Node{
 protected:
     std::string* type;
     std::string* id;
+    double Number;
     NodePtr right;
 public:
     Arg(std::string* _type, std::string* _id, NodePtr _right ) : type(_type), id(_id), right(_right){};
+    Arg(double _Number ) : Number(_Number){};
+    Arg(double _Number, NodePtr _right) : Number(_Number), right(_right){};
     ~Arg(){
         delete right;
     };
-    void translate(std::ostream &dst)const override{};
+    void translate(std::ostream &dst) const override{
+        if(type != NULL){
+            dst<< *type;
+        }
+        if(id!=NULL){
+            dst<< *id;
+            
+        }
+        else{
+            dst<< Number;
+            
+        }
+        if(right !=NULL){
+            dst<< ",";
+            right->translate(dst);
+        }
+        
+    };
     void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
         if(destloc < 8){
             dst << "\tlw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
