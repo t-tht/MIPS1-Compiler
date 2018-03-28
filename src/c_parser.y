@@ -21,7 +21,7 @@
 }
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS
 %token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS T_LESSTHANEQ T_MORETHANEQ T_CONDEQ T_NOTEQ T_LOGAND T_LOGOR T_IF T_MORETHAN T_LESSTHAN
-%token T_NUMBER T_IDENTIFIER T_RETURN T_INT
+%token T_NUMBER T_IDENTIFIER T_RETURN T_INT T_ELSE
 %token T_ADD T_VOID
 
 %type <node> Program Block BlockList Term Factor
@@ -90,6 +90,7 @@ AssignStatement:
 
 IfStatement:
  T_IF T_LBRACKET CompareExpression T_RBRACKET Block                             { $$ = new IfStatement($3, $5); }
+|T_IF T_LBRACKET CompareExpression T_RBRACKET Block T_ELSE Block                            { $$ = new IfStatement($3, $5, $7); }
 
 
 CompareExpression:

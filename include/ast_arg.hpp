@@ -15,13 +15,7 @@ public:
     Arg(std::string* _type, std::string* _id, NodePtr _right ) : type(_type), id(_id), right(_right){};
     Arg(double _Number ) : Number(_Number){};
     Arg(double _Number, NodePtr _right) : Number(_Number), right(_right){};
-<<<<<<< HEAD
-=======
-    double val;
-    NodePtr right;
->>>>>>> 3ea5ab6d4fc2f756dea1c59ff3b6d87c6db7e870
 public:
-    Arg(std::string* _type, std::string* _id, double _val, NodePtr _right ) : type(_type), id(_id), val(_val), right(_right){};
     ~Arg(){
         delete right;
     };
@@ -48,7 +42,7 @@ public:
             if(id != NULL){
                 dst << "\tlw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
             }else{
-                dst << "\tli\t\t$" << destloc << ", " << val << std::endl;
+                dst << "\tli\t\t$" << destloc << ", " << Number << std::endl;
             }
             destloc++;
             if(right != NULL){
@@ -58,7 +52,7 @@ public:
             if(id != NULL){
                 dst << "\tlw\t\t$" << 2 << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
             }else{
-                dst << "\tli\t\t$" << 2 << ", " << val << std::endl;
+                dst << "\tli\t\t$" << 2 << ", " << Number << std::endl;
             }
             dst << "\tsw\t\t$" << 2 << ", " << (destloc-8)*4 + 16 << "($sp)" << std::endl;
             destloc++;

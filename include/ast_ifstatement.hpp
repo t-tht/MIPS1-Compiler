@@ -9,8 +9,10 @@ class IfStatement : public Node{
 	protected:
 		const NodePtr cond;
 		const NodePtr body;
+        const NodePtr body1=NULL;
 	public:
 		IfStatement(const NodePtr _cond, const NodePtr _body) : cond(_cond), body(_body){};
+        IfStatement(const NodePtr _cond, const NodePtr _body, const NodePtr _body1) : cond(_cond), body(_body), body1(_body1){};
 		~IfStatement(){
 			delete cond;
 			delete body;
@@ -29,6 +31,12 @@ class IfStatement : public Node{
 				body->translate(dst);
                 tab--;
 			}
+            if(body1 != NULL){
+                dst<< "else:"<<std::endl;
+                tab++;
+                body1->translate(dst);
+                tab--;
+            }
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
 			dst << "if statement compile function not yet implemented" << std::endl;

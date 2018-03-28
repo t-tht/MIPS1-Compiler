@@ -2,12 +2,12 @@
 
 	.text
 	.align	2
-	.globl	main
+	.globl	function
 	.set	nomips16
 	.set	nomicromips
-	.ent	main
-	.type	main, @function
-main:
+	.ent	function
+	.type	function, @function
+function:
 	.frame	$fp, 128, $ra
 	.mask	0x40000000, -4
 	.fmask	0x00000000, 0
@@ -33,8 +33,8 @@ main:
 
 	.set	macro
 	.set	reorder
-	.end	main
-	.size	main, .-main
+	.end	function
+	.size	function, .-function
 #Stack : 
 #Local Variable : 
 #compile finished
