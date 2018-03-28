@@ -1,11 +1,9 @@
 int a = 5;
-int func(){
-    int i = 20;
+int func(int i){
     a = 6;
     return a+i;
 }
 
 int main(){
-    int i = 10;
-    return func();
+    return func(10);
 }

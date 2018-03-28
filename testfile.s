@@ -27,11 +27,8 @@ func:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
+	sw		$4, 128($fp)
 #compiling function body
-#variable declaration--start
-	li		$2, 20
-	sw		$2, 116($fp)
-#variable declaration--end
 #assignment -- start
 	lui		$2, %hi(a)
 	li		$3, 6
@@ -43,7 +40,7 @@ func:
 	lw		$2, %lo(a)($3)
 #variable primative--end
 #variable primative--start
-	lw		$3, 116($fp)
+	lw		$3, 128($fp)
 #variable primative--end
 	addu	$2, $2, $3
 #binary expression--end
@@ -61,9 +58,8 @@ func:
 	.end	func
 	.size	func, .-func
 #Stack : 
-#i: 116
+#i: 128
 #Local Variable : 
-#i: 20
 
 
 	.text
@@ -87,10 +83,7 @@ main:
 	move	$fp, $sp
 
 #compiling function body
-#variable declaration--start
-	li		$2, 10
-	sw		$2, 116($fp)
-#variable declaration--end
+	li		$4, 10
 	jal	func
 	nop
 
@@ -107,9 +100,7 @@ main:
 	.end	main
 	.size	main, .-main
 #Stack : 
-#i: 116
 #Local Variable : 
-#i: 10
 #compile finished
 #Global Variables : 
 #a: 5
