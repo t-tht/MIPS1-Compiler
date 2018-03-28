@@ -15,7 +15,6 @@ public:
     Arg(std::string* _type, std::string* _id, NodePtr _right ) : type(_type), id(_id), right(_right){};
     Arg(double _Number ) : Number(_Number){};
     Arg(double _Number, NodePtr _right) : Number(_Number), right(_right){};
-    double val;
 public:
     ~Arg(){
         delete right;
