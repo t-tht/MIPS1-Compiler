@@ -46,7 +46,7 @@ public:
 			cntx.RegSetAvailable(temp[0]);
 
 		}
-		else if(cntx.IsAVariable(*id)){
+		else if(cntx.IsOnStack(*id)){
 
 			dst << "\tlw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
 
