@@ -21,13 +21,13 @@
 }
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS
 %token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS T_LESSTHANEQ T_MORETHANEQ T_CONDEQ T_NOTEQ T_LOGAND T_LOGOR T_IF T_MORETHAN T_LESSTHAN
-%token T_NUMBER T_IDENTIFIER T_RETURN T_INT T_ELSE
+%token T_NUMBER T_IDENTIFIER T_RETURN T_INT T_ELSE T_WHILE
 %token T_ADD T_VOID
 
 %type <node> Program Block BlockList Term Factor
 %type <node> FunctionDeclaration Param VariableDeclaration GlobalVariableDeclaration
 %type <node> FunctionCall Arg
-%type <node> Statements IfStatement AssignStatement ReturnStatement
+%type <node> Statements IfStatement AssignStatement ReturnStatement WhileStatement
 %type <node> Expression BinaryExpression CompareExpression
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
@@ -42,7 +42,7 @@ ROOT:
 
 
 Program:
- FunctionDeclaration                                                            { $$ = new Program($1, NULL); }
+FunctionDeclaration                                                            { $$ = new Program($1, NULL); }
 |FunctionDeclaration Program 							                        { $$ = new Program($1, $2); }
 |GlobalVariableDeclaration                                                      { $$ = new Program($1, NULL); }
 |GlobalVariableDeclaration Program                                              { $$ = new Program($1, $2); }
@@ -75,10 +75,13 @@ BlockList:
 |BlockList VariableDeclaration                                                  { $$ = new Block($1, $2); }
 
 Statements:
- ReturnStatement                                                                { $$ = $1; }
+ReturnStatement                                                                 { $$ = $1; }
 |AssignStatement                                                                { $$ = $1; }
 |IfStatement                                                                    { $$ = $1; }
+|WhileStatement                                                                 { $$ = $1; }
 
+WhileStatement:
+T_WHILE T_LBRACKET CompareExpression T_RBRACKET Block                           { $$= new WhileStatement($3, $5); }
 
 ReturnStatement:
  T_RETURN Expression T_SEMICOLON                                                { $$ = new ReturnStat($2); }
@@ -134,7 +137,7 @@ Factor:
  T_NUMBER                                                                       { $$ = new Number($1); }
 |T_IDENTIFIER                                                                   { $$ = new Variable($1); }
 |T_CLBRACKET BinaryExpression T_CRBRACKET                                       { $$ = $2; }
-
+|FunctionCall                                                                   { $$ = $1; }
 
 Param:  //for function declaration
  Type T_IDENTIFIER                                                              { $$ = new Param($1, $2, NULL); }

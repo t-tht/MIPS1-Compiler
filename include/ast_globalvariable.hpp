@@ -15,7 +15,23 @@ public:
     ~GlobalVariable(){
         delete val;
     };
-    void translate(std::ostream &dst)const override{};
+    void translate(std::ostream &dst)const override{
+        globalvars.push_back(*id);
+        for(int i=0; i<tab; i++){
+            dst<< "\t";
+        }
+        dst << *id;
+        if(val != NULL){
+            dst << " = ";
+            val ->translate(dst);
+        }
+        else{
+            dst<< "=0";
+        }
+        dst<<std::endl;
+
+        
+    };
     void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
         this->GetContext(cntx);
         dst << "\t.globl\t" << *id << std::endl;
