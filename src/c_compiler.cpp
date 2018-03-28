@@ -15,6 +15,8 @@ int main(int argc, char* argv[]){
     if(std::string(argv[1])== "-S"){
         ast->GetContext(cntx);
         ast->compile(std::cout, cntx, 2);
+        std::cout << "#compile finished" << std::endl;
+        cntx.PrintGlobal(std::cout);
     }
 
     if(std::string(argv[1])== "--translate"){

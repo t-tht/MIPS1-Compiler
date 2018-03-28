@@ -8,7 +8,7 @@ class Variable;
 
 class Number : public Node{
 private:
-	double value;
+	unsigned int value;
 public:
 	Number(double _value) : value(_value){};
 	~Number(){};
@@ -31,11 +31,18 @@ public:
 	Variable(std::string* _id) : id(_id){};
 	~Variable(){};
 	void translate(std::ostream &dst)const override{
-		// dst << "#variable primative" << std::endl;
 		dst << *id;
 	};
+
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-		dst << "\tlw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
+		dst << "#variable primative--start" << std::endl;
+		if(cntx.IsAGlobal(*id)){
+			dst << "\tlui\t\t$" << destloc << ", %hi(" << *id << ")" << std::endl;
+			dst << "\tlw\t\t$" << destloc << ", %lo(" << *id << ")($" << destloc << ")" << std::endl;
+		}else if(cntx.IsAVariable(*id)){
+			dst << "\tlw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
+		}
+		dst << "#variable primative--end" << std::endl;
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{
 		return cntx.FindVariable(*id);

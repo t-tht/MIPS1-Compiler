@@ -26,29 +26,29 @@ public:
 			param->translate(dst);
 		}
 		dst << "):" << std::endl;
-        if(globalvars.size()!=0){
-            tab++;
-            for(int i=0; i<tab; i++){
-                dst<< "\t";
+		if(globalvars.size()!=0){
+			tab++;
+			for(int i=0; i<tab; i++){
+				dst<< "\t";
 
-            }
-            tab--;
-            for(unsigned int i=0; i<globalvars.size(); i++){
-                dst<< "global " << globalvars[i];
-                dst<< std::endl;
-            }
-           }
-        tab++;
-                if(block!=NULL){
-                    block->translate(dst);
-                }
-        tab--;
+			}
+			tab--;
+			for(unsigned int i=0; i<globalvars.size(); i++){
+				dst<< "global " << globalvars[i];
+				dst<< std::endl;
+			}
+		}
+		tab++;
+		if(block!=NULL){
+			block->translate(dst);
+		}
+		tab--;
 	};
 	void compile(std::ostream &dst, InterpretContext &_cntx, unsigned int destloc) const override{
-		InterpretContext cntx;
+		InterpretContext cntx(_cntx);
 		this->GetContext(cntx);
 
-		cntx.PrintStack(dst);
+		dst << std::endl << std::endl;
 
 		//default text stuff
 		dst << "\t" << ".text" << std::endl;
@@ -88,6 +88,9 @@ public:
 		dst << "\t" << ".set\treorder" << std::endl;
 		dst << "\t" << ".end\t" << *id << std::endl;
 		dst << "\t" << ".size\t" << *id << ", .-" << *id << std::endl;
+
+		cntx.PrintStack(dst);
+		cntx.PrintVariable(dst);
 
 	};
 

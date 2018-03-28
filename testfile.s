@@ -1,18 +1,15 @@
-#Stack: 
-#a: 128
-#b: 132
-#c: 136
-#d: 140
-#e: 144
-#f: 148
+a:
+		.word	5
+
+
 	.text
 	.align	2
-	.globl	g
+	.globl	func
 	.set	nomips16
 	.set	nomicromips
-	.ent	g
-	.type	g, @function
-g:
+	.ent	func
+	.type	func, @function
+func:
 	.frame	$fp, 128, $ra
 	.mask	0x40000000, -4
 	.fmask	0x00000000, 0
@@ -25,16 +22,21 @@ g:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-	sw		$4, 128($fp)
-	sw		$5, 132($fp)
-	sw		$6, 136($fp)
-	sw		$7, 140($fp)
 #compiling function body
-	li		$2, 10
-	lw		$8, 128($fp)
-	subu	$2, $2, $8
-	lw		$3, 132($fp)
-	subu	$2, $2, $3
+#variable declaration--start
+	li		$2, 20
+	sw		$2, 116($fp)
+#variable declaration--end
+#binary expression--start
+#variable primative--start
+	lui		$2, %hi(a)
+	lw		$2, %lo(a)($2)
+#variable primative--end
+#variable primative--start
+	lw		$3, 116($fp)
+#variable primative--end
+	addu	$2, $2, $3
+#binary expression--end
 
 #deallocating stack
 	move	$sp, $fp
@@ -46,15 +48,14 @@ g:
 
 	.set	macro
 	.set	reorder
-	.end	g
-	.size	g, .-g
-#Stack: 
-#a: 116
-#b: 112
-#c: 108
-#d: 104
-#e: 100
-#f: 96
+	.end	func
+	.size	func, .-func
+#Stack : 
+#i: 116
+#Local Variable : 
+#i: 20
+
+
 	.text
 	.align	2
 	.globl	main
@@ -76,27 +77,11 @@ main:
 	move	$fp, $sp
 
 #compiling function body
-	li		$2, 1
+#variable declaration--start
+	li		$2, 10
 	sw		$2, 116($fp)
-	li		$2, 2
-	sw		$2, 112($fp)
-	li		$2, 3
-	sw		$2, 108($fp)
-	li		$2, 4
-	sw		$2, 104($fp)
-	li		$2, 5
-	sw		$2, 100($fp)
-	li		$2, 6
-	sw		$2, 96($fp)
-	li		$4, 1
-	lw		$5, 112($fp)
-	li		$6, 3
-	lw		$7, 104($fp)
-	li		$2, 5
-	sw		$2, 16($sp)
-	lw		$2, 96($fp)
-	sw		$2, 20($sp)
-	jal	g
+#variable declaration--end
+	jal	func
 	nop
 
 #deallocating stack
@@ -111,3 +96,10 @@ main:
 	.set	reorder
 	.end	main
 	.size	main, .-main
+#Stack : 
+#i: 116
+#Local Variable : 
+#i: 10
+#compile finished
+#Global Variables : 
+#a: 5

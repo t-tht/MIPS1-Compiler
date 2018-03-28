@@ -25,8 +25,8 @@
 %token T_ADD T_VOID
 
 %type <node> Program Block BlockList Term Factor
-%type <node> FunctionDeclaration VariableDeclaration Arg
-%type <node> FunctionCall Param
+%type <node> FunctionDeclaration Param VariableDeclaration GlobalVariableDeclaration
+%type <node> FunctionCall Arg
 %type <node> Statements IfStatement AssignStatement ReturnStatement
 %type <node> Expression BinaryExpression CompareExpression
 %type <number> T_NUMBER
@@ -43,8 +43,15 @@ ROOT:
 
 Program:
  FunctionDeclaration                                                            { $$ = new Program($1, NULL); }
-|Program FunctionDeclaration							                        { $$ = new Program($1, $2); }
-|VariableDeclaration                                                            { $$ = new Program($1, NULL); }
+|FunctionDeclaration Program 							                        { $$ = new Program($1, $2); }
+|GlobalVariableDeclaration                                                      { $$ = new Program($1, NULL); }
+|GlobalVariableDeclaration Program                                              { $$ = new Program($1, $2); }
+
+
+GlobalVariableDeclaration:
+ Type T_IDENTIFIER T_SEMICOLON                                                  { $$ = new GlobalVariable($1, $2, NULL); }
+|Type T_IDENTIFIER T_EQUALS Expression T_SEMICOLON                              { $$ = new GlobalVariable($1, $2, $4); }
+
 
 
 FunctionDeclaration:

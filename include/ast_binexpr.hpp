@@ -26,7 +26,7 @@ public:
 	};
 
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-		// dst << "#binary expression" << std::endl;
+		dst << "#binary expression--start" << std::endl;
 		cntx.RegSetUsed(destloc);
 		if((left != NULL) && (right != NULL)){
 			std::vector<unsigned int> tmp;
@@ -40,7 +40,7 @@ public:
 			if(*op == "+"){
 
 				left->compile(dst, cntx, destloc);
-				right->compile(dst, cntx, tmp[0]); 
+				right->compile(dst, cntx, tmp[0]);
 				dst << "\taddu\t$" << destloc << ", $" << destloc << ", $" << tmp[0] << std::endl;
 
 			}else if(*op == "-"){
@@ -66,6 +66,7 @@ public:
 			cntx.RegSetAvailable(tmp[0]);
 		}
 		cntx.RegSetAvailable(destloc);
+		dst << "#binary expression--end" << std::endl;
 	};
 
 
