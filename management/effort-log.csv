@@ -3,3 +3,36 @@ Date,Effort,Developers,Milestones
 25/02/2018,5,txt216,C to python simple
 25-Mar,5,kr1116,C translator completed for formative  
 25-Mar,6,txt216,Finishing compiler
+,,,
+Entry below updated on 28-March,,,
+25/02/2018,2,kr1116; th216,c_translator_filestructure
+26/02/2018,5,kr1116; th216,c_translator_ast
+27/02/2018,6,kr1116; th216,c_translator_return
+28/02/2018,,th216,c_translator_statementseq
+01/03/2018,,kr1116; th216,c_translator_binexpression
+03/03/2018,10,kr1116; th216,c_translator_funcdec; c_translator_multfuncdec
+04/03/2018,,kr1116; th216,c_translator_assignment/block
+05/03/2018,,th216,c_translator_complete
+06/03/2018,5,kr1116,c_translator_formative
+07/03/2018,,th216,
+08/03/2018,1,kr1116,c_compiler_context
+09/03/2018,,,
+10/03/2018,,,
+11/03/2018,6,kr1116,c_compiler_testsuite
+12/03/2018,7,th216; kr1116,c_compiler_funcdec
+13/03/2018,,,
+14/03/2018,,,
+15/03/2018,,,
+16/03/2018,,,
+17/03/2018,,,
+18/03/2018,6,kr1116; th216,c_compiler_printsomething
+19/03/2018,,,
+20/03/2018,,,
+21/03/2018,,,
+22/03/2018,8,kr1116; th216,c_compiler_return
+23/03/2018,,,
+24/03/2018,9,th216,c_compiler_stack
+25/03/2018,10,th216; kr1116,c_compiler_functioncall
+26/03/2018,,,
+27/03/2018,10,th216,c_compiler_variablebindings
+28/03/2018,,,
