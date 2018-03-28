@@ -131,6 +131,14 @@ bool IsAGlobal(std::string id)const{
         }
     };
 
+std::vector<unsigned int> AvailableReg(){
+    std::vector<unsigned int> temp;
+    if(AvailableDestReg().size()){
+        return AvailableDestReg();
+    }else if(AvailableTempReg().size()){
+        return AvailableTempReg();
+    }
+}
 
     std::vector<unsigned int> AvailableDestReg(){  //returns either 2 or 3 for destreg
         std::vector<unsigned int> temp;

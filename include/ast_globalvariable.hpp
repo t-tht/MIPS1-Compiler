@@ -18,6 +18,11 @@ public:
     void translate(std::ostream &dst)const override{};
     void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
         this->GetContext(cntx);
+        dst << "\t.globl\t" << *id << std::endl;
+        dst << "\t.data" << std::endl;
+        dst << "\t.align\t" << 2 << std::endl;
+        dst << "\t.type\t" << *id << ", @object" << std::endl;
+        dst << "\t.size\t" << *id << ", 4" << std::endl; 
         dst << "a:" << std::endl;
         dst << "\t\t.word\t";
         if(val != NULL){

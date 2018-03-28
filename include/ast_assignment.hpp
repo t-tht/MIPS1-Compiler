@@ -29,10 +29,25 @@ public:
 
     };
     void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-        if(Expr != NULL){
-            Expr->compile(dst, cntx, destloc);
+        dst << "#assignment -- start" << std::endl;
+        if(cntx.IsAGlobal(*id)){
+            dst << "\tlui\t\t$" << destloc << ", %hi(" << *id << ")" << std::endl;
+            cntx.RegSetUsed(destloc);
+            std::vector<unsigned int> temp = cntx.AvailableReg();
+            cntx.RegSetUsed(temp[0]);
+            if(Expr != NULL){
+                Expr->compile(dst, cntx, temp[0]);
+            }
+            cntx.RegSetAvailable(temp[0]);
+            dst << "\tsw\t\t$" << temp[0] << ", %lo(" << *id << ")($" << destloc << ")" << std::endl;
+            cntx.RegSetAvailable(destloc);
+        }else if(cntx.IsAVariable(*id)){
+            if(Expr != NULL){
+                Expr->compile(dst, cntx, destloc);
+            }
+            dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
         }
-        dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
+        dst << "#assignment -- end" << std::endl;
     };
 
     unsigned int GetContext(InterpretContext &cntx) const override{

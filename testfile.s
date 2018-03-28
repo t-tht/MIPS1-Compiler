@@ -1,3 +1,8 @@
+	.globl	a
+	.data
+	.align	2
+	.type	a, @object
+	.size	a, 4
 a:
 		.word	5
 
@@ -27,10 +32,15 @@ func:
 	li		$2, 20
 	sw		$2, 116($fp)
 #variable declaration--end
+#assignment -- start
+	lui		$2, %hi(a)
+	li		$3, 6
+	sw		$3, %lo(a)($2)
+#assignment -- end
 #binary expression--start
 #variable primative--start
-	lui		$2, %hi(a)
-	lw		$2, %lo(a)($2)
+	lui		$3, %hi(a)
+	lw		$2, %lo(a)($3)
 #variable primative--end
 #variable primative--start
 	lw		$3, 116($fp)
