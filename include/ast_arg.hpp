@@ -9,15 +9,10 @@ class Arg : public Node{
 protected:
     std::string* type;
     std::string* id;
-    double Number;
-    NodePtr right;
-public:
-    Arg(std::string* _type, std::string* _id, NodePtr _right ) : type(_type), id(_id), right(_right){};
-    Arg(double _Number ) : Number(_Number){};
-    Arg(double _Number, NodePtr _right) : Number(_Number), right(_right){};
     double val;
     NodePtr right;
 public:
+    Arg(std::string* _type, std::string* _id, double _val, NodePtr _right ) : type(_type), id(_id), val(_val), right(_right){};
     ~Arg(){
         delete right;
     };
@@ -30,7 +25,7 @@ public:
             
         }
         else{
-            dst<< Number;
+            dst<< val;
             
         }
         if(right !=NULL){
@@ -44,7 +39,7 @@ public:
             if(id != NULL){
                 dst << "\tlw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
             }else{
-                dst << "\tli\t\t$" << destloc << ", " << Number << std::endl;
+                dst << "\tli\t\t$" << destloc << ", " << val << std::endl;
             }
             destloc++;
             if(right != NULL){
@@ -54,7 +49,7 @@ public:
             if(id != NULL){
                 dst << "\tlw\t\t$" << 2 << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
             }else{
-                dst << "\tli\t\t$" << 2 << ", " << Number << std::endl;
+                dst << "\tli\t\t$" << 2 << ", " << val << std::endl;
             }
             dst << "\tsw\t\t$" << 2 << ", " << (destloc-8)*4 + 16 << "($sp)" << std::endl;
             destloc++;
@@ -63,7 +58,7 @@ public:
             }
         }
     };
-
+    
     unsigned int GetContext(InterpretContext &cntx)const override{};
 };
 
