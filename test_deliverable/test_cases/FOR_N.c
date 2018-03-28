@@ -1,7 +1,8 @@
-int forn(int i, int j){
+int forn(int j){
     int k;
-    for( k=i ; i<j ; k++){
-        
+    int i;
+    for( i=0 ; i<j ; i++){
+        k++;
     }
     return k;
 }

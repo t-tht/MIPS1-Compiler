@@ -1,5 +1,5 @@
 int ifelsef(int x){
-    if(x=2){
+    if(x==2){
         return x;
     }
     else{

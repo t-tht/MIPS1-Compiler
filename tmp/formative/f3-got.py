@@ -1,7 +1,7 @@
 def f(x):
 	return 10
 def main():
-	return f(11f()+7
+	return f(11)+7
 
 # Boilerplat
 if __name__ == "__main__":

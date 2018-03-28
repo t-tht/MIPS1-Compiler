@@ -19,14 +19,14 @@ mkdir -p ${working}
 
 for i in ${input_dir}/*.c ; do
     base=$(echo $i | sed -E -e "s|${input_dir}/([^.]+)[.]c|\1|g");
-    
+
     # Compile the reference C version
     gcc $i -o $working/$base
     
     # Run the reference C version
     $working/$base
     REF_C_OUT=$?
-    
+
     # Run the reference python version
     python3 ${input_dir}/$base.py
     REF_P_OUT=$?

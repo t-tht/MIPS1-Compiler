@@ -6,22 +6,29 @@
 	.ent	main
 	.type	main, @function
 main:
-	.frame	$fp, 24, $31
+	.frame	$fp, 128, $ra
 	.mask	0x40000000, -4
 	.fmask	0x00000000, 0
 	.set	noreorder
 	.set	nomacro
-	addiu	$sp, $sp, -8
-	sw	$fp, 4($sp)
+
+#allocate stack
+	addiu	$sp, $sp, -128
+	sw		$ra, 124($sp)
+	sw		$fp, 120($sp)
 	move	$fp, $sp
-	li	$2, 10
-	li	$8, 10
-	addu	$2, $2, $8
+
+#compiling function body
+	li		$2, 10
+	li		$3, 10
+	addu	$2, $2, $3
+
+#deallocating stack
 	move	$sp, $fp
-	movz	$31, $31, $0
-	lw	$fp, 4($sp)
-	addiu	$sp, $sp, 8
-	j	$31
+	lw		$fp, 120($sp)
+	lw		$ra, 124($sp)
+	addiu	$sp, $sp, 128
+	j		$ra
 	nop
 
 	.set	macro

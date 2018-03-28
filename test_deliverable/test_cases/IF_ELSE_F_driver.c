@@ -1,6 +1,6 @@
-int ifelsef(int x, int y);
+int ifelsef(int x);
 
 int main(){
-    return !(ifelset(3));
+    return !(ifelsef(3));
 }
 
