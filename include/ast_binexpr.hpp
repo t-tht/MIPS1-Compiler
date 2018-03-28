@@ -40,8 +40,7 @@ public:
 			if(*op == "+"){
 
 				left->compile(dst, cntx, destloc);
-				right->compile(dst, cntx, tmp[0]);
-
+				right->compile(dst, cntx, tmp[0]); 
 				dst << "\taddu\t$" << destloc << ", $" << destloc << ", $" << tmp[0] << std::endl;
 
 			}else if(*op == "-"){

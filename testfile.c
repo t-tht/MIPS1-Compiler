@@ -1,5 +1,5 @@
 int g(int a, int b, int c, int d, int e, int f){
-    return a+b+c+d+e+f;
+    return 10-a-b;
 }
 int main(){
     int a = 1;
@@ -8,5 +8,5 @@ int main(){
     int d = 4;
     int e = 5;
     int f = 6;
-    return g(a,b,c,d,e,f);
+    return g(1,b,3,d,5,f);
 }

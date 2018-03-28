@@ -30,7 +30,7 @@ public:
             tab++;
             for(int i=0; i<tab; i++){
                 dst<< "\t";
-                
+
             }
             tab--;
             for(unsigned int i=0; i<globalvars.size(); i++){
@@ -47,6 +47,8 @@ public:
 	void compile(std::ostream &dst, InterpretContext &_cntx, unsigned int destloc) const override{
 		InterpretContext cntx;
 		this->GetContext(cntx);
+
+		cntx.PrintStack(dst);
 
 		//default text stuff
 		dst << "\t" << ".text" << std::endl;

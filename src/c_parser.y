@@ -31,7 +31,7 @@
 %type <node> Expression BinaryExpression CompareExpression
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
-%type <string> BinaryOp CompareOp
+%type <string> CompareOp
 
 %start ROOT
 
@@ -96,8 +96,8 @@ CompareOp:
 |T_NOTEQ                                                                        { $$ = new std::string("!="); }
 |T_LOGAND                                                                       { $$ = new std::string("&&"); }
 |T_LOGOR                                                                        { $$ = new std::string("||"); }
-|T_MORETHAN                                                                      { $$ = new std::string(">"); }
-|T_LESSTHAN                                                                      { $$ = new std::string("<"); }
+|T_MORETHAN                                                                     { $$ = new std::string(">"); }
+|T_LESSTHAN                                                                     { $$ = new std::string("<"); }
 
 Expression :
  BinaryExpression                                                               { $$ = $1; }
@@ -108,40 +108,38 @@ Expression :
 FunctionCall:
 T_IDENTIFIER T_LBRACKET T_RBRACKET                                              { $$ = new FuncCallExpr($1, NULL); }
 |T_IDENTIFIER T_LBRACKET Arg T_RBRACKET                                         { $$ = new FuncCallExpr($1, $3); }
-//need to change param to arg for ambiguity
+
 
 BinaryExpression :
- Expression BinaryOp Expression                                                 { $$ = new BinExpr($1, $2, $3); }
+ BinaryExpression T_PLUS Term                                                   { $$ = new BinExpr($1, new std::string("+"), $3); }
+|BinaryExpression T_MINUS Term                                                  { $$ = new BinExpr($1, new std::string("-"), $3); }
+|Term                                                                           { $$ = $1; }
 
-
-BinaryOp:
- T_PLUS                                                                         { $$ = new std::string("+"); }
-|T_MINUS                                                                        { $$ = new std::string("-"); }
-|T_TIMES                                                                        { $$ = new std::string("*"); }
-|T_DIVIDE                                                                       { $$ = new std::string("/"); }
 
 Term:
  Factor                                                                         { $$ = $1; }
-|Term T_TIMES Factor                                                            { $$ = new BinExpr($1,new std::string("*"), $3); }
-|Term T_DIVIDE Factor                                                           { $$ = new BinExpr($1,new std::string("/"),$3); }
+|Term T_TIMES Factor                                                            { $$ = new BinExpr($1, new std::string("*"), $3); }
+|Term T_DIVIDE Factor                                                           { $$ = new BinExpr($1, new std::string("/"), $3); }
 
 
 Factor:
  T_NUMBER                                                                       { $$ = new Number($1); }
 |T_IDENTIFIER                                                                   { $$ = new Variable($1); }
+|T_CLBRACKET BinaryExpression T_CRBRACKET                                       { $$ = $2; }
 
 
 Param:  //for function declaration
  Type T_IDENTIFIER                                                              { $$ = new Param($1, $2, NULL); }
-|Param T_COMMA Type T_IDENTIFIER                                                { $$ = new Param($3, $4, $1); }
+|Type T_IDENTIFIER T_COMMA Param                                                { $$ = new Param($1, $2, $4); }
 
 
 Arg:    //for function calls
- T_IDENTIFIER                                                                   { $$ = new Arg(NULL, $1, NULL); }
-|Type T_IDENTIFIER                                                              { $$ = new Arg($1, $2, NULL); }
-|T_IDENTIFIER T_COMMA Arg                                                       { $$ = new Arg(NULL, $1, $3); }
-|Type T_IDENTIFIER T_COMMA Arg                                                  { $$ = new Arg($1, $2, $4); }
-
+ T_IDENTIFIER                                                                   { $$ = new Arg(NULL, $1, 0, NULL); }
+|Type T_IDENTIFIER                                                              { $$ = new Arg($1, $2, 0, NULL); }
+|T_IDENTIFIER T_COMMA Arg                                                       { $$ = new Arg(NULL, $1, 0, $3); }
+|Type T_IDENTIFIER T_COMMA Arg                                                  { $$ = new Arg($1, $2, 0, $4); }
+|T_NUMBER                                                                       { $$ = new Arg(NULL, NULL, $1, NULL); }
+|T_NUMBER T_COMMA Arg                                                           { $$ = new Arg(NULL, NULL, $1, $3); }
 
 Type:
  T_INT                                                                          { $$ = new std::string("int"); }

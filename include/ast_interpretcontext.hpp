@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <unordered_map>
+#include <map>
 #include <sstream>
 
 class InterpretContext;
@@ -44,6 +45,11 @@ public:
     unsigned int var_no;
     bool reg[32];       //free registers, 0 = free; 1 = occupied
 
+    std::unordered_map<std::string, unsigned int> VariableBindings;
+    std::unordered_map<std::string, unsigned int> GlobalBindings;
+    std::map<std::string, unsigned int> Stack;
+    std::unordered_map<std::string, unsigned int> PassedArg;
+
     /*printing functions*/
     void PrintReg(std::ostream& dst)const{
         dst << "#Occupied Registers" << std::endl;
@@ -54,6 +60,13 @@ public:
             }else{
                 dst << std::endl;
             }
+        }
+    }
+
+    void PrintStack(std::ostream& dst)const{
+        dst << "#Stack: " << std::endl;
+        for(auto it = Stack.begin(); it != Stack.end(); ++it){
+            dst << "#" << it->first << ": " << it->second << std::endl;
         }
     }
     /*getter functions*/
@@ -118,12 +131,6 @@ public:
         }
         return temp;
     };
-
-
-    std::unordered_map<std::string, unsigned int> VariableBindings;
-    std::unordered_map<std::string, unsigned int> GlobalBindings;
-    std::unordered_map<std::string, unsigned int> Stack;
-    std::unordered_map<std::string, unsigned int> PassedArg;
 
     void AddVariable(std::string id, unsigned int val){
         if(FindVariable(id)){
@@ -204,7 +211,7 @@ public:
     void functionLevelDecrement(){functionlevel--;};
     unsigned int functionLevelGet(){return functionlevel;};
 
-    /*Printing functions*/
+    /*Boring Printing functions*/
     void AllocateStack(std::ostream &dst){
         unsigned int size = frame_size;
         dst << "#allocate stack" << std::endl;
