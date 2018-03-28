@@ -1,12 +1,11 @@
-int g(int a, int b, int c, int d, int e, int f){
-    return a+b+c+d+e+f;
+int a = 5;
+int func(){
+    int i = 20;
+    a = 6;
+    return a+i;
 }
+
 int main(){
-    int a = 1;
-    int b = 2;
-    int c = 3;
-    int d = 4;
-    int e = 5;
-    int f = 6;
-    return g(a,b,c,d,e,f);
+    int i = 10;
+    return func();
 }
