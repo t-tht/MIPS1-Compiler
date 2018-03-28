@@ -43,3 +43,4 @@ src/c_parser.tab.cpp
 test
 testfile.c
 ubuntu-xenial-16.04-cloudimg-console.log
+working/*_driver.compile.stderr
