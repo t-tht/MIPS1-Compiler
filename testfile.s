@@ -27,6 +27,11 @@ main:
 	li		$3, 10
 	bne		$2, $3, exit1
 
+	li		$2, 10
+	li		$3, 10
+	bne		$2, $3, exit1
+
+not implemented
 	lw		$2, 116($fp)
 	li		$3, 2
 	addu	$2, $2, $3

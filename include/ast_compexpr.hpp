@@ -41,7 +41,7 @@ public:
 		cntx.RegSetAvailable(temp[1]);
 	}
 	*/
-	if(left != NULL && right != NULL && *op != "||"){
+	if(left != NULL && right != NULL){
 		cntx.RegSetUsed(destloc);
 		left->compile(dst, cntx, destloc);
 		std::vector<unsigned int> temp = cntx.AvailableReg();
@@ -80,18 +80,9 @@ public:
 
 		}else if(*op == "&&"){
 
-		}else{
+		}else if(*op == "||"){
 			dst << "not implemented" << std::endl;
 		}
-		cntx.RegSetAvailable(temp[0]);
-		cntx.RegSetAvailable(destloc);
-	}else if(left != NULL && right != NULL && *op == "||"){
-		cntx.RegSetUsed(destloc);
-		left->compile(dst, cntx, destloc);
-		std::vector<unsigned int> temp = cntx.AvailableReg();
-		cntx.RegSetUsed(temp[0]);
-		right->compile(dst,cntx, temp[0]);
-		//
 		cntx.RegSetAvailable(temp[0]);
 		cntx.RegSetAvailable(destloc);
 	}

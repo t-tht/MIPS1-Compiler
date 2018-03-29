@@ -1485,7 +1485,7 @@ yyreduce:
 
   case 28:
 #line 101 "src/c_parser.y" /* yacc.c:1646  */
-    { (yyval.node) = new LogicalOr((yyvsp[-2].node), (yyvsp[0].node)); }
+    { (yyval.node) = new CompExpr((yyvsp[-2].node), new std::string("||"), (yyvsp[0].node)); }
 #line 1490 "src/c_parser.tab.cpp" /* yacc.c:1646  */
     break;
 

@@ -98,7 +98,7 @@ IfStatement:
 
 CompareExpressionAndOr:
  CompareExpression T_LOGAND CompareExpression                                   { $$ = new CompExpr($1, new std::string("&&"), $3); }
-|CompareExpression T_LOGOR CompareExpression                                    { $$ = new LogicalOr($1, $3); }
+|CompareExpression T_LOGOR CompareExpression                                    { $$ = new CompExpr($1, new std::string("||"), $3); }
 |CompareExpression                                                              { $$ = $1; }
 
 
