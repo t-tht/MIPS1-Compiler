@@ -1,3 +1,6 @@
+int h(){
+    return 20;
+}
 int g(int x){
     return x;
 }
@@ -6,5 +9,5 @@ int func(int x, int y, int z){
 }
 int main(){
     int a = 10;
-    return a + g(a);
+    return func(g(a),a,20);
 }
