@@ -1,9 +1,9 @@
-def a():
-	return 10
-def b():
-	return 1
 def main():
-	return a()+b()
+	x = 10
+	y = 20
+	y=x--
+
+	return y
 
 # Boilerplat
 if __name__ == "__main__":

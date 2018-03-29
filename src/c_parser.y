@@ -28,7 +28,7 @@
 %type <node> FunctionDeclaration Param VariableDeclaration GlobalVariableDeclaration
 %type <node> FunctionCall Arg
 %type <node> Statements IfStatement AssignStatement ReturnStatement WhileStatement
-%type <node> Expression BinaryExpression  CompareExpressionAndOr CompareExpression
+%type <node> Expression BinaryExpression  CompareExpressionAndOr CompareExpression IncrementDecrement
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
 %type <string> CompareOp
@@ -119,6 +119,14 @@ Expression :
  BinaryExpression                                                               { $$ = $1; }
 |Term                                                                           { $$ = $1; }
 |FunctionCall                                                                   { $$ = $1; }
+|IncrementDecrement                                                             { $$ = $1; }
+
+IncrementDecrement:
+ T_IDENTIFIER T_PLUS T_PLUS                                                     { $$ = new IncrementDecrement(new std::string("post"), new std::string("+"), $1); }
+|T_IDENTIFIER T_MINUS T_MINUS                                                   { $$ = new IncrementDecrement(new std::string("post"), new std::string("-"), $1); }
+|T_PLUS T_PLUS T_IDENTIFIER                                                     { $$ = new IncrementDecrement(new std::string("pre"), new std::string("+"), $3); }
+|T_MINUS T_MINUS T_IDENTIFIER                                                   { $$ = new IncrementDecrement(new std::string("pre"), new std::string("-"), $3); }
+
 
 
 FunctionCall:
