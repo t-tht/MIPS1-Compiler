@@ -7,76 +7,39 @@ class Arg;
 
 class Arg : public Node{
 protected:
-    /*
-    std::string* type;
-    std::string* id;
-    double val;
-    NodePtr right;
-    */
     NodePtr expr;
     NodePtr right;
 public:
-    //Arg(std::string* _type, std::string* _id, double _val, NodePtr _right ) : type(_type), id(_id), val(_val), right(_right){};
     Arg(NodePtr _expr, NodePtr _right) : expr(_expr), right(_right){};
     ~Arg(){
         delete expr;
         delete right;
     };
     void translate(std::ostream &dst) const override{
-        /*
-        if(type != NULL){
-            dst<< *type;
+        if(expr != NULL){
+            expr->translate(dst);
         }
-        if(id!=NULL){
-            dst<< *id;
-
-        }
-        else{
-            dst<< val;
-
-        }
-        if(right !=NULL){
-            dst<< ",";
+        if(right != NULL){
+            dst << ", ";
             right->translate(dst);
         }
-*/
     };
     void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-        if(expr != NULL){
-            expr->compile(dst, cntx, destloc);
+        if(destloc < 8){
+            if(expr != NULL){
+                expr->compile(dst, cntx, destloc);
+            }
+        }else if(destloc > 7){
+            if(expr != NULL){
+                expr->compile(dst, cntx, 2);
+            }
+            dst << "\tsw\t\t$" << 2 << ", " << (destloc-8)*4 + 16 << "($sp)" << std::endl;
         }
         destloc++;
         if(right != NULL){
             right->compile(dst, cntx, destloc);
         }
     }
-    /*
-    void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-        if(destloc < 8){
-            if(id != NULL){
-                dst << "\tlw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
-            }else{
-                dst << "\tli\t\t$" << destloc << ", " << val << std::endl;
-            }
-            destloc++;
-            if(right != NULL){
-                right->compile(dst, cntx, destloc);
-            }
-        }else if(destloc > 7){
-            if(id != NULL){
-                dst << "\tlw\t\t$" << 2 << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
-            }else{
-                dst << "\tli\t\t$" << 2 << ", " << val << std::endl;
-            }
-            dst << "\tsw\t\t$" << 2 << ", " << (destloc-8)*4 + 16 << "($sp)" << std::endl;
-            destloc++;
-            if(right != NULL){
-                right->compile(dst, cntx, destloc);
-            }
-        }
-    };
-    */
-
     unsigned int GetContext(InterpretContext &cntx)const override{};
 };
 
