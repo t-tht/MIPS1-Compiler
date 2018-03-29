@@ -2,12 +2,12 @@
 
 	.text
 	.align	2
-	.globl	main
+	.globl	ift
 	.set	nomips16
 	.set	nomicromips
-	.ent	main
-	.type	main, @function
-main:
+	.ent	ift
+	.type	ift, @function
+ift:
 	.frame	$fp, 128, $ra
 	.mask	0x40000000, -4
 	.fmask	0x00000000, 0
@@ -20,25 +20,43 @@ main:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-	li		$2, 10
-	sw		$2, 116($fp)
+	sw		$4, 128($fp)
+	sw		$5, 132($fp)
 #if statement--start
-	lw		$2, 116($fp)
-	li		$3, 10
+	lw		$2, 128($fp)
+	lw		$3, 132($fp)
 	bne		$2, $3, exit1
 
-	li		$2, 10
-	li		$3, 10
-	bne		$2, $3, exit1
+	li		$2, 0
 
-not implemented
-	lw		$2, 116($fp)
-	li		$3, 2
-	addu	$2, $2, $3
-	sw		$2, 116($fp)
+#deallocating stack
+	move	$sp, $fp
+	lw		$fp, 120($sp)
+	lw		$ra, 124($sp)
+	addiu	$sp, $sp, 128
+	j		$ra
+	nop
+
+#Stack : 
+#x: 128
+#y: 132
+#Local Variable : 
 
 exit1:
-	lw		$2, 116($fp)
+	li		$2, 1
+
+#deallocating stack
+	move	$sp, $fp
+	lw		$fp, 120($sp)
+	lw		$ra, 124($sp)
+	addiu	$sp, $sp, 128
+	j		$ra
+	nop
+
+#Stack : 
+#x: 128
+#y: 132
+#Local Variable : 
 
 #deallocating stack
 	move	$sp, $fp
@@ -50,11 +68,11 @@ exit1:
 
 	.set	macro
 	.set	reorder
-	.end	main
-	.size	main, .-main
+	.end	ift
+	.size	ift, .-ift
 #Stack : 
-#x: 116
+#x: 128
+#y: 132
 #Local Variable : 
-#x: 10
 #compile finished
 #Global Variables : 

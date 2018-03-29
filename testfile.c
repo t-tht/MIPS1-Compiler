@@ -1,7 +1,6 @@
-int main(){
-    int x = 10;
-    if(x == 10 || 10 == 10){
-        x = x + 2;
+int ift(int x, int y){
+    if(x==y){
+        return 0;
     }
-    return x;
+    return 1;
 }
