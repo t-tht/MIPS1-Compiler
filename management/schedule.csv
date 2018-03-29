@@ -2,20 +2,20 @@
 Week,    DateRange,          PlannedEffort,  ActualEffort,  OtherDeadlines
 4, 29th Jan -  4th Feb,-,-,-
 5,  5th Feb - 11th Feb,-,-,-
-6, 12th Feb - 18th Feb,C to Python Simple,No work was done due to focus on other deadlines,"db cw, lab oral, distsys cw, CNY"
+6, 12th Feb - 18th Feb,c_translator,No work was done due to focus on other deadlines,"db cw, lab oral, distsys cw, CNY"
 7, 19th Feb - 25th Feb,C to Python Advanced,We were able to brute force an output from the ast to give a pass on the first transaltor issue,
-8, 26th Feb -  4th Feb,"We plan to finish the simple C to Python today as we have a much better idea of how to complete the ast, we will do enough to satsify the testbench for formative",,
-9,  5th Mar - 11th Mar,                  ,              ,
-10, 12th Mar - 18th Mar,                  ,              ,
-11, 19th Mar - 27th Mar,                  ,              ,
-=======,,,,
+8, 26th Feb -  4th March,"We plan to finish the simple C to Python today as we have a much better idea of how to complete the ast, we will do enough to satsify the testbench for formative","We did not finish the C to Python today, due to complications with indentation ","job interviews, databases coursework"
+9,  5th Mar - 11th Mar,"We plan to finish the simple C to Python today as we have a much better idea of how to complete the ast, we will do enough to satsify the testbench for formative","Updated later: We forgot to update the log, we were able to print out something but not a return",
+10, 12th Mar - 18th Mar,                  ,"We forgot to compelte the management report component despite planning to after each session, this is a major loss, however, we did keep organised and have finished the C translator and keeping track of the compiler",Matlab project
+11, 19th Mar - 30th Mar,"Produce for the test_suite and ensure they are tested and work, Add more statements to the compiler",              ,
+Completed properly below,,,,
+,,,,
 Week,    DateRange,          PlannedEffort,  ActualEffort,  OtherDeadlines
-4, 29th Jan -  4th Feb,                  ,              ,
-5,  5th Feb - 11th Feb,                  ,              ,
-6, 12th Feb - 18th Feb,                  ,              ,
-7, 19th Feb - 25th Feb,                  ,              ,
-8, 26th Feb -  4th Feb,                  ,              ,
-9,  5th Mar - 11th Mar,                  ,              ,
-10, 12th Mar - 18th Mar,                  ,              ,
-11, 19th Mar - 27th Mar,                  ,              ,
->>>>>>> 6d6a0352ecc0c4efb6480092bf3e9c76f2f6e7fb,,,,
+4, 29th Jan -  4th Feb,-,-,-
+5,  5th Feb - 11th Feb,-,-,-
+6, 12th Feb - 18th Feb,14,7,"db cw, lab oral, distsys cw, CNY"
+7, 19th Feb - 25th Feb,15,12,
+8, 26th Feb -  4th March,10,14,"job interviews, databases coursework"
+9,  5th Mar - 11th Mar,10,13,
+10, 12th Mar - 18th Mar,13,3,Matlab project
+11, 19th Mar - 30th Mar,20,              ,

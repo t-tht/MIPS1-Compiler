@@ -37,7 +37,8 @@ return									{return T_RETURN;}
 int										{return T_INT;}
 void									{return T_VOID;}
 if                                      {return T_IF;}
-
+else                                    {return T_ELSE;}
+while                                   {return T_WHILE;}
 [0-9]+([.][0-9]*)?					{yylval.number=strtod(yytext, 0); return T_NUMBER;}
 [a-z]+									{yylval.string=new std::string(yytext); return T_IDENTIFIER;}
 

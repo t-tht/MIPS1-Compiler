@@ -2,12 +2,12 @@
 
 	.text
 	.align	2
-	.globl	main
+	.globl	function
 	.set	nomips16
 	.set	nomicromips
-	.ent	main
-	.type	main, @function
-main:
+	.ent	function
+	.type	function, @function
+function:
 	.frame	$fp, 128, $ra
 	.mask	0x40000000, -4
 	.fmask	0x00000000, 0
@@ -20,20 +20,8 @@ main:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
+#compiling function body
 	li		$2, 10
-	sw		$2, 116($fp)
-loop1:
-	lw		$2, 116($fp)
-	li		$3, 10
-	bne		$2, $3, exit1
-
-	lw		$2, 116($fp)
-	li		$3, 2
-	addu	$2, $2, $3
-	sw		$2, 116($fp)
-	b		loop1
-exit1:
-	lw		$2, 116($fp)
 
 #deallocating stack
 	move	$sp, $fp
@@ -45,11 +33,9 @@ exit1:
 
 	.set	macro
 	.set	reorder
-	.end	main
-	.size	main, .-main
+	.end	function
+	.size	function, .-function
 #Stack : 
-#x: 116
 #Local Variable : 
-#x: 10
 #compile finished
 #Global Variables : 

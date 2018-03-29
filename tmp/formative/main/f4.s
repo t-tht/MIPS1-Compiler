@@ -20,20 +20,26 @@ main:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
+#compiling function body
+#binary expression--start
+#binary expression--start
 	li		$2, 10
-	sw		$2, 116($fp)
-loop1:
-	lw		$2, 116($fp)
+#binary expression--start
 	li		$3, 10
-	bne		$2, $3, exit1
-
-	lw		$2, 116($fp)
-	li		$3, 2
+	li		$8, 2
+	mult	$3, $8
+	mflo	$3
+#binary expression--end
 	addu	$2, $2, $3
-	sw		$2, 116($fp)
-	b		loop1
-exit1:
-	lw		$2, 116($fp)
+#binary expression--end
+#binary expression--start
+	li		$2, 4
+	li		$3, 4
+	div	$2, $3
+	mflo	$2
+#binary expression--end
+	subu	$2, $2, $2
+#binary expression--end
 
 #deallocating stack
 	move	$sp, $fp
@@ -48,8 +54,6 @@ exit1:
 	.end	main
 	.size	main, .-main
 #Stack : 
-#x: 116
 #Local Variable : 
-#x: 10
 #compile finished
 #Global Variables : 

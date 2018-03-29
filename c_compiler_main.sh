@@ -30,7 +30,7 @@ for i in ${input_dir}/*.c ; do
     if [[ ${have_compiler} -eq 0 ]] ; then
 
         # Run the DUT MIPS version
-        $compiler --compile $i -o ${working}/$base.s
+        $compiler -S $i -o ${working}/$base.s
         mips-linux-gnu-gcc -static ${working}/$base.s -o ${working}/$base-s-got
 
         #run the mips Binary

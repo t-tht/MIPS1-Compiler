@@ -2,6 +2,7 @@
 #include "../include/ast_interpretcontext.hpp"
 #include <iostream>
 int tab=0;
+int jump=0;
 std::vector<std::string> globalvars;
 
 int main(int argc, char* argv[]){

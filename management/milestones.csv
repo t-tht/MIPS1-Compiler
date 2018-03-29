@@ -1,5 +1,29 @@
-MilestoneID,             Dependencies, EstimatedEffort, Lead,  Completed, Description
+MilestoneID,Dependencies, EstimatedEffort, Lead,  Completed, Description
 DefineInitialMilestones,             ,1,    ?,           , Come up with initial milestones for getting started
-C to python simple,,12,tht216,,Compiler simple C examples into Python code
+C to python simple,,12,tht216,15th March,Compiler simple C examples into Python code
 C to python advanced,,16,kr1116,,Include more tokens from C to Python code
 C to python simple,,6,th216,,"We have found the ast structure, implementation fo the AST.hpp"
+"Below was a very poor attempt to scrape back on our management tactics, we remembered but forgot after every meeting but kept track using messages and github descriptions to keep track- this should have been filled weekly, first two were",,,,,
+c_translator_filestructure,,,kr1116,,Produce necessary file system to allow translation from C to Python
+c_translator_ast,,,kr1116,,Produce an abstract syntax structure that includes node
+c_translator_return,c_translator_ast,5,th216,13c10808ff7b898175e0f7cbc25297fbeca3499a,Produce code for the translate function to allow parser to pass on file
+c_translator_statementseq,c_translator _return,6,kr1116,0b0c6204b451999094cd7931a2b90cafd749e2b8,Produce the structure to allow several statements to be parsed
+c_translator_binexpression,c_translator_statement,5,kr1116,9ada5b53fade2df5b5021e3c6e8181e83e65e879,Produce stucture to allow it to parser
+c_translator_funcdec,c_translator _return,7,th216,4333ba6a8ed599ef98204f5e2e6497a27e54d609,Change parser file so that it will dynamically allow other kinds of function declarations
+c_translator_multfuncdec,c_translator_funcdec,5,th216,4333ba6a8ed599ef98204f5e2e6497a27e54d609,Allow consecutive function declarations and variable declarations
+c_translator_assignment/block,c_translator_funcdec,4,kr1116,f2f88bb931bd4440b32bb76d8e83d007724f7cc7,Implement class for assignment
+c_translator_complete,,3,kr1116,efe2e96834d95c95c468a3b8ef3f5809c5601b15,Ensure everything is printing
+c_translator_formative,,,kr1116,2ffc99280b2a658bf298915e08a7093c7c25e294,Ensuring printing is in appropiate format to pass the formative
+c_compiler_context,,1,th216,dcd6e9a49ca27981a4f612b2e50eaa1381d1a10c,Create context files with relevant properties to store variable and registers
+c_compiler_testsuite,,,kr1116,,Create test suite files to test the compiler
+c_compiler_printsomething,,,kr1116,,Produce something to print the file
+c_compiler_return,c_compiler_printsomething,,th216,1bc6fe85a121d8c341191395170c48f4efeb7a8a,Same return 10 test done with translator
+c_compiler_stack,,,th216,a38318e27b024062f25ac286f78343228f18b7cf,Implement stack using context function
+c_compiler_funcdec,,,th216,ce3199251276c369680e8024ac8093f3d400f6c4,Implementing function declaration
+c_compiler_functioncall,c_compiler_stack,,th216,,
+c_compiler_variablebindings,,,kr1116,d95ef789e48c27e04a9bef72d9efaadf53ec0a8a,Dynamic stack that will also bind variables
+c_compiler_expression,,,th216,7fa1c5e7a30e7d9ecc7f949e40adfe3e693634a2,Pass tests with operator precedence
+c_compiler_while,,,,,Enable while statements to be inputted
+c_compiler_if,,,,,
+c_compiler_for,,,,,
+c_compiler_complete,,,,,

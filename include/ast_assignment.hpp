@@ -29,7 +29,7 @@ public:
 
     };
     void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-        dst << "#assignment -- start" << std::endl;
+        // dst << "#assignment -- start" << std::endl;
         if(cntx.IsAGlobal(*id)){
             dst << "\tlui\t\t$" << destloc << ", %hi(" << *id << ")" << std::endl;
             cntx.RegSetUsed(destloc);
@@ -47,7 +47,7 @@ public:
             }
             dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
         }
-        dst << "#assignment -- end" << std::endl;
+        // dst << "#assignment -- end" << std::endl;
     };
 
     unsigned int GetContext(InterpretContext &cntx) const override{

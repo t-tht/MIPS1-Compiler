@@ -26,7 +26,7 @@ public:
 	};
 
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-		dst << "#binary expression--start" << std::endl;
+		// dst << "#binary expression--start" << std::endl;
 		if((left != NULL) && (right != NULL)){
 			cntx.RegSetUsed(destloc);
 			if(*op == "+"){
@@ -76,7 +76,7 @@ public:
 				cntx.RegSetAvailable(temp[0]);
 			}
 		}
-		dst << "#binary expression--end" << std::endl;
+		// dst << "#binary expression--end" << std::endl;
 	};
 
 

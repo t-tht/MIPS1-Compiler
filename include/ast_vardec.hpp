@@ -31,14 +31,14 @@ public:
 
 	}
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
-		dst << "#variable declaration--start" << std::endl;
+		// dst << "#variable declaration--start" << std::endl;
 		if(Expr != NULL){
 			Expr->compile(dst, cntx, destloc);
 		}else{
 			dst << "\tli\t\t$" << destloc << ", 0" << std::endl;
 		}
 		dst << "\tsw\t\t$" << destloc << ", " << cntx.FindOnStack(*id) << "($fp)" << std::endl;
-		dst << "#variable declaration--end" << std::endl;
+		// dst << "#variable declaration--end" << std::endl;
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{
 		unsigned int exprv;

@@ -73,7 +73,7 @@ public:
 		}
 
 		if(block != NULL){
-			dst << "#compiling function body" << std::endl;
+			// dst << "#compiling function body" << std::endl;
 			block->compile(dst, cntx, destloc);
 		}
 
