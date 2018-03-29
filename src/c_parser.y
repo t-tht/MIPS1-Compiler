@@ -92,7 +92,7 @@ AssignStatement:
 
 
 IfStatement:
- T_IF T_LBRACKET CompareExpression T_RBRACKET Block                             { $$ = new IfStatement($3, $5); }
+ T_IF T_LBRACKET CompareExpression T_RBRACKET Block                             { $$ = new IfStatement($3, $5, NULL); }
 |T_IF T_LBRACKET CompareExpression T_RBRACKET Block T_ELSE Block                { $$ = new IfStatement($3, $5, $7); }
 
 
@@ -119,7 +119,7 @@ Expression :
  BinaryExpression                                                               { $$ = $1; }
 |Term                                                                           { $$ = $1; }
 |FunctionCall                                                                   { $$ = $1; }
-|IncrementDecrement                                                             { $$ = $1; }
+//|IncrementDecrement                                                             { $$ = $1; }
 
 IncrementDecrement:
  T_IDENTIFIER T_PLUS T_PLUS                                                     { $$ = new IncrementDecrement(new std::string("post"), new std::string("+"), $1); }

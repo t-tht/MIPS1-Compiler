@@ -9,9 +9,8 @@ class IfStatement : public Node{
 	protected:
 		const NodePtr cond;
 		const NodePtr body;
-        const NodePtr body1=NULL;
+        const NodePtr body1;
 	public:
-		IfStatement(const NodePtr _cond, const NodePtr _body) : cond(_cond), body(_body){};
         IfStatement(const NodePtr _cond, const NodePtr _body, const NodePtr _body1) : cond(_cond), body(_body), body1(_body1){};
 		~IfStatement(){
 			delete cond;
