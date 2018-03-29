@@ -90,7 +90,8 @@ extern int yydebug;
     T_INCREMENT = 284,
     T_DECREMENT = 285,
     T_ADD = 286,
-    T_VOID = 287
+    T_VOID = 287,
+    T_FOR = 288
   };
 #endif
 
@@ -105,7 +106,7 @@ union YYSTYPE
   double number;
   std::string *string;
 
-#line 109 "src/c_parser.tab.hpp" /* yacc.c:1909  */
+#line 110 "src/c_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

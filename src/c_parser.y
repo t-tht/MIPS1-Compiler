@@ -22,15 +22,15 @@
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS
 %token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS T_LESSTHANEQ T_MORETHANEQ T_CONDEQ T_NOTEQ T_LOGAND T_LOGOR T_IF T_MORETHAN T_LESSTHAN
 %token T_NUMBER T_IDENTIFIER T_RETURN T_INT T_ELSE T_WHILE T_INCREMENT T_DECREMENT
-%token T_ADD T_VOID
+%token T_ADD T_VOID T_FOR
 
 %type <node> Program Block BlockList Term Factor
 %type <node> FunctionDeclaration Param VariableDeclaration GlobalVariableDeclaration
 %type <node> FunctionCall Arg
-%type <node> Statements IfStatement AssignStatement ReturnStatement WhileStatement
+%type <node> Statements IfStatement AssignStatement ReturnStatement WhileStatement ForStatement
 %type <node> Expression BinaryExpression  CompareExpressionAndOr CompareExpression IncrementDecrement
 %type <number> T_NUMBER
-%type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
+%type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID T_FOR
 %type <string> CompareOp
 
 %start ROOT
@@ -79,9 +79,13 @@ ReturnStatement                                                                 
 |AssignStatement                                                                { $$ = $1; }
 |IfStatement                                                                    { $$ = $1; }
 |WhileStatement                                                                 { $$ = $1; }
+|ForStatement                                                                 { $$ = $1; }
 
 WhileStatement:
 T_WHILE T_LBRACKET CompareExpressionAndOr T_RBRACKET Block                           { $$= new WhileStatement($3, $5); }
+
+ForStatement:
+T_FOR T_LBRACKET VariableDeclaration T_SEMICOLON CompareExpression T_SEMICOLON IncrementDecrement T_SEMICOLON T_RBRACKET Block                           { $$= new ForStatement($3, $5, $7, $10); }
 
 ReturnStatement:
  T_RETURN Expression T_SEMICOLON                                                { $$ = new ReturnStat($2); }
