@@ -2,96 +2,6 @@
 
 	.text
 	.align	2
-	.globl	a
-	.set	nomips16
-	.set	nomicromips
-	.ent	a
-	.type	a, @function
-a:
-	.frame	$fp, 128, $ra
-	.mask	0x40000000, -4
-	.fmask	0x00000000, 0
-	.set	noreorder
-	.set	nomacro
-
-#allocate stack
-	addiu	$sp, $sp, -128
-	sw		$ra, 124($sp)
-	sw		$fp, 120($sp)
-	move	$fp, $sp
-
-	li		$2, 10
-
-#deallocating stack
-	move	$sp, $fp
-	lw		$fp, 120($sp)
-	lw		$ra, 124($sp)
-	addiu	$sp, $sp, 128
-	j		$ra
-	nop
-
-
-#deallocating stack
-	move	$sp, $fp
-	lw		$fp, 120($sp)
-	lw		$ra, 124($sp)
-	addiu	$sp, $sp, 128
-	j		$ra
-	nop
-
-	.set	macro
-	.set	reorder
-	.end	a
-	.size	a, .-a
-
-
-	.text
-	.align	2
-	.globl	b
-	.set	nomips16
-	.set	nomicromips
-	.ent	b
-	.type	b, @function
-b:
-	.frame	$fp, 128, $ra
-	.mask	0x40000000, -4
-	.fmask	0x00000000, 0
-	.set	noreorder
-	.set	nomacro
-
-#allocate stack
-	addiu	$sp, $sp, -128
-	sw		$ra, 124($sp)
-	sw		$fp, 120($sp)
-	move	$fp, $sp
-
-	li		$2, 1
-
-#deallocating stack
-	move	$sp, $fp
-	lw		$fp, 120($sp)
-	lw		$ra, 124($sp)
-	addiu	$sp, $sp, 128
-	j		$ra
-	nop
-
-
-#deallocating stack
-	move	$sp, $fp
-	lw		$fp, 120($sp)
-	lw		$ra, 124($sp)
-	addiu	$sp, $sp, 128
-	j		$ra
-	nop
-
-	.set	macro
-	.set	reorder
-	.end	b
-	.size	b, .-b
-
-
-	.text
-	.align	2
 	.globl	main
 	.set	nomips16
 	.set	nomicromips
@@ -110,13 +20,15 @@ main:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-	jal		a
-	nop
-	move	$3, $2
-	jal		b
-	nop
-	move	$2, $2
-	addu	$2, $2, $3
+	li		$2, 10
+	sw		$2, 116($fp)
+	li		$2, 20
+	sw		$2, 112($fp)
+	lw		$2, 116($fp)
+	addiu	$2, $2, -1
+	sw		$2, 116($fp)
+	sw		$2, 112($fp)
+	lw		$2, 112($fp)
 
 #deallocating stack
 	move	$sp, $fp
