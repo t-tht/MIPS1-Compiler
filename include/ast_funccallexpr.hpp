@@ -20,7 +20,7 @@ public:
 		dst << *id << "(";
 		if(arg != NULL){
 			arg->translate(dst);
-        }
+		}
 		dst << ")";
 
 	};
@@ -29,8 +29,11 @@ public:
 			arg->GetContext(cntx);
 			arg->compile(dst,cntx,4);
 		}
-		dst << "\tjal\t" << *id << std::endl;
+		dst << "\tjal\t\t" << *id << std::endl;
 		dst << "\tnop" << std::endl;
+		if(destloc != 2){
+			dst << "\tmove\t$" << destloc << ", $2" << std::endl;
+		}
 
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{

@@ -28,53 +28,33 @@ public:
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
 		// dst << "#binary expression--start" << std::endl;
 		if((left != NULL) && (right != NULL)){
+			left->compile(dst, cntx, destloc);
 			cntx.RegSetUsed(destloc);
+			std::vector<unsigned int> temp = cntx.AvailableReg();
+			right->compile(dst, cntx, temp[0]);
+			cntx.RegSetUsed(temp[0]);
+
 			if(*op == "+"){
 
-
-				cntx.RegSetUsed(destloc);
-				left->compile(dst, cntx, destloc);
-
-				std::vector<unsigned int> temp = cntx.AvailableReg();
-				cntx.RegSetUsed(temp[0]);
-				right->compile(dst, cntx, temp[0]);
-
-
 				dst << "\taddu\t$" << destloc << ", $" << destloc << ", $" << temp[0] << std::endl;
-				cntx.RegSetAvailable(temp[0]);
-				cntx.RegSetAvailable(destloc);
+
 			}else if(*op == "-"){
 
-				left->compile(dst, cntx, destloc);
-				std::vector<unsigned int> temp = cntx.AvailableReg();
-				cntx.RegSetUsed(temp[0]);
-				right->compile(dst, cntx, temp[0]);
 				dst << "\tsubu\t$" << destloc << ", $" << destloc << ", $" << temp[0] << std::endl;
-				cntx.RegSetAvailable(destloc);
-				cntx.RegSetAvailable(temp[0]);
 
 			}else if(*op == "*"){
 
-				left->compile(dst, cntx, destloc);
-				std::vector<unsigned int> temp = cntx.AvailableReg();
-				cntx.RegSetUsed(temp[0]);
-				right->compile(dst, cntx, temp[0]);
 				dst << "\tmult\t$" << destloc << ", $" << temp[0] << std::endl;
 				dst << "\tmflo\t$" << destloc << std::endl;
-				cntx.RegSetAvailable(destloc);
-				cntx.RegSetAvailable(temp[0]);
 
 			}else if(*op == "/"){
 
-				left->compile(dst, cntx, destloc);
-				std::vector<unsigned int> temp = cntx.AvailableReg();
-				cntx.RegSetUsed(temp[0]);
-				right->compile(dst, cntx, temp[0]);
 				dst << "\tdiv\t$" << destloc << ", $" << temp[0] << std::endl;
 				dst << "\tmflo\t$" << destloc << std::endl;
-				cntx.RegSetAvailable(destloc);
-				cntx.RegSetAvailable(temp[0]);
+
 			}
+			cntx.RegSetAvailable(temp[0]);
+			cntx.RegSetAvailable(destloc);
 		}
 		// dst << "#binary expression--end" << std::endl;
 	};
