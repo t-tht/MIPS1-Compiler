@@ -20,16 +20,23 @@ main:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-	li		$2, 10
+	li		$2, 20
 	sw		$2, 116($fp)
+	li		$2, 10
+	sw		$2, 112($fp)
 loop1:
 	lw		$2, 116($fp)
+	li		$3, 20
+	bne		$2, $3, exit1
+
+	lw		$2, 112($fp)
 	li		$3, 10
 	bne		$2, $3, exit1
 
 	lw		$2, 116($fp)
 	li		$3, 2
-	addu	$2, $2, $3
+	div	$2, $3
+	mflo	$2
 	sw		$2, 116($fp)
 	b		loop1
 exit1:
@@ -49,7 +56,9 @@ exit1:
 	.size	main, .-main
 #Stack : 
 #x: 116
+#y: 112
 #Local Variable : 
-#x: 10
+#y: 10
+#x: 20
 #compile finished
 #Global Variables : 

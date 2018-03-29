@@ -28,7 +28,7 @@
 %type <node> FunctionDeclaration Param VariableDeclaration GlobalVariableDeclaration
 %type <node> FunctionCall Arg
 %type <node> Statements IfStatement AssignStatement ReturnStatement WhileStatement
-%type <node> Expression BinaryExpression CompareExpression
+%type <node> Expression BinaryExpression  CompareExpressionAndOr CompareExpression
 %type <number> T_NUMBER
 %type <string> T_IDENTIFIER T_RETURN T_INT T_ADD Type T_VOID
 %type <string> CompareOp
@@ -42,7 +42,7 @@ ROOT:
 
 
 Program:
-FunctionDeclaration                                                            { $$ = new Program($1, NULL); }
+ FunctionDeclaration                                                            { $$ = new Program($1, NULL); }
 |FunctionDeclaration Program 							                        { $$ = new Program($1, $2); }
 |GlobalVariableDeclaration                                                      { $$ = new Program($1, NULL); }
 |GlobalVariableDeclaration Program                                              { $$ = new Program($1, $2); }
@@ -81,7 +81,7 @@ ReturnStatement                                                                 
 |WhileStatement                                                                 { $$ = $1; }
 
 WhileStatement:
-T_WHILE T_LBRACKET CompareExpression T_RBRACKET Block                           { $$= new WhileStatement($3, $5); }
+T_WHILE T_LBRACKET CompareExpressionAndOr T_RBRACKET Block                           { $$= new WhileStatement($3, $5); }
 
 ReturnStatement:
  T_RETURN Expression T_SEMICOLON                                                { $$ = new ReturnStat($2); }
@@ -96,8 +96,15 @@ IfStatement:
 |T_IF T_LBRACKET CompareExpression T_RBRACKET Block T_ELSE Block                { $$ = new IfStatement($3, $5, $7); }
 
 
+CompareExpressionAndOr:
+ CompareExpression T_LOGAND CompareExpression                                   { $$ = new CompExpr($1, new std::string("&&"), $3); }
+|CompareExpression T_LOGOR CompareExpression                                    { $$ = new CompExpr($1, new std::string("||"), $3); }
+|CompareExpression                                                              { $$ = $1; }
+
+
 CompareExpression:
  Expression CompareOp Expression                                                { $$ = new CompExpr($1, $2, $3); }
+|CompareExpressionAndOr                                                         { $$ = $1;}
 
 
 CompareOp:
@@ -105,8 +112,6 @@ CompareOp:
 |T_MORETHANEQ                                                                   { $$ = new std::string("=>"); }
 |T_CONDEQ                                                                       { $$ = new std::string("=="); }
 |T_NOTEQ                                                                        { $$ = new std::string("!="); }
-|T_LOGAND                                                                       { $$ = new std::string("&&"); }
-|T_LOGOR                                                                        { $$ = new std::string("||"); }
 |T_MORETHAN                                                                     { $$ = new std::string(">"); }
 |T_LESSTHAN                                                                     { $$ = new std::string("<"); }
 

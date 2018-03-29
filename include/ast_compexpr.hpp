@@ -41,29 +41,56 @@ public:
 		cntx.RegSetAvailable(temp[1]);
 	}
 	*/
-	if(left != NULL && right != NULL){
+	if(left != NULL && right != NULL && *op != "||"){
 		cntx.RegSetUsed(destloc);
 		left->compile(dst, cntx, destloc);
 		std::vector<unsigned int> temp = cntx.AvailableReg();
 		cntx.RegSetUsed(temp[0]);
 		right->compile(dst,cntx, temp[0]);
+
+		//destloc = left			//temp[0] = right
+
 		if(*op == "=="){
 
 			dst << "\tbne\t\t$" << destloc << ", $" << temp[0] << ", exit" << jump << std::endl << std::endl;
 
 		}else if(*op == "!="){
 
+			dst << "\tbeq\t\t$" << destloc << ", $" << temp[0] << ", exit" << jump << std::endl << std::endl;
+
 		}else if(*op == "<"){
 
-			dst << "\tbge\t$" << temp[0] << ", $" << temp[1] << ",link"<< ++jump<< std::endl;
+			dst << "\tbge\t$" << destloc << ", $" << temp[0] << ", exit"<< jump<< std::endl;
 
 		}else if(*op == "<="){
 
+  			dst << "\tslt\t\t$" << temp[0] << ", $" << temp[0] << ", $" << destloc << std::endl;
+			dst << "\tbne\t\t$" << temp[0] << ", $0, exit" << jump << std::endl << std::endl;
+
 		}else if(*op == ">"){
+
+			dst << "\tslt\t\t$" << temp[0] << ", $" << temp[0] << ", $" << destloc << std::endl;
+			dst << "\tbeq\t\t$" << temp[0] << ", $0, exit" << jump << std::endl << std::endl;
 
 		}else if(*op == ">="){
 
+			dst << "\tslt\t\t$" << temp[0] << ", $" << destloc << ", $" << temp[0] << std::endl;
+			dst << "\tbne\t\t$" << temp[0] << ", $0, exit" << jump << std::endl << std::endl;
+
+		}else if(*op == "&&"){
+
+		}else{
+			dst << "not implemented" << std::endl;
 		}
+		cntx.RegSetAvailable(temp[0]);
+		cntx.RegSetAvailable(destloc);
+	}else if(left != NULL && right != NULL && *op == "||"){
+		cntx.RegSetUsed(destloc);
+		left->compile(dst, cntx, destloc);
+		std::vector<unsigned int> temp = cntx.AvailableReg();
+		cntx.RegSetUsed(temp[0]);
+		right->compile(dst,cntx, temp[0]);
+		//
 		cntx.RegSetAvailable(temp[0]);
 		cntx.RegSetAvailable(destloc);
 	}
