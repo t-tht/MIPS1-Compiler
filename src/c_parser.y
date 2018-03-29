@@ -21,7 +21,7 @@
 }
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS
 %token T_LBRACKET T_RBRACKET T_CLBRACKET T_CRBRACKET T_SEMICOLON T_COMMA T_EQUALS T_LESSTHANEQ T_MORETHANEQ T_CONDEQ T_NOTEQ T_LOGAND T_LOGOR T_IF T_MORETHAN T_LESSTHAN
-%token T_NUMBER T_IDENTIFIER T_RETURN T_INT T_ELSE T_WHILE
+%token T_NUMBER T_IDENTIFIER T_RETURN T_INT T_ELSE T_WHILE T_INCREMENT T_DECREMENT
 %token T_ADD T_VOID
 
 %type <node> Program Block BlockList Term Factor
@@ -119,13 +119,13 @@ Expression :
  BinaryExpression                                                               { $$ = $1; }
 |Term                                                                           { $$ = $1; }
 |FunctionCall                                                                   { $$ = $1; }
-//|IncrementDecrement                                                             { $$ = $1; }
+|IncrementDecrement                                                             { $$ = $1; }
 
 IncrementDecrement:
- T_IDENTIFIER T_PLUS T_PLUS                                                     { $$ = new IncrementDecrement(new std::string("post"), new std::string("+"), $1); }
-|T_IDENTIFIER T_MINUS T_MINUS                                                   { $$ = new IncrementDecrement(new std::string("post"), new std::string("-"), $1); }
-|T_PLUS T_PLUS T_IDENTIFIER                                                     { $$ = new IncrementDecrement(new std::string("pre"), new std::string("+"), $3); }
-|T_MINUS T_MINUS T_IDENTIFIER                                                   { $$ = new IncrementDecrement(new std::string("pre"), new std::string("-"), $3); }
+ T_IDENTIFIER T_INCREMENT                                                     { $$ = new IncrementDecrement(new std::string("post"), new std::string("+"), $1); }
+|T_IDENTIFIER T_DECREMENT                                                   { $$ = new IncrementDecrement(new std::string("post"), new std::string("-"), $1); }
+|T_INCREMENT T_IDENTIFIER                                                     { $$ = new IncrementDecrement(new std::string("pre"), new std::string("+"), $2); }
+|T_DECREMENT T_IDENTIFIER                                                   { $$ = new IncrementDecrement(new std::string("pre"), new std::string("-"), $2); }
 
 
 
