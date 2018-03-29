@@ -49,6 +49,7 @@ public:
 		right->compile(dst,cntx, temp[0]);
 
 		//destloc = left			//temp[0] = right
+		// all jumps to false label
 
 		if(*op == "=="){
 
