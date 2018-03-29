@@ -40,11 +40,23 @@ class IfStatement : public Node{
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
             dst << "#if statement--start" << std::endl;
-			jump++;
+            if(body1==NULL){
+            jump++;
             cond->compile(dst, cntx, destloc);
             body->compile(dst, cntx, destloc);
             dst<< "\nexit"<< jump << ":\n";
             jump--;
+            }
+            if(body1!=NULL){
+                jump++;
+                cond->compile(dst, cntx, destloc);
+                body->compile(dst, cntx, destloc);
+                dst<< "\tj\tescape"<< jump << "\n";
+                dst<< "\nexit"<< jump << ":\n";
+                body1->compile(dst,cntx,destloc);
+                dst<< "\nescape"<< jump << ":\n";
+                jump--;
+            }
 		};
 		unsigned int GetContext(InterpretContext &cntx) const override{return 0;};
 };

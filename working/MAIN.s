@@ -30,8 +30,6 @@ main:
 	j		$ra
 	nop
 
-#Stack : 
-#Local Variable : 
 
 #deallocating stack
 	move	$sp, $fp
@@ -45,7 +43,5 @@ main:
 	.set	reorder
 	.end	main
 	.size	main, .-main
-#Stack : 
-#Local Variable : 
 #compile finished
 #Global Variables : 

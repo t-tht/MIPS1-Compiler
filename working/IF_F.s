@@ -37,10 +37,6 @@ iff:
 	j		$ra
 	nop
 
-#Stack : 
-#x: 128
-#y: 132
-#Local Variable : 
 
 exit1:
 	lw		$2, 132($fp)
@@ -53,10 +49,6 @@ exit1:
 	j		$ra
 	nop
 
-#Stack : 
-#x: 128
-#y: 132
-#Local Variable : 
 
 #deallocating stack
 	move	$sp, $fp
@@ -70,9 +62,5 @@ exit1:
 	.set	reorder
 	.end	iff
 	.size	iff, .-iff
-#Stack : 
-#x: 128
-#y: 132
-#Local Variable : 
 #compile finished
 #Global Variables : 

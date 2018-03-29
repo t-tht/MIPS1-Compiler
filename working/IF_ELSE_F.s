@@ -36,11 +36,21 @@ ifelsef:
 	j		$ra
 	nop
 
-#Stack : 
-#x: 128
-#Local Variable : 
+	j	escape1
 
 exit1:
+	li		$2, 1
+
+#deallocating stack
+	move	$sp, $fp
+	lw		$fp, 120($sp)
+	lw		$ra, 124($sp)
+	addiu	$sp, $sp, 128
+	j		$ra
+	nop
+
+
+escape1:
 
 #deallocating stack
 	move	$sp, $fp
@@ -54,8 +64,5 @@ exit1:
 	.set	reorder
 	.end	ifelsef
 	.size	ifelsef, .-ifelsef
-#Stack : 
-#x: 128
-#Local Variable : 
 #compile finished
 #Global Variables : 

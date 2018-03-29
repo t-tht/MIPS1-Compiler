@@ -1,9 +1,8 @@
 def main():
-	x = 10
-	y = 20
-	y=x--
-
-	return y
+	if(2<3):
+		return 4
+else:
+		return 7
 
 # Boilerplat
 if __name__ == "__main__":
