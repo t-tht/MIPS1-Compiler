@@ -1,7 +1,10 @@
-int main(){
-    int x = 10;
-    if(x == 10 || 10 == 10){
-        x = x + 2;
-    }
+int g(int x){
     return x;
+}
+int func(int x, int y, int z){
+    return x+y+z;
+}
+int main(){
+    int a = 10;
+    return a + g(a);
 }
