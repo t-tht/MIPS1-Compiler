@@ -1,13 +1,9 @@
-int h(){
-    return 20;
+int a(int x){
+    return x + 1;
 }
-int g(int x){
-    return x;
-}
-int func(int x, int y, int z){
-    return x+y+z;
+int b(int x){
+    return a(x + 1);
 }
 int main(){
-    int a = 10;
-    return func(g(a),a,20);
+    return b(2)+ a(2);
 }

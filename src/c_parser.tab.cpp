@@ -478,7 +478,7 @@ static const yytype_uint8 yyrline[] =
       80,    81,    84,    87,    91,    95,    96,   100,   101,   102,
      106,   107,   111,   112,   113,   114,   115,   116,   119,   120,
      121,   125,   126,   130,   131,   132,   136,   137,   138,   142,
-     143,   144,   145,   148,   149,   153,   154,   164,   165
+     143,   144,   145,   148,   149,   153,   154,   158,   159
 };
 #endif
 
@@ -1653,13 +1653,13 @@ yyreduce:
     break;
 
   case 57:
-#line 164 "src/c_parser.y" /* yacc.c:1646  */
+#line 158 "src/c_parser.y" /* yacc.c:1646  */
     { (yyval.string) = new std::string("int"); }
 #line 1659 "src/c_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 165 "src/c_parser.y" /* yacc.c:1646  */
+#line 159 "src/c_parser.y" /* yacc.c:1646  */
     { (yyval.string) = new std::string("void"); }
 #line 1665 "src/c_parser.tab.cpp" /* yacc.c:1646  */
     break;
@@ -1893,7 +1893,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 168 "src/c_parser.y" /* yacc.c:1906  */
+#line 162 "src/c_parser.y" /* yacc.c:1906  */
 
 const Node *g_root; // Definition of variable (to match declaration earlier)
 
