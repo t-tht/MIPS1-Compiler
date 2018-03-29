@@ -44,3 +44,5 @@ test
 testfile.c
 ubuntu-xenial-16.04-cloudimg-console.log
 *.log
+testfile.s
+testfile.py

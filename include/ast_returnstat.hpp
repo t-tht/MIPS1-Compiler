@@ -29,10 +29,10 @@ public:
         //return
         dst << "\t" << "j\t\t$ra" << std::endl;
         dst << "\t" << "nop" << std::endl << std::endl;
-        
-        cntx.PrintStack(dst);
-        cntx.PrintVariable(dst);
-        
+
+		// cntx.PrintStack(dst);
+        // cntx.PrintVariable(dst);
+
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{
 		int exprv = 0;

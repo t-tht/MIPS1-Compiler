@@ -89,8 +89,8 @@ public:
 		dst << "\t" << ".end\t" << *id << std::endl;
 		dst << "\t" << ".size\t" << *id << ", .-" << *id << std::endl;
 
-		cntx.PrintStack(dst);
-		cntx.PrintVariable(dst);
+		// cntx.PrintStack(dst);
+		// cntx.PrintVariable(dst);
 
 	};
 
