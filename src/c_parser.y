@@ -93,7 +93,7 @@ AssignStatement:
 
 IfStatement:
  T_IF T_LBRACKET CompareExpression T_RBRACKET Block                             { $$ = new IfStatement($3, $5); }
-|T_IF T_LBRACKET CompareExpression T_RBRACKET Block T_ELSE Block                            { $$ = new IfStatement($3, $5, $7); }
+|T_IF T_LBRACKET CompareExpression T_RBRACKET Block T_ELSE Block                { $$ = new IfStatement($3, $5, $7); }
 
 
 CompareExpression:

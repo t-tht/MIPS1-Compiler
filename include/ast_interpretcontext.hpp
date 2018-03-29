@@ -27,6 +27,7 @@ public:
         arg_no = 0;
         var_no = 0;
         param_no = 0;
+        jump = 0;
     };
     InterpretContext(InterpretContext &cntx){
         for(int i = 0; i < 32; i++){
@@ -41,6 +42,7 @@ public:
         arg_no = 0;
         var_no = 0;
         param_no = 0;
+        jump = 0;
         GlobalBindings = cntx.GlobalBindings;
     }
     ~InterpretContext(){};
@@ -53,13 +55,30 @@ public:
     unsigned int arg_no;
     unsigned int param_no;
     unsigned int var_no;
+    unsigned int jump;
     bool reg[32];       //free registers, 0 = free; 1 = occupied
 
     std::unordered_map<std::string, unsigned int> VariableBindings;
     std::unordered_map<std::string, unsigned int> GlobalBindings;
     std::map<std::string, unsigned int> Stack;
+    //std::map<std::string> Label;
+
+
 
 /*FIND FUNCTIONS*/
+/*
+std::string GetLabel(std::string name){
+    std::stringstream ss;
+    ss << name << labeloffset;
+    if(!FindLabel){
+        return ss.str();
+    }else{
+        ss.str(std::string());
+        ss << name << labeloffset+1;
+        return
+    }
+}
+*/
 
 
 unsigned int FindGlobal(std::string id){

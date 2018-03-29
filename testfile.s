@@ -20,15 +20,20 @@ main:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-#compiling function body
-#if statement--start
-	li		$2, 3
-	li		$3, 2
-	bge	$2, $3,link1
 	li		$2, 10
-    
-link1:
-	li		$2, 5
+	sw		$2, 116($fp)
+loop1:
+	lw		$2, 116($fp)
+	li		$3, 10
+	bne		$2, $3, exit1
+
+	lw		$2, 116($fp)
+	li		$3, 2
+	addu	$2, $2, $3
+	sw		$2, 116($fp)
+	b		loop1
+exit1:
+	lw		$2, 116($fp)
 
 #deallocating stack
 	move	$sp, $fp
@@ -43,6 +48,8 @@ link1:
 	.end	main
 	.size	main, .-main
 #Stack : 
+#x: 116
 #Local Variable : 
+#x: 10
 #compile finished
 #Global Variables : 

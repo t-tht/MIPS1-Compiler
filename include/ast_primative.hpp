@@ -35,7 +35,7 @@ public:
 	};
 
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-		dst << "#variable primative--start" << std::endl;
+		// dst << "#variable primative--start" << std::endl;
 
 		if(cntx.IsAGlobal(*id)){
 
@@ -52,7 +52,7 @@ public:
 
 		}
 
-		dst << "#variable primative--end" << std::endl;
+		// dst << "#variable primative--end" << std::endl;
 	};
 	unsigned int GetContext(InterpretContext &cntx) const override{
 		return cntx.FindVariable(*id);

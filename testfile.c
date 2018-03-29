@@ -1,6 +1,7 @@
 int main(){
-    if(3<2){
-        return 10;
+    int x = 10;
+    while(x == 10){
+        x = x + 2;
     }
-    return 5;
+    return x;
 }

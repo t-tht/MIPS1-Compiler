@@ -29,11 +29,18 @@ class WhileStatement : public Node{
 				body->translate(dst);
                 tab--;
 			}
-            
-            
+
+
 		};
-		void compile(std::ostream &dst, InterpretContext &_cntx, unsigned int destloc) const override{
-			dst << "if statement compile function not yet implemented" << std::endl;
+		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc) const override{
+			// dst << "#while statement --start" << std::endl;
+			jump++;
+			dst << "loop" << jump << ":" << std::endl;
+			cond->compile(dst, cntx, destloc);
+			body->compile(dst, cntx, destloc);
+			dst << "\tb\t\t" << "loop" << jump << std::endl;
+			dst << "exit" << jump << ":" << std::endl;
+			// dst << "#while statement --end" << std::endl;
 		};
 		unsigned int GetContext(InterpretContext &cntx) const override{return 0;};
 };
