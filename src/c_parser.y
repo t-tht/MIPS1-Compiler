@@ -98,7 +98,7 @@ IfStatement:
 
 CompareExpressionAndOr:
  CompareExpression T_LOGAND CompareExpression                                   { $$ = new CompExpr($1, new std::string("&&"), $3); }
-|CompareExpression T_LOGOR CompareExpression                                    { $$ = new LogicalOr($1, $3); }
+|CompareExpression T_LOGOR CompareExpression                                    { $$ = new CompExpr($1, new std::string("||"), $3); }
 |CompareExpression                                                              { $$ = $1; }
 
 
@@ -144,18 +144,20 @@ Factor:
 |T_CLBRACKET BinaryExpression T_CRBRACKET                                       { $$ = $2; }
 |FunctionCall                                                                   { $$ = $1; }
 
-Param:  //for function declaration
+Param:
  Type T_IDENTIFIER                                                              { $$ = new Param($1, $2, NULL); }
 |Type T_IDENTIFIER T_COMMA Param                                                { $$ = new Param($1, $2, $4); }
 
 
-Arg:    //for function calls
- T_IDENTIFIER                                                                   { $$ = new Arg(NULL, $1, 0, NULL); }
-|Type T_IDENTIFIER                                                              { $$ = new Arg($1, $2, 0, NULL); }
-|T_IDENTIFIER T_COMMA Arg                                                       { $$ = new Arg(NULL, $1, 0, $3); }
-|Type T_IDENTIFIER T_COMMA Arg                                                  { $$ = new Arg($1, $2, 0, $4); }
-|T_NUMBER                                                                       { $$ = new Arg(NULL, NULL, $1, NULL); }
-|T_NUMBER T_COMMA Arg                                                           { $$ = new Arg(NULL, NULL, $1, $3); }
+Arg:
+ Expression                                                                     { $$ = new Arg($1, NULL); }
+|Expression T_COMMA Arg                                                         { $$ = new Arg($1, $3); }
+// T_IDENTIFIER                                                                   { $$ = new Arg(NULL, $1, 0, NULL); }
+//|Type T_IDENTIFIER                                                              { $$ = new Arg($1, $2, 0, NULL); }
+//|T_IDENTIFIER T_COMMA Arg                                                       { $$ = new Arg(NULL, $1, 0, $3); }
+//|Type T_IDENTIFIER T_COMMA Arg                                                  { $$ = new Arg($1, $2, 0, $4); }
+//|T_NUMBER                                                                       { $$ = new Arg(NULL, NULL, $1, NULL); }
+//|T_NUMBER T_COMMA Arg                                                           { $$ = new Arg(NULL, NULL, $1, $3); }
 
 
 Type:

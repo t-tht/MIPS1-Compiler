@@ -7,33 +7,50 @@ class Arg;
 
 class Arg : public Node{
 protected:
+    /*
     std::string* type;
     std::string* id;
     double val;
     NodePtr right;
+    */
+    NodePtr expr;
+    NodePtr right;
 public:
-    Arg(std::string* _type, std::string* _id, double _val, NodePtr _right ) : type(_type), id(_id), val(_val), right(_right){};
+    //Arg(std::string* _type, std::string* _id, double _val, NodePtr _right ) : type(_type), id(_id), val(_val), right(_right){};
+    Arg(NodePtr _expr, NodePtr _right) : expr(_expr), right(_right){};
     ~Arg(){
+        delete expr;
         delete right;
     };
     void translate(std::ostream &dst) const override{
+        /*
         if(type != NULL){
             dst<< *type;
         }
         if(id!=NULL){
             dst<< *id;
-            
+
         }
         else{
             dst<< val;
-            
+
         }
         if(right !=NULL){
             dst<< ",";
             right->translate(dst);
         }
-        
+*/
     };
+    void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
+        if(expr != NULL){
+            expr->compile(dst, cntx, destloc);
+        }
+        destloc++;
+        if(right != NULL){
+            right->compile(dst, cntx, destloc);
+        }
+    }
+    /*
     void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
         if(destloc < 8){
             if(id != NULL){
@@ -58,7 +75,8 @@ public:
             }
         }
     };
-    
+    */
+
     unsigned int GetContext(InterpretContext &cntx)const override{};
 };
 
