@@ -39,7 +39,11 @@ class IfStatement : public Node{
             }
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-            dst << "if statement compile function not yet implemented" << std::endl;
+            dst << "#if statement--start" << std::endl;
+            cond->compile(dst, cntx, destloc);
+            body->compile(dst, cntx, destloc);
+            dst<< "\nlink"<< jump << ":\n";
+            jump--;
 		};
 		unsigned int GetContext(InterpretContext &cntx) const override{return 0;};
 };

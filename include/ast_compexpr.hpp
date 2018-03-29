@@ -28,7 +28,16 @@ class CompExpr : public Node{
 			}
 		};
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
-			dst << "compare expression compile function not yet implemented" << std::endl;
+            std::vector<unsigned int> temp = cntx.AvailableReg();
+            cntx.RegSetUsed(temp[0]);
+            cntx.RegSetUsed(temp[1]);
+            if(*op == "<"){
+                left->compile(dst, cntx, temp[0]);
+                right->compile(dst,cntx, temp[1]);
+                dst << "\tbge\t$" << temp[0] << ", $" << temp[1] << ",link"<< ++jump<< std::endl;
+                cntx.RegSetAvailable(temp[0]);
+                cntx.RegSetAvailable(temp[1]);
+            }
 		};
 		unsigned int GetContext(InterpretContext &cntx) const override{return 0;};
 };

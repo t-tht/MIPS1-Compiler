@@ -7,6 +7,7 @@
 
 extern int tab;
 extern std::vector<std::string> globalvars;
+extern int jump;
 
 #include "ast_interpretcontext.hpp"
 #include "ast_node.hpp"
