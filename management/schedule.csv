@@ -8,14 +8,14 @@ Week,    DateRange,          PlannedEffort,  ActualEffort,  OtherDeadlines
 9,  5th Mar - 11th Mar,"We plan to finish the simple C to Python today as we have a much better idea of how to complete the ast, we will do enough to satsify the testbench for formative","Updated later: We forgot to update the log, we were able to print out something but not a return",
 10, 12th Mar - 18th Mar,                  ,"We forgot to compelte the management report component despite planning to after each session, this is a major loss, however, we did keep organised and have finished the C translator and keeping track of the compiler",Matlab project
 11, 19th Mar - 30th Mar,"Produce for the test_suite and ensure they are tested and work, Add more statements to the compiler",              ,
-Completed properly below,,,,
+Completed properly below as we misunderstood format,,,,
 ,,,,
 Week,    DateRange,          PlannedEffort,  ActualEffort,  OtherDeadlines
 4, 29th Jan -  4th Feb,-,-,-
 5,  5th Feb - 11th Feb,-,-,-
 6, 12th Feb - 18th Feb,14,7,"db cw, lab oral, distsys cw, CNY"
 7, 19th Feb - 25th Feb,15,12,
-8, 26th Feb -  4th March,10,14,"job interviews, databases coursework"
-9,  5th Mar - 11th Mar,10,13,
-10, 12th Mar - 18th Mar,13,3,Matlab project
-11, 19th Mar - 30th Mar,20,              ,
+8, 26th Feb -  4th March,10,39,"job interviews, databases coursework"
+9,  5th Mar - 11th Mar,10,28,
+10, 12th Mar - 18th Mar,13,34,Matlab project
+11, 19th Mar - 30th Mar,20,101,No other deadlines

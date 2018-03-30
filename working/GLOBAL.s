@@ -27,8 +27,8 @@ global:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-	lui		$2, %hi(x)
-	lw		$2, %lo(x)($2)
+	lui		$3, %hi(x)
+	lw		$2, %lo(x)($3)
 
 #deallocating stack
 	move	$sp, $fp

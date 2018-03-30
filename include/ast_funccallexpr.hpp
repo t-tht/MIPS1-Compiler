@@ -31,11 +31,11 @@ public:
 		}
 		dst << "\tjal\t\t" << *id << std::endl;
 		dst << "\tnop" << std::endl;
-		if(destloc == 2){	//simple hack to solve issue of return f() + g(); without this f() will be saved in $2 and g() will overrite $2
-			destloc = 3;
-		}else if(destloc == 3){
-			destloc = 2;
-		}
+//        if(destloc == 2){    //simple hack to solve issue of return f() + g(); without this f() will be saved in $2 and g() will overrite $2
+//            destloc = 3;
+//        }else if(destloc == 3){
+//            destloc = 2;
+//        }
 		dst << "\tmove\t$" << destloc << ", $2" << std::endl;
 
 	};
