@@ -38,7 +38,7 @@
 %%
 
 ROOT:
- Program                                                                        { g_root = $1; }
+    Program                                                                        { g_root = $1; }
 
 
 Program:
@@ -85,7 +85,7 @@ WhileStatement:
 T_WHILE T_LBRACKET CompareExpressionAndOr T_RBRACKET Block                           { $$= new WhileStatement($3, $5); }
 
 ForStatement:
-T_FOR T_LBRACKET VariableDeclaration T_SEMICOLON CompareExpression T_SEMICOLON IncrementDecrement T_SEMICOLON T_RBRACKET Block                           { $$= new ForStatement($3, $5, $7, $10); }
+T_FOR T_LBRACKET VariableDeclaration CompareExpression T_SEMICOLON IncrementDecrement T_RBRACKET Block                           { $$= new ForStatement($3, $4, $6, $8); }
 
 ReturnStatement:
  T_RETURN Expression T_SEMICOLON                                                { $$ = new ReturnStat($2); }

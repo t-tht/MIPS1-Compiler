@@ -20,40 +20,25 @@ main:
 	sw		$fp, 120($sp)
 	move	$fp, $sp
 
-	li		$2, 5
+	li		$2, 0
 	sw		$2, 116($fp)
-#if statement--start
-	lw		$2, 116($fp)
+#for statement--start
+	li		$2, 0
+	sw		$2, 112($fp)
+
+for1:
+	lw		$2, 112($fp)
 	li		$3, 7
-	slt		$3, $3, $2
-	beq		$3, $0, exit1
+	bge	$2, $3, exit1
+	lw		$2, 112($fp)
+	addiu	$2, $2, 1
+	sw		$2, 112($fp)
+	li		$2, 0
+	sw		$2, 116($fp)
 
-	li		$2, 4
-
-#deallocating stack
-	move	$sp, $fp
-	lw		$fp, 120($sp)
-	lw		$ra, 124($sp)
-	addiu	$sp, $sp, 128
-	j		$ra
-	nop
-
-	j	escape1
-
+j	for1
 exit1:
-	li		$2, 7
-
-#deallocating stack
-	move	$sp, $fp
-	lw		$fp, 120($sp)
-	lw		$ra, 124($sp)
-	addiu	$sp, $sp, 128
-	j		$ra
-	nop
-
-
-escape1:
-	li		$2, 10
+	lw		$2, 112($fp)
 
 #deallocating stack
 	move	$sp, $fp

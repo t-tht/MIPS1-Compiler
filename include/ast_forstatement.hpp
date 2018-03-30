@@ -21,8 +21,10 @@ class ForStatement : public Node{
 		void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
             dst << "#for statement--start" << std::endl;
             jump++;
+                        vardec->GetContext(cntx);
+                vardec->compile(dst,cntx,destloc);
             dst<<"\nfor"<< jump << ":\n";
-            jump--;
+
             cond->compile(dst,cntx,destloc);
             body->compile(dst,cntx,destloc);
             increment->compile(dst,cntx,destloc);
