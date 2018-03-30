@@ -3,7 +3,7 @@
 	.align	2
 	.type	x, @object
 	.size	x, 4
-a:
+x:
 		.word	1
 
 

@@ -39,7 +39,7 @@ public:
         dst << "\t.align\t" << 2 << std::endl;
         dst << "\t.type\t" << *id << ", @object" << std::endl;
         dst << "\t.size\t" << *id << ", 4" << std::endl; 
-        dst << "a:" << std::endl;
+        dst << *id<< ":" << std::endl;
         dst << "\t\t.word\t";
         if(val != NULL){
         dst << val->GetContext(cntx);

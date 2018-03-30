@@ -21,10 +21,13 @@ public:
 	};
 	void compile(std::ostream &dst, InterpretContext &cntx, unsigned int destloc)const override{
 		// dst << "#return statement" << std::endl;
-		if(Expr != NULL){
-			Expr->compile(dst, cntx, 2);
+        std::vector<unsigned int> temp = cntx.AvailableReg();
+        cntx.RegSetUsed(temp[0]);
+        if(Expr != NULL){
+			Expr->compile(dst, cntx, temp[0]);
 		}
         dst << std::endl;
+        cntx.RegSetAvailable(temp[0]);
         cntx.DeallocateStack(dst);
         //return
         dst << "\t" << "j\t\t$ra" << std::endl;
